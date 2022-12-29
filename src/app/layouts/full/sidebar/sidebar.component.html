@@ -1,0 +1,54 @@
+<!-- ============================================================== -->
+<!-- sidebar -->
+<!-- ============================================================== -->
+
+<!-- ============================================================== -->
+<!-- Afficher le dashboard dans le side bar-->
+<!-- ============================================================== -->
+
+<mat-nav-list appAccordion>
+    <mat-list-item *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected"
+        group="{{menuitem.state}}">
+        <mat-list [class.mat-elevation-z0]="true" dense [routerLink]="['/', menuitem.state]"
+            *ngIf="menuitem.type === 'stab' && menuitem.name=='Dashboard'  ">
+            <mat-icon>{{ menuitem.icon }}</mat-icon>
+            <span>{{ menuitem.name }}</span>
+        </mat-list>
+    </mat-list-item>
+</mat-nav-list>
+
+<!-- ============================================================== -->
+<!-- Afficher les fonctionnalités de type link2 cad qui ont des sous fonctionnalités-->
+<!-- ============================================================== -->
+<mat-nav-list>
+    <mat-list-item *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected"
+        group="{{menuitem.state}}">
+        <mat-list  [routerLink]="['/', menuitem.state]"
+            *ngIf="menuitem.type === 'link2' ">
+            <mat-icon>{{ menuitem.icon }}</mat-icon>
+            <span>{{ menuitem.name }}</span>
+        </mat-list>
+    </mat-list-item>
+</mat-nav-list>
+
+<!-- ============================================================== -->
+<!-- Afficher les fonctionnalités qui n"ont pas de sous fonctionnalités-->
+<!-- ============================================================== -->
+<mat-nav-list appAccordion>
+    <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected"
+        group="{{menuitem.state}}">
+        <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+            <mat-expansion-panel-header appAccordionToggle *ngIf="menuitem.type === 'link1' ">
+                <mat-icon>{{ menuitem.icon }}</mat-icon>
+                <span>{{ menuitem.name }}</span>
+                <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+            </mat-expansion-panel-header>
+            <mat-nav-list dense *ngFor="let submenu of menuitem.children">
+                <a mat-list-item [routerLink]="['/', submenu.state]">
+                    <mat-icon>{{ submenu.icon }}</mat-icon>
+                    <span>{{ submenu.name }}</span>
+                </a>
+            </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-list-item>
+</mat-nav-list>
