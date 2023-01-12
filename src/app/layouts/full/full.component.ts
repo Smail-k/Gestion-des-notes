@@ -1,5 +1,6 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import {ChangeDetectorRef, Component,OnDestroy,AfterViewInit} from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItems } from '../../shared/menu-items/menu-items';
 
 
@@ -15,6 +16,7 @@ export class FullComponent implements OnDestroy, AfterViewInit {
   private _mobileQueryListener: () => void;
 
   constructor(
+    private router:Router,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     public menuItems: MenuItems
@@ -28,4 +30,7 @@ export class FullComponent implements OnDestroy, AfterViewInit {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   ngAfterViewInit() {}
+  logout(){
+    this.router.navigate(['/login'])
+  }
 }

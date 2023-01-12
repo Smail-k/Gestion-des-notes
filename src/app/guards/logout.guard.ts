@@ -18,7 +18,6 @@ export class LogoutGuard implements CanActivate {
       route: ActivatedRouteSnapshot,
       state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-        console.log('In guard, canActivate() called');
         var token:any = localStorage.getItem('at');
         var decodedtoken = this.helper.decodeToken(token);
         console.log(decodedtoken);
@@ -26,7 +25,6 @@ export class LogoutGuard implements CanActivate {
         console.log("tokenExpired was:" + tokenExpired);
         if (tokenExpired)
       { 
-        console.log("e")
         this.router.navigate(['/login']);
         localStorage.clear();
        return false;

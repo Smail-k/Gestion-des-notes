@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
@@ -17,6 +17,8 @@ import { DemoMaterialModule } from './demo-material-module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './guards/auth.interceptor';
+import { IsSignedGuard } from './guards/is-signed.guard';
 
 @NgModule({
   declarations: [
@@ -38,10 +40,16 @@ import { LoginComponent } from './login/login.component';
     RouterModule.forRoot(AppRoutes)
   ],
   providers: [
-    {
-      provide: LocationStrategy,
-      useClass: PathLocationStrategy
-    }
+
+    IsSignedGuard,
+    {   
+    provide: LocationStrategy,
+    useClass: PathLocationStrategy,
+    },
+  
+  
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  
   ],
   bootstrap: [AppComponent]
 })

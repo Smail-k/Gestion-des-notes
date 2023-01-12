@@ -16,7 +16,7 @@ export class UtilisateurService {
   
   ngOnInit() { }
   
-  authenticate(username:string,password:string):Observable<any>
+  authenticate(username:any,password:any):Observable<any>
   {
   const body = new HttpParams()
   .set('username', username)
@@ -25,6 +25,7 @@ export class UtilisateurService {
   {
     headers: new HttpHeaders({
     'Access-Control-Allow-Origin':'*',
+    'Access-Control-Allow-Methods':'*',
     'Content-type':'application/x-www-form-urlencoded'
     })
   }

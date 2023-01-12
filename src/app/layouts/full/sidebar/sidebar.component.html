@@ -17,28 +17,6 @@
     </mat-accordion>
 
 
-<!-- ============================================================== -->
-<!-- Afficher les fonctionnalités qui ont de sous fonctionnalités
-
-<mat-nav-list appAccordion >
-    <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()"  >
-        <mat-expansion-panel [class.mat-elevation-z0]="true" dense >
-            <mat-expansion-panel-header  *ngIf="menuitem.type === 'link1' " >
-                <mat-icon >{{ menuitem.icon }}</mat-icon>
-                <span>{{ menuitem.name }}</span>
-            </mat-expansion-panel-header>
-
-            <mat-nav-list  *ngFor="let submenu of menuitem.children">
-                <a mat-list-item [routerLink]="['/', submenu.state]">
-                    <mat-icon>{{ submenu.icon }}</mat-icon>
-                    <span>{{ submenu.name }}</span>
-                </a>
-            </mat-nav-list>
-        </mat-expansion-panel>
-    </mat-list-item>
-</mat-nav-list>
- ============================================================== -->
-
 <mat-accordion *ngFor="let menuitem of menuItems.getMenuitem()" >
 <mat-expansion-panel >
             <mat-expansion-panel-header  *ngIf="menuitem.type === 'link1' " >

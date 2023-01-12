@@ -9,30 +9,37 @@ import { GestionDesParametresComponent } from './gestion-des-parametres/gestion-
 import { GestionDesUEComponent } from './gestion-des-ue/gestion-des-ue.component';
 import { ImporterFichierExcellUEComponent } from './gestion-des-ue/importer-fichier-excell-ue/importer-fichier-excell-ue.component';
 import { LoginComponent } from '../login/login.component';
+import { IsSignedGuard } from '../guards/is-signed.guard';
 
 
 export const MaterialRoutes: Routes = [
   {
+    canActivate:[IsSignedGuard],
     path: 'gestionEtudiant',
     component: GestionDesEtudiantsComponent
   },
   {
+    canActivate:[IsSignedGuard],
     path: 'gestionMatieres',
     component: GestionDesMatieresComponent
   },
   {
+    canActivate:[IsSignedGuard],
     path: 'ImporterUE',
     component: ImporterFichierExcellUEComponent
   },
   {
+    canActivate:[IsSignedGuard],
     path: 'gestionUE',
     component: GestionDesUEComponent
   },
   {
+    canActivate:[IsSignedGuard],
     path: 'gestionDesParametres',
     component: GestionDesParametresComponent
   },
   {
+    canActivate:[IsSignedGuard],
     path: 'gestionDesUtilisateurs',
     component: GestionDesAdministrateursComponent
   },

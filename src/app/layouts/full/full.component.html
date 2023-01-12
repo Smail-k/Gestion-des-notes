@@ -25,11 +25,8 @@
             <mat-icon>menu</mat-icon>
         </button>
         <span fxFlex></span>
-        <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5"> <img src="assets/images/users/2.jpg" alt="user" class="profile-pic"> </button>
-        <mat-menu #profile="matMenu" class="mymegamenu">
-            <button mat-menu-item>
-                <mat-icon>exit_to_app</mat-icon> Sign Out </button>
-        </mat-menu>
+        <button mat-icon-button (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon> </button>
     </mat-toolbar>
 
     <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">

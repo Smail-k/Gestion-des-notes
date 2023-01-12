@@ -11,13 +11,14 @@ export class IsSignedGuard implements CanActivate {
 /** 
  *Autoriser l'acces au dashboard si l'utilisateur est connecté
   */ 
-  canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot)
-  : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree 
-  {
-  if(localStorage.getItem('at')!=null )
-  {this.router.navigate(["/"]);
-    return false;}
-  else
-    return true;}
-  
+
+ canActivate(): boolean {
+   if (localStorage.getItem('at') != null) {
+     return true;
+   } else {
+     this.router.navigate(['/login']);
+     return false;
+   }
+
+}
 }

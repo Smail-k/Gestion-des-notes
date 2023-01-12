@@ -21,7 +21,7 @@
 								<mat-form-field>
 									<button mat-icon-button matSuffix >
 									<mat-icon>person_pin</mat-icon>
-								</button>
+									</button>
 									<input matInput placeholder="nom utilisateur" [formControl]="form.controls['uname']">
 								</mat-form-field>
 								<small
@@ -40,15 +40,15 @@
 										[formControl]="form.controls['password']">
 								</mat-form-field>
 								<small
-									*ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched && canAcess"
+									*ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched"
 									class="text-danger support-text">Mot de passe obligatoire.</small>
-								<small *ngIf="!canAcess" class="text-danger support-text">Mot de passe ou Login
-									incorrect.</small>
+									<small *ngIf="!canAcess" class="text-danger support-text">Mot de passe ou Login
+										incorrect.</small>
 							</div>
 <br><br><br>
 							<div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
 								<button mat-raised-button color="primary" class="btn-block btn-lg m-t-20 m-b-20"
-									type="submit">Connexion</button>
+									type="submit" [disabled]="!form.valid">Connexion</button>
 							</div>
 
 						</div>
