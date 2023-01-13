@@ -1,1 +1,120 @@
-<p>gestion-des-ue works!</p>
+<div fxLayout="row">
+    <div fxFlex.gt-sm="100%">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>LIST</mat-card-title>
+
+                <mat-form-field appearance="fill" style="width:25%">
+                    <mat-label>Année Universitaire</mat-label>
+                    <mat-select [(ngModel)]="selectedValue" name="uYear">
+                        <mat-option *ngFor="let uYear of years" [value]="uYear.value">
+                            {{uYear.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;&nbsp;
+                <mat-form-field appearance="fill" style="width:25%">
+                    <mat-label>Promotion</mat-label>
+                    <mat-select [(ngModel)]="selectedValue" name="food">
+                        <mat-option *ngFor="let promo of promotions" [value]="promo.value">
+                            {{promo.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button mat-raised-button color="primary"><mat-icon
+                        aria-label="Example icon-button with a heart icon">add</mat-icon> Export Excel
+                </button>
+
+                <table id="example2" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Libellés</th>
+                            <th>Crédit ECTS</th>
+                            <th>Coeff</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>JIN5U1B</td>
+                            <td>INFO51</td>
+                            <td>10</td>
+                            <td>10</td>
+                            <td>
+                                <button mat-icon-button color="accent"> 
+                                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
+                                </button>
+
+                                <button mat-icon-button color="primary"> 
+                                    <mat-icon aria-label="delete button icon">edit</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>JIN5U2A</td>
+                            <td>INFO52</td>
+                            <td>6</td>
+                            <td>6</td>
+                            <td>
+                                <button mat-icon-button color="accent"> 
+                                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
+                                </button>
+
+                                <button mat-icon-button color="primary"> 
+                                    <mat-icon aria-label="delete button icon">edit</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>JIN5U4B</td>
+                            <td>INFO53</td>
+                            <td>7</td>
+                            <td>6</td>
+                            <td>
+                                <button mat-icon-button color="accent"> 
+                                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
+                                </button>
+
+                                <button mat-icon-button color="primary"> 
+                                    <mat-icon aria-label="delete button icon">edit</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>JIN5U3C</td>
+                            <td>SHM50</td>
+                            <td>7</td>
+                            <td>7</td>
+                            <td>
+                                <button mat-icon-button color="accent"> 
+                                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
+                                </button>
+
+                                <button mat-icon-button color="primary"> 
+                                    <mat-icon aria-label="delete button icon">edit</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Code</th>
+                            <th>Libellés</th>
+                            <th>Crédit ECTS</th>
+                            <th>Coeff</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+
+                <button mat-raised-button color="primary"><mat-icon
+                        aria-label="Example icon-button with a heart icon">import_export</mat-icon> Export Excel
+                </button>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

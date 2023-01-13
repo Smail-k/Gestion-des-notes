@@ -20,7 +20,7 @@ export interface ChildrenItems {
   type?: string;
   child?: SubChildren[];
 }
- 
+
 export interface Menu {
   state: string;
   name: string;
@@ -29,25 +29,51 @@ export interface Menu {
   badge?: BadgeItem[];
   saperator?: Saperator[];
   children?: ChildrenItems[];
-  interfacage?:string;
+  interfacage?: string;
 }
 
 
 const MENUITEMS = [
-  { state: 'dashboard', name: 'Dashboard', type: 'stab', icon: 'av_timer' },
-  { state: 'gestionEtudiant', type: 'link1', name: 'Gestion des etudiants', icon: 'person',
-  children:[
-   { state: 'gestionEtudiant', type:'link1', name: 'Importer Excell ',icon:'cloud_upload'},]  
-  },
-  { state: 'gestionMatieres', type: 'link2', name: 'Gestion des matières', icon: 'view_comfy',},
-  { state: 'gestionUE', type: 'link1', name: 'Gestion des UE', icon: 'web',
-  children:[
-   { state: 'ImporterUE', type:'link1', name: 'Importer Excell',icon:'cloud_upload'},
-   { state: 'gestionUE', type:'link1', name: 'Gérer UE',icon:'web'},
-  ]  
-  },
-  { state: 'gestionDesParametres', type: 'link2', name: 'Gestion de Paramètres', icon: 'settings',},
-  { state: 'gestionDesUtilisateurs', type: 'link2', name: 'Gestion des utilisateurs', icon: 'supervised_user_circle',},
+  { state: 'dashboard', name: 'Dashboard', type: 'link2', icon: 'av_timer' },
+  
+  // {
+  //   state: 'gestionUE', // i.e dashboard
+  //   name: 'Gestion des UE', // i.e Dashboard
+  //   type: 'sub', // i.e sub // sub, link, seprator
+  //   icon: 'web', // i.e av_timer
+  //   children: [
+  //     {
+
+  //       state: 'ImporterUE', // i.e dashboard1
+  //       name: 'Importer Excell', // i.e Dashboard 1
+  //       icon: 'cloud_upload',
+  //     },
+  //     {
+  //       state: 'gestionUE', // i.e dashboard2
+  //       name: 'Gérer UE', // i.e Dashboard 2
+  //       icon: 'web'
+  //     }
+  //   ]
+  // },
+  // {
+  //   state: 'gestionEtudiant', // i.e dashboard
+  //   name: 'Gestion des etudiants', // i.e Dashboard
+  //   type: 'sub', // i.e sub // sub, link, seprator
+  //   icon: 'view_comfy', // i.e av_timer
+  //   children: [
+  //     {
+
+  //       state: 'gestionEtudiant', // i.e dashboard1
+  //       name: 'Importer Excell', // i.e Dashboard 1
+  //       icon: 'cloud_upload',
+  //     },
+  //   ]
+  // },
+  { state: 'gestionEtudiant', type: 'link2', name: 'Gestion des étudiants', icon: 'person', },
+  { state: 'gestionUE', type: 'link2', name: 'Gestion des UE', icon: 'book', },
+  { state: 'gestionMatieres', type: 'link2', name: 'Gestion des matières', icon: 'book', },
+  { state: 'gestionDesParametres', type: 'link2', name: 'Gestion de Paramètres', icon: 'settings', },
+  { state: 'gestionDesUtilisateurs', type: 'link2', name: 'Gestion des utilisateurs', icon: 'supervised_user_circle', },
 
 ];
 
