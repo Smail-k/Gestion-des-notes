@@ -10,6 +10,7 @@ import { GestionDesUEComponent } from './gestion-des-ue/gestion-des-ue.component
 import { ImporterFichierExcellUEComponent } from './gestion-des-ue/importer-fichier-excell-ue/importer-fichier-excell-ue.component';
 import { LoginComponent } from '../login/login.component';
 import { IsSignedGuard } from '../guards/is-signed.guard';
+import { DashboardComponent } from '../dashboard/dashboard.component';
 
 
 export const MaterialRoutes: Routes = [
@@ -17,6 +18,11 @@ export const MaterialRoutes: Routes = [
     canActivate:[IsSignedGuard],
     path: 'gestionEtudiant',
     component: GestionDesEtudiantsComponent
+  },
+  {
+    canActivate:[IsSignedGuard],
+    path: 'Dashboard',
+    component: DashboardComponent
   },
   {
     canActivate:[IsSignedGuard],
