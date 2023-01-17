@@ -9,27 +9,19 @@ providedIn: 'root'
 })
 export class UtilisateurService {
 
-  token!:any;
-  helper = new JwtHelperService
+ 
   
   constructor(private http:HttpClient) { }
-  
-  ngOnInit() { }
-  
-  authenticate(username:any,password:any):Observable<any>
-  {
-  const body = new HttpParams()
-  .set('username', username)
-  .set('password', password)
-  const httpOptions=
-  {
-    headers: new HttpHeaders({
-    'Access-Control-Allow-Origin':'*',
-    'Access-Control-Allow-Methods':'*',
-    'Content-type':'application/x-www-form-urlencoded'
-    })
-  }
-  return this.http.post(url+'api/login',body,httpOptions);
-  }
+ 
+
+  /**
+   * 
+   * @param file le fichier qui contient les etudiants à importer
+   * @returns une chaine de caractere de succées
+   */
+  importEtudiants(file:any):Observable<any>
+  { 
+    // Envoi de la requête POST
+    return this.http.post(url+ 'api/excelEtudiant',file); }
   
 }

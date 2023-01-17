@@ -17,8 +17,8 @@ import { DemoMaterialModule } from './demo-material-module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './login/login.component';
-import { AuthInterceptor } from './guards/auth.interceptor';
 import { IsSignedGuard } from './guards/is-signed.guard';
+import { AuthinterceptorInterceptor } from './Interceptor/authinterceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -48,7 +48,7 @@ import { IsSignedGuard } from './guards/is-signed.guard';
     },
   
   
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: AuthinterceptorInterceptor, multi: true },
   
   ],
   bootstrap: [AppComponent]

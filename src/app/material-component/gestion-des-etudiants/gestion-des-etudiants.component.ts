@@ -1,4 +1,6 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { UtilisateurService } from 'src/app/services/user.service';
 declare const $:any;
 
 interface Promotion {
@@ -18,9 +20,11 @@ interface UnivYear {
 export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
 
   
-  constructor() { }
+  constructor(private HttpClient:HttpClient , private us:UtilisateurService) { }
   selectedValue!: string;
   selectedYearValue!: string;
+  selectedFile!: File;
+
 
   promotions: Promotion[] = [
     {value: 'steak-0', viewValue: '3A INFO'},
@@ -40,5 +44,24 @@ export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     
   }
+  
 
+/**
+ * 
+ * @param event 
+ */
+  onFileChanged(event :any) {
+    this.selectedFile = event.target.files[0];
+    this.onUpload(event);
+  }
+
+  onUpload(event:any) {
+ // Récupération du fichier Excel
+ let file = event.target.files[0];
+ // Création d'un formulaire pour envoyer le fichier
+ console.log(file)
+ // Envoi de la requête POST
+     this.us.importEtudiants(file).subscribe(data => {
+      console.log("data"+data);  }, err => {console.log("err"+err);});
+  }
 }

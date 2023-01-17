@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { OauthServiceService } from '../services/oauth-service.service';
 import { UtilisateurService } from '../services/user.service';
 
 @Component({
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   
   constructor(
   private fb: FormBuilder,
-  private us : UtilisateurService,
+  private os : OauthServiceService,
   private router: Router,
   private route: ActivatedRoute,
   ){}
@@ -67,7 +68,7 @@ export class LoginComponent implements OnInit {
   
   let username=this.f.uname.value;
   let password=this.f.password.value
-  this.us.authenticate(username,password).subscribe(res=>
+  this.os.authenticate(username,password).subscribe(res=>
     {
       //Username et password correcte 
       
