@@ -19,38 +19,36 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './guards/auth.interceptor';
 import { IsSignedGuard } from './guards/is-signed.guard';
+import { AppBreadcrumbComponent } from './layouts/full/breadcrumb/breadcrumb.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FullComponent,
-    SpinnerComponent,
-    AppSidebarComponent,
-    LoginComponent
-  ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    DemoMaterialModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    FormsModule,
-    SharedModule,
-    RouterModule.forRoot(AppRoutes)
-  ],
-  providers: [
-
-    IsSignedGuard,
-    {   
-    provide: LocationStrategy,
-    useClass: PathLocationStrategy,
-    },
-  
-  
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        FullComponent,
+        AppBreadcrumbComponent,
+        SpinnerComponent,
+        AppSidebarComponent,
+        LoginComponent
+    ],
+    providers: [
+        IsSignedGuard,
+        {
+            provide: LocationStrategy,
+            useClass: PathLocationStrategy,
+        },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        DemoMaterialModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        FormsModule,
+        SharedModule,
+        RouterModule.forRoot(AppRoutes),
+    ]
 })
 export class AppModule {}
