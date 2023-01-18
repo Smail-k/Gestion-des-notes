@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { UtilisateurService } from 'src/app/services/user.service';
+import * as XLSL from 'xlsx'
 declare const $:any;
 
 interface Promotion {
@@ -18,12 +19,14 @@ interface UnivYear {
   styleUrls: ['./gestion-des-etudiants.component.css']
 })
 export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
+  ExcelData: any;
 
   
   constructor(private HttpClient:HttpClient , private us:UtilisateurService) { }
   selectedValue!: string;
   selectedYearValue!: string;
   selectedFile!: File;
+  file!: File;
 
 
   promotions: Promotion[] = [
@@ -51,17 +54,16 @@ export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
  * @param event 
  */
   onFileChanged(event :any) {
-    this.selectedFile = event.target.files[0];
-    this.onUpload(event);
-  }
+  this.selectedFile = event.target.files[0];
+  // Récupération du fichier Excel
+  this.file = event.target.files[0];
+  const fd = new FormData();
+  fd.append('file', this.file);
+  // Envoi de la requête POST
+  this.us.importModules(fd).subscribe(data => {
+      console.log(data);  }, err => {console.log(err);});
+        }
 
-  onUpload(event:any) {
- // Récupération du fichier Excel
- let file = event.target.files[0];
- // Création d'un formulaire pour envoyer le fichier
- console.log(file)
- // Envoi de la requête POST
-     this.us.importEtudiants(file).subscribe(data => {
-      console.log("data"+data);  }, err => {console.log("err"+err);});
-  }
+
+  
 }

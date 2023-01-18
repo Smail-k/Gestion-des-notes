@@ -21,36 +21,32 @@ import { IsSignedGuard } from './guards/is-signed.guard';
 import { AuthinterceptorInterceptor } from './Interceptor/authinterceptor.interceptor';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    FullComponent,
-    SpinnerComponent,
-    AppSidebarComponent,
-    LoginComponent
-  ],
-  imports: [
-    BrowserModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    DemoMaterialModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    FormsModule,
-    SharedModule,
-    RouterModule.forRoot(AppRoutes)
-  ],
-  providers: [
-
-    IsSignedGuard,
-    {   
-    provide: LocationStrategy,
-    useClass: PathLocationStrategy,
-    },
-  
-  
-    {provide: HTTP_INTERCEPTORS, useClass: AuthinterceptorInterceptor, multi: true },
-  
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        FullComponent,
+        SpinnerComponent,
+        AppSidebarComponent,
+        LoginComponent
+    ],
+    providers: [
+        IsSignedGuard,
+        {
+            provide: LocationStrategy,
+            useClass: PathLocationStrategy,
+        },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthinterceptorInterceptor, multi: true },
+    ],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        DemoMaterialModule,
+        FlexLayoutModule,
+        HttpClientModule,
+        FormsModule,
+        SharedModule,
+        RouterModule.forRoot(AppRoutes),
+    ]
 })
 export class AppModule {}
