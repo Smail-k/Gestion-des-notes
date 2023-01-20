@@ -30,9 +30,43 @@
                     <input #FileInput  type="file" accept=".xls,.xlsx" (change)="onFileChanged($event)"  style="display: none" >
                 </button>
 
+                <!-- <ng-template #preview>
+                    <table datatable [dtOptions]="dtOptions" class="row-border hover">
+                        <thead>
+                            <tr>
+                                <th>Numéro</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let etudiant of etudiants">
+                                <td>{{etudiant.numero}}</td>
+                                <td>{{etudiant.nom}}</td>
+                                <td>{{etudiant.prenom}}</td>
+                                <td>
+                                    <button mat-icon-button color="warn">
+                                        <mat-icon aria-label="delete button icon">delete</mat-icon>
+                                    </button>
     
+                                    <button mat-icon-button color="primary">
+                                        <mat-icon aria-label="delete button icon">edit</mat-icon>
+                                    </button>
+    
+                                    <button mat-icon-button color="accent">
+                                        <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
+                                    </button>
+    
+                                </td>
+                            </tr>
+    
+                        </tbody>
+                    </table>
+                  </ng-template> -->
 
-                <table id="example1" class="display" style="width:100%">
+                
+                <table id="example1"  class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th>Numéro</th>
@@ -42,10 +76,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>551176</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
+                        <tr *ngFor="let etudiant of etudiants">
+                            <td>{{etudiant.numero}}</td>
+                            <td>{{etudiant.nom}}</td>
+                            <td>{{etudiant.prenom}}</td>
                             <td>
                                 <button mat-icon-button color="warn">
                                     <mat-icon aria-label="delete button icon">delete</mat-icon>

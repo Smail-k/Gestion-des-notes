@@ -19,6 +19,7 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './login/login.component';
 import { IsSignedGuard } from './guards/is-signed.guard';
 import { AuthinterceptorInterceptor } from './Interceptor/authinterceptor.interceptor';
+import {DataTablesModule} from 'angular-datatables'
 
 @NgModule({
     declarations: [
@@ -45,7 +46,9 @@ import { AuthinterceptorInterceptor } from './Interceptor/authinterceptor.interc
         FlexLayoutModule,
         HttpClientModule,
         FormsModule,
-        SharedModule,
+        SharedModule, 
+        DataTablesModule,
+        DataTablesModule.forRoot(),
         RouterModule.forRoot(AppRoutes),
     ]
 })
