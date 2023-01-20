@@ -20,11 +20,22 @@ export class EtudiantService {
   }
 
   listeEtudiant(): Observable<Etudiant[]>{
-    return this.http.get<Etudiant[]>(this.apiURL);
+    return this.http.get<Etudiant[]>(this.apiURL+'/lister');
     }
 
   addEtudiant(etudiant: Etudiant){
     this.etudiants.push(etudiant);
   }
+
+    /**
+   * 
+   * @param file le fichier qui contient les etudiants à importer
+   * @returns une chaine de caractere de succées
+   */
+    importEtudiants(file:FormData):Observable<any>
+    { 
+      // Envoi de la requête POST
+      return this.http.post( 'http://localhost:8080/api/excel/etudiant',file); }
+
 
 }

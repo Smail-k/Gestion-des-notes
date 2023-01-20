@@ -1,5 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AfterViewInit, OnDestroy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, OnDestroy, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import DataTables from 'datatables.net';
 import { Subject } from 'rxjs';
 
 import { Etudiant } from 'src/app/models/etudiant';
@@ -23,62 +27,46 @@ interface UnivYear {
 })
 export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
   ExcelData: any;
+  searchKey!:any;
   etudiants?: Etudiant[];
-
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-  
-  constructor(private HttpClient: HttpClient, private us: UtilisateurService, private etuService: EtudiantService) { }
   selectedValue!: string;
   selectedYearValue!: string;
   selectedFile!: File;
   file!: File;
-
-
   promotions: Promotion[] = [
-    { value: 'steak-0', viewValue: '3A INFO' },
-    { value: 'pizza-1', viewValue: '4A INFO' },
-    { value: 'tacos-2', viewValue: '5A INFO' },
+    {value: 'steak-0', viewValue: '3A INFO'},
+    {value: 'pizza-1', viewValue: '4A INFO'},
+    {value: 'tacos-2', viewValue: '5A INFO'},
   ];
 
   years: UnivYear[] = [
-    { value: 'year-0', viewValue: '2020-2021' },
-    { value: 'year-1', viewValue: '2021-2022' },
-    { value: 'year-2', viewValue: '2022-2023' },
+    {value: 'year-0', viewValue: '2020-2021'},
+    {value: 'year-1', viewValue: '2021-2022'},
+    {value: 'year-2', viewValue: '2022-2023'},
   ];
+  
+  listData! : MatTableDataSource<any>;
+  displayedColumns : string[] = ['numero' , 'nom', 'prenom','actions' ];
+  dataSource!: MatTableDataSource<Etudiant>;
+  @ViewChild(MatSort) sort! : MatSort;
+  @ViewChild (MatPaginator) paginator! : MatPaginator;
+
+
+  constructor(private HttpClient: HttpClient, private us: UtilisateurService, private etuService: EtudiantService) { }
+
   ngAfterViewInit(): void {
-
-  //  $('#example1').DataTable({
-  //     data: this.etudiants,
-  //     columns: [
-  //       { title: 'Numéro' },
-  //       { title: 'Nom' },
-  //       { title: 'Prénom' },
-  //       { title: 'Nom' },
-  //       { title: 'Prénom' },
-  //       { title: 'Action' },
-  //     ],
-  //   });
-
-
-
+    $('#dt-mat-id').DataTable();
   }
 
   ngOnInit(): void {
+    this.ListerEtudiants();
+  }
 
-    $('#example1').DataTable();
-
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10
-    };
-
-    this.etuService.listeEtudiant().subscribe(etuds => {
-      console.log(etuds);
-      this.etudiants = etuds;
-      this.dtTrigger.next(null);
-    });
-
+  
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 
   /**
@@ -92,14 +80,32 @@ export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
     const fd = new FormData();
     fd.append('file', this.file);
     // Envoi de la requête POST
-    this.us.importModules(fd).subscribe(data => {
+    this.etuService.importEtudiants(fd).subscribe(data => {
       console.log(data);
     }, err => { console.log(err); });
   }
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
+  /**
+   * Lister tous les etudiants sans filtre
+   */
+  ListerEtudiants():void{
+    this.etuService.listeEtudiant().subscribe(etuds => {
+      console.log(etuds);
+      this.etudiants = etuds;
+      this.dataSource = new MatTableDataSource(this.etudiants);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      //this.dtTrigger.next(null);
+    });
   }
+
+  applyFilter(){this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase(); }
+  
+  onSearchClear(){
+    this.searchKey="";
+    this.applyFilter();
+  }
+
+  
 
 }

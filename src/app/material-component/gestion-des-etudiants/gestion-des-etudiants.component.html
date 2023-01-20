@@ -3,7 +3,7 @@
     <div fxFlex.gt-sm="100%">
         <mat-card>
             <mat-card-content>
-                <mat-card-title>LISTE</mat-card-title><br>
+                <mat-card-title>LISTE DES ETUDIANTS</mat-card-title><br>
 
                 <mat-form-field appearance="fill" style="width:25%">
                     <mat-label>Année Universitaire</mat-label>
@@ -14,6 +14,7 @@
                     </mat-select>
                 </mat-form-field>
                 &nbsp;&nbsp;
+                
                 <mat-form-field appearance="fill" style="width:25%">
                     <mat-label>Promotion</mat-label>
                     <mat-select [(ngModel)]="selectedValue" name="promotion">
@@ -22,88 +23,68 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                
+                    <mat-form-field class="search-form-field" floatLabel="never" style="width: 20%;">
+                        <input matInput [(ngModel)]= "searchKey" placeholder="Recherche" autocomplete="off" (keyup)="applyFilter()">
+                        <button mat-button matSuffix mat-icon-button aria-label="clear" 
+                        *ngIf="searchKey" (click)= "onSearchClear()">
+                            <mat-icon> close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    &nbsp;&nbsp;
                 <button mat-raised-button color="primary" (click)="FileInput.click()">
                     <mat-icon>cloud_upload</mat-icon>
                     Import Excel
                     <input #FileInput  type="file" accept=".xls,.xlsx" (change)="onFileChanged($event)"  style="display: none" >
                 </button>
 
-                <!-- <ng-template #preview>
-                    <table datatable [dtOptions]="dtOptions" class="row-border hover">
-                        <thead>
-                            <tr>
-                                <th>Numéro</th>
-                                <th>Nom</th>
-                                <th>Prénom</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let etudiant of etudiants">
-                                <td>{{etudiant.numero}}</td>
-                                <td>{{etudiant.nom}}</td>
-                                <td>{{etudiant.prenom}}</td>
-                                <td>
-                                    <button mat-icon-button color="warn">
-                                        <mat-icon aria-label="delete button icon">delete</mat-icon>
-                                    </button>
-    
-                                    <button mat-icon-button color="primary">
-                                        <mat-icon aria-label="delete button icon">edit</mat-icon>
-                                    </button>
-    
-                                    <button mat-icon-button color="accent">
-                                        <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
-                                    </button>
-    
-                                </td>
-                            </tr>
-    
-                        </tbody>
-                    </table>
-                  </ng-template> -->
 
                 
-                <table id="example1"  class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Numéro</th>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let etudiant of etudiants">
-                            <td>{{etudiant.numero}}</td>
-                            <td>{{etudiant.nom}}</td>
-                            <td>{{etudiant.prenom}}</td>
-                            <td>
-                                <button mat-icon-button color="warn">
-                                    <mat-icon aria-label="delete button icon">delete</mat-icon>
-                                </button>
+              
+    <div class="mat-elevation-z8"> 
+        <mat-table [dataSource]='dataSource' matSort>
+        <ng-container matColumnDef="numero"> 
+            <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Numero </b> </mat-header-cell>
+            <mat-cell *matCellDef="let etudiant">{{etudiant.numero}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="nom" > 
+            <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Nom </b> </mat-header-cell>
+            <mat-cell *matCellDef="let etudiant">{{etudiant.nom}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="prenom"> 
+            <mat-header-cell *matHeaderCellDef> <b> Prenom </b></mat-header-cell>
+            <mat-cell *matCellDef="let etudiant">{{etudiant.prenom}} </mat-cell>
+        </ng-container>
+            
+        <ng-container matColumnDef="actions"> 
+            <mat-header-cell *matHeaderCellDef> <b> Actions </b></mat-header-cell>
+            <mat-cell *matCellDef="let Utilisateur"> 
 
-                                <button mat-icon-button color="primary">
-                                    <mat-icon aria-label="delete button icon">edit</mat-icon>
-                                </button>
-
-                                <button mat-icon-button color="accent">
-                                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
-                                </button>
-
-                            </td>
-                        </tr>
-
-                    </tbody>
-                    
-                </table>
-
-
-                <button mat-raised-button color="primary"><mat-icon
-                        aria-label="Example icon-button with a heart icon">import_export</mat-icon> Export Excel
+                <button mat-icon-button color="warn">
+                    <mat-icon aria-label="delete button icon">delete</mat-icon>
                 </button>
+
+                <button mat-icon-button color="accent"> 
+                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
+                </button>
+
+                <button mat-icon-button color="primary"> 
+                    <mat-icon aria-label="delete button icon">edit</mat-icon>
+                </button>
+
+        </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef= "displayedColumns" > </mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"> </mat-row>
+    
+    
+        </mat-table>  
+        <mat-paginator [pageSizeOptions]="[5,10,25,100]" [pageSize]="10" showFirstLastButtons> </mat-paginator> 
+        </div>
+    
+
             </mat-card-content>
         </mat-card>
     </div>
