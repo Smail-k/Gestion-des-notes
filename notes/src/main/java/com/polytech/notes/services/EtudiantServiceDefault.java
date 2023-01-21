@@ -134,5 +134,10 @@ public class EtudiantServiceDefault implements EtudiantService{
 	public List<String> getPromotions() {
 		return repository.findPromotions();
 	}
+
+	@Override
+	public List<Etudiant> getAll() {
+		return repository.findAll();
+	}
 	
 }

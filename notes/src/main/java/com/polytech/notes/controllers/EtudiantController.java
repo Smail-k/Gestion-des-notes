@@ -98,4 +98,9 @@ public class EtudiantController {
 		return null;
 	}
 	
+	@GetMapping("/all")
+	public List<Etudiant> etudiants() {
+		return etudiantService.getAll();
+	}
+	
 }
