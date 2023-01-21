@@ -22,5 +22,7 @@ public interface EtudiantService {
 	List<Note> getNoteAnnee(String nom,String prenom,String niveau);
 	
 	List<Etudiant> getEtudiants(Promotion p,Long annee);
+	List<String> getAnneeUniversitaires();
+	List<String> getPromotions();
 	
 }

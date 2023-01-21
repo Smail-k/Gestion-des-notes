@@ -103,7 +103,10 @@ public class ExcelParser {
 			Promotion p = (row.getCell(0)+"").trim().contains("3A") ? Promotion.Annee3
 					: (row.getCell(0)+"").trim().contains("4A") ? Promotion.Annee4
 					: Promotion.Annee5;
-			Long annee = Long.parseLong((row.getCell(0)+"").trim().substring((row.getCell(0)+"").trim().length()-4));
+			String annee = (row.getCell(0)+"").trim().substring((row.getCell(0)+"").trim().length()-4);
+			Long l=Long.parseLong(annee);
+			l++;
+			annee+="/"+l; //2022/2023 par exemple
 			
 			for(int i=3; i<=sheet.getPhysicalNumberOfRows();i++) {
 				row = sheet.getRow(i);

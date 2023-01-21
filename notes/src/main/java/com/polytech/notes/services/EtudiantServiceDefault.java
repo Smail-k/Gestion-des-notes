@@ -124,4 +124,15 @@ public class EtudiantServiceDefault implements EtudiantService{
 	public List<Etudiant> getEtudiants(Promotion p, Long annee) {
 		return repository.findEtudiantsByPromotionAndAnnee(p, annee);
 	}
+	
+	@Override
+	public List<String> getAnneeUniversitaires() {
+		return repository.findAnneeUniversitaires();
+	}
+	
+	@Override
+	public List<String> getPromotions() {
+		return repository.findPromotions();
+	}
+	
 }

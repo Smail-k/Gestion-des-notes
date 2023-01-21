@@ -27,7 +27,7 @@ public class Etudiant {
 	@JoinColumn(name="etudiant_id",referencedColumnName = "id")
 	private List<Note> notes;
 	private Promotion promotion;
-	private Long annee;
+	private String annee;
 	
 	public Etudiant() {
 		super();
@@ -53,11 +53,11 @@ public class Etudiant {
 		return nom;
 	}
 
-	public Long getAnnee() {
+	public String getAnnee() {
 		return annee;
 	}
 
-	public void setAnnee(Long annee) {
+	public void setAnnee(String annee) {
 		this.annee = annee;
 	}
 
