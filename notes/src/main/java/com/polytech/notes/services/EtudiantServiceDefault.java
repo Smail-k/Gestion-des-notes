@@ -105,23 +105,26 @@ public class EtudiantServiceDefault implements EtudiantService{
 			return null;
 		List<Note> notesSemestre = new Vector<Note>();
 		for (Note note : notes) {
-			if(note.getUnite().getSemestre().getNom().equals(sem)) {
-				noteFinale+= note.getNote()*note.getMatiere().getCoefficient();
+			if(note.getUnite()!=null && note.getUnite().getSemestre().getNom().equals(sem)) {
+				noteFinale+= note.getNote()*note.getUnite().getCoefficient();
 				notesSemestre.add(note);
 				if(totalCoefficient==1.0)
 					totalCoefficient=note.getUnite().getSemestre().getSemestreCoefficient();
+			}else if(note.getUnite()==null && note.getMatiere().getUnite().getSemestre().getNom().equals(sem)) {
+				notesSemestre.add(note);
 				
 			}
 		}
 		
 		Note n = new Note(); 
 		n.setNote(noteFinale/totalCoefficient);
+		//System.out.println(totalCoefficient);
 		notesSemestre.add(n);
 		return notesSemestre;
 	}
 
 	@Override
-	public List<Etudiant> getEtudiants(Promotion p, Long annee) {
+	public List<Etudiant> getEtudiants(Promotion p, String annee) {
 		return repository.findEtudiantsByPromotionAndAnnee(p, annee);
 	}
 	

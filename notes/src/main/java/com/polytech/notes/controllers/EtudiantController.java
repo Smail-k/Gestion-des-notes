@@ -13,8 +13,10 @@ import com.polytech.notes.models.Etudiant;
 import com.polytech.notes.models.Matiere;
 import com.polytech.notes.models.Note;
 import com.polytech.notes.models.Promotion;
+import com.polytech.notes.models.Unite;
 import com.polytech.notes.services.EtudiantService;
 import com.polytech.notes.services.NoteService;
+import com.polytech.notes.services.UniteService;
 
 @RestController
 @RequestMapping("/api/etudiants")
@@ -24,6 +26,9 @@ public class EtudiantController {
 	private EtudiantService etudiantService;
 	@Autowired
 	private NoteService noteService;
+	@Autowired
+	private UniteService uniteService;
+	
 	
 	@DeleteMapping("/delete")
 	public String deleteEtudiant(String numero) {
@@ -87,8 +92,17 @@ public class EtudiantController {
 		return etudiantService.getNoteSemestre(nom, prenom, sem);
 	}
 	
+	@GetMapping("/note/unite")
+	public List<Note> getNoteOfModule(String nom,String prenom,String codeUnite) {
+		Unite u = uniteService.findUniteByCode(codeUnite);
+//		System.out.println(u);
+		List<Note> list= noteService.getNoteByUnite(codeUnite, nom, prenom);
+		list.add(noteService.getTotalNoteUnite(codeUnite,nom, prenom));
+		return list;
+	}
+	
 	@GetMapping("/liste")
-	public List<Etudiant> etudiants(String promo, Long annee) {
+	public List<Etudiant> etudiants(String promo, String annee) {
 		if(promo.equals("3A"))
 			return etudiantService.getEtudiants(Promotion.Annee3, annee);
 		if(promo.equals("4A"))

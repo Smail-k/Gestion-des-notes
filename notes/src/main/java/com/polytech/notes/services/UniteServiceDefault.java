@@ -3,6 +3,7 @@ package com.polytech.notes.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.polytech.notes.models.Note;
 import com.polytech.notes.models.Unite;
 import com.polytech.notes.repositories.UniteRepository;
 
@@ -23,8 +24,12 @@ public class UniteServiceDefault implements UniteService{
 	public Unite findUniteByLibelle(String libelle) {
 		return repository.findUniteBylibelle(libelle);
 	}
-	
-	
+
+	@Override
+	public Unite findUniteByCode(String codeUnite) {
+		return repository.findUniteByCode(codeUnite);
+	}
+	 
 
 
 }

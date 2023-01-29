@@ -9,4 +9,6 @@ public interface UniteService {
 
 	Unite saveModule(Unite m);
 	Unite findUniteByLibelle(String libelle);
+	Unite findUniteByCode(String codeUnite);
+	
 }

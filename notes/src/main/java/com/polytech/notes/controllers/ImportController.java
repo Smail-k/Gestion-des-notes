@@ -84,12 +84,39 @@ public class ImportController {
 		ExcelParser parser = new ExcelParser();
 		parser.importNotes(excel);
 		List<Note> notes = parser.getNotes();
+		Note test=null;
 		for (Note note : notes) {
 			note.setEtudiant(etudiantService.getEtudiantByNumero(note.getEtudiant().getNumero()));
 			note.setMatiere(matiereService.findMatiereByCode(note.getMatiere().getCode()));
-			note.setUnite(note.getMatiere().getUnite());
-			noteService.saveNote(note);
+			//note.setUnite(note.getMatiere().getUnite());
+			test = noteService.saveNote(note);
 		}
-		return "";
+		for (Note note : notes) {
+			String uniteCode= note.getMatiere().getUnite().getCode();
+			String etudiantNumero= note.getEtudiant().getNumero();
+			
+			Note n = noteService.getNoteByUniteCodeAndEtudiantNumero(uniteCode, etudiantNumero);
+			List<Note> list = noteService.getNoteByMatiereUnite(uniteCode, etudiantNumero);
+			double noteModule=0;
+			for (Note noteMatiere : list) {
+				noteModule+=noteMatiere.getNote()*noteMatiere.getMatiere().getCoefficient();
+			}
+			noteModule/=note.getMatiere().getUnite().getCoefficient();
+			if(n==null) {
+				n=new Note();
+				n.setNote(noteModule);
+				n.setEtudiant(note.getEtudiant());
+				n.setAnnee(note.getAnnee());
+				n.setUnite(note.getMatiere().getUnite());
+				n.setSituation(noteModule>=10 ? true : false);
+				noteService.saveNote(n);
+			}
+			else {
+				n.setNote(noteModule);
+				noteService.saveNote(n);
+			}
+		}
+		
+		return test==null ? "erreur d'ajout de certaines notes !" : "notes bien ajoutées";
 	}
 }

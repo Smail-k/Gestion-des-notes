@@ -20,7 +20,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	Etudiant findEtudiantByNumeroAndNotesAnnee(String numero,String annee);
 	Etudiant findEtudiantByNomAndNotesAnnee(String nom,String annee);
 	Etudiant getEtudiantByNomAndPrenom(String nom,String prenom);
-	List<Etudiant> findEtudiantsByPromotionAndAnnee(Promotion p,Long annee);
+	List<Etudiant> findEtudiantsByPromotionAndAnnee(Promotion p,String annee);
 	
 	@Query("select distinct annee from Etudiant")
 	List<String> findAnneeUniversitaires();

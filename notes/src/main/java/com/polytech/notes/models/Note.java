@@ -20,6 +20,8 @@ public class Note {
 	private boolean situation; 	
 	@OneToOne
 	private Matiere matiere; 
+	@OneToOne
+	private Semestre semestre; 
 	//@JsonIgnore
 	@OneToOne
 	private Unite unite;
@@ -27,6 +29,7 @@ public class Note {
 	@ManyToOne
 	private Etudiant etudiant;
 	private String annee;
+	
 	
 	public Note(double note, boolean situation, Matiere matiere,Unite unite,Etudiant e) {
 		super();
