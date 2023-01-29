@@ -62,17 +62,14 @@ public class EtudiantController {
 	}
 	//chercher la note d'une matiere par numero d'etudiant
 	@GetMapping("/note/matiere/numero/")
-	public Note getNoteByMatiere(String num,Long id) {
-		Matiere m = new Matiere();
-		m.setId(id);
-		return noteService.getNoteEtudiantByMatiere(num,m);
+	public Note getNoteByMatiere(String num,String code) {
+		return noteService.getNoteEtudiantByMatiere(num,code);
 	}
 
+	//http://localhost:8080/api/etudiants/note/matiere/nom/?nom=MQJQZ&prenom=EHC&code=JIN71F
 	@GetMapping("/note/matiere/nom")
-	public Note getNoteByMatiere(String nom,String prenom,Long id) {
-		Matiere m = new Matiere();
-		m.setId(id);
-		return noteService.getNoteEtudiantByNomAndMatiere(nom,prenom,m);
+	public Note getNoteByMatiere(String nom,String prenom,String code) {
+		return noteService.getNoteEtudiantByNomAndMatiere(nom,prenom,code);
 	}
 	
 	@GetMapping("/note/nom")
@@ -91,7 +88,7 @@ public class EtudiantController {
 	public List<Note> getNoteBySemestre(String nom,String prenom,String sem) {
 		return etudiantService.getNoteSemestre(nom, prenom, sem);
 	}
-	
+	//http://localhost:8080/api/etudiants/note/unite/?nom=MQJQZ&prenom=EHC&codeUnite=JIN7U1B
 	@GetMapping("/note/unite")
 	public List<Note> getNoteOfModule(String nom,String prenom,String codeUnite) {
 		Unite u = uniteService.findUniteByCode(codeUnite);
@@ -101,6 +98,7 @@ public class EtudiantController {
 		return list;
 	}
 	
+	//http://localhost:8080/api/etudiants/liste/?promo=4A&annee=2021/2022
 	@GetMapping("/liste")
 	public List<Etudiant> etudiants(String promo, String annee) {
 		if(promo.equals("3A"))
@@ -112,6 +110,7 @@ public class EtudiantController {
 		return null;
 	}
 	
+	//http://localhost:8080/api/etudiants/all/
 	@GetMapping("/all")
 	public List<Etudiant> etudiants() {
 		return etudiantService.getAll();

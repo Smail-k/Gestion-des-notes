@@ -11,8 +11,8 @@ import com.polytech.notes.models.Unite;
 @Service
 public interface NoteService {
 
-	Note getNoteEtudiantByMatiere(String numero,Matiere matiere);
-	Note getNoteEtudiantByNomAndMatiere(String nom,String prenom,Matiere matiere);
+	Note getNoteEtudiantByMatiere(String numero,String code);
+	Note getNoteEtudiantByNomAndMatiere(String nom,String prenom,String code);
 	Note saveNote(Note note);
 	Note getNoteByUniteCodeAndEtudiantNumero(String code,String numero);
 	List<Note> getNoteByMatiereUnite(String code, String numero);

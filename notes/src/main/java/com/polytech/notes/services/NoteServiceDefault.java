@@ -16,18 +16,18 @@ public class NoteServiceDefault implements NoteService{
 	@Autowired
 	private NoteRepository noteRepository;
 	
-	public Note getNoteEtudiantByMatiere(String numero,Matiere m) {
-		return noteRepository.findNoteByEtudiantNumeroAndMatiere(numero, m);
+	public Note getNoteEtudiantByMatiere(String numero,String code) {
+		return noteRepository.findNoteByEtudiantNumeroAndMatiereCode(numero, code);
 	}
 
 	@Override
-	public Note getNoteEtudiantByNomAndMatiere(String nom, String prenom, Matiere m) {
-		return noteRepository.findByEtudiantNomAndEtudiantPrenomAndMatiere(nom, prenom, m);
+	public Note getNoteEtudiantByNomAndMatiere(String nom, String prenom, String code) {
+		return noteRepository.findByEtudiantNomAndEtudiantPrenomAndMatiereCode(nom, prenom, code);
 	}
 
 	@Override
 	public Note saveNote(Note note) {
-		Note n = getNoteEtudiantByMatiere(note.getEtudiant().getNumero(), note.getMatiere());
+		Note n = getNoteEtudiantByMatiere(note.getEtudiant().getNumero(), note.getMatiere().getCode());
 		if(n!=null) {
 			n.setNote(note.getNote());
 			return noteRepository.save(n);

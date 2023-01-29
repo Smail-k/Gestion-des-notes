@@ -12,8 +12,8 @@ import com.polytech.notes.models.Unite;
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Long>{
 
-	Note findNoteByEtudiantNumeroAndMatiere(String numero,Matiere m); 
-	Note findByEtudiantNomAndEtudiantPrenomAndMatiere(String nom,String prenom,Matiere m); 
+	Note findNoteByEtudiantNumeroAndMatiereCode(String numero,String code); 
+	Note findByEtudiantNomAndEtudiantPrenomAndMatiereCode(String nom,String prenom,String code); 
 	Note findNoteByUniteCodeAndEtudiantNumero(String code,String numero);
 	List<Note> findNoteByMatiereUniteCodeAndEtudiantNumero(String code,String numero);
 	List<Note> findNoteByMatiereUniteCodeAndEtudiantNomAndEtudiantPrenom(String u,String nom,String prenom);
