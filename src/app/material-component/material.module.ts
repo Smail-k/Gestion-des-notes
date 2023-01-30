@@ -20,8 +20,9 @@ import { GestionDesUEComponent } from './gestion-des-ue/gestion-des-ue.component
 import { ImporterFichierExcellUEComponent } from './gestion-des-ue/importer-fichier-excell-ue/importer-fichier-excell-ue.component';
 import { GestionDesAdministrateursComponent } from './gestion-des-administrateurs/gestion-des-administrateurs.component';
 import { LoginComponent } from '../login/login.component';
-import { SupprimerEtudiantComponent } from './supprimer-etudiant/supprimer-etudiant.component';
+import { SupprimerEtudiantComponent } from './gestion-des-etudiants/supprimer-etudiant/supprimer-etudiant.component';
 import { ToastrModule } from 'ngx-toastr';
+import { AjouteretudiantComponent } from './gestion-des-etudiants/ajouteretudiant/ajouteretudiant.component';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { ToastrModule } from 'ngx-toastr';
     ImporterFichierExcellUEComponent,
     GestionDesAdministrateursComponent,
     SupprimerEtudiantComponent,
+    AjouteretudiantComponent,
 
   
   ]

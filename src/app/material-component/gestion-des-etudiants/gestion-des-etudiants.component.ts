@@ -13,7 +13,8 @@ import { Promotion } from 'src/app/models/promotion';
 import { EtudiantService } from 'src/app/services/etudiant.service';
 import { PromotionService } from 'src/app/services/promotion.service';
 import { UtilisateurService } from 'src/app/services/user.service';
-import { SupprimerEtudiantComponent } from '../supprimer-etudiant/supprimer-etudiant.component';
+import { AjouteretudiantComponent } from './ajouteretudiant/ajouteretudiant.component';
+import { SupprimerEtudiantComponent } from './supprimer-etudiant/supprimer-etudiant.component';
 
 @Component({
   selector: 'app-gestion-des-etudiants',
@@ -65,8 +66,7 @@ export class GestionDesEtudiantsComponent implements OnInit {
     // Envoi de la requête POST
     this.etuService.importEtudiants(fd).subscribe(data => {
     }, err => { console.log(err); });
-    this.toastr.success('Importation avec Succées', 'La liste des Etudiant est bien importé'); 
-
+    this.toastr.success('Importation avec Succées', 'La liste des Etudiant est bien importée'); 
   }
 
   /**
@@ -82,7 +82,6 @@ export class GestionDesEtudiantsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.etudiants);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      //this.dtTrigger.next(null);
     });
   }
 
@@ -113,23 +112,43 @@ export class GestionDesEtudiantsComponent implements OnInit {
     )
   }
 
-  Open(u:any) 
-  {
-    console.log(u);
-  
-    const DialogConfig = new MatDialogConfig();
-      DialogConfig.autoFocus=true;
-      const dialogRef= this.dialog.open(SupprimerEtudiantComponent,
-        {
-        width:'20%',
-        height:'20%',
-        panelClass:'custom-dialog',
-        data:{u}    })
-      dialogRef.afterClosed().subscribe(res=>
-        {
-        })
-      }
+  /**
+   * 
+   * @param etudiant : represente l'etudiant quand va supprimer
+   */
+delete(etudiant:any) 
+{
+  const DialogConfig = new MatDialogConfig();
+    DialogConfig.autoFocus=true;
+    const dialogRef= this.dialog.open(SupprimerEtudiantComponent,
+      {
+      width:'20%',
+      height:'20%',
+      panelClass:'custom-dialog',
+      data:{etudiant}    })
+    dialogRef.afterClosed().subscribe(res=>
+      {      this.ListerEtudiants("Annee4","2021/2022") })
+}
 
+ 
+ajouter() {
+
+  const DialogConfig = new MatDialogConfig();
+  DialogConfig.autoFocus=true;
+  // DialogConfig.width="60%";
+  const dialogRef= this.dialog.open(AjouteretudiantComponent,{
+    width:'40%',
+    height:'80%',
+    panelClass:'custom-dialog',
+    data:{
+      
+    }
+  })
+  dialogRef.afterClosed().subscribe(res=>{
+    this.ListerEtudiants("Annee4","2021/2022")
+  })
+}
+  
 
 
   

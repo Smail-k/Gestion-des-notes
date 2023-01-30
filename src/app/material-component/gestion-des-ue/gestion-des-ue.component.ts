@@ -1,47 +1,101 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-declare const $:any;
-interface Promotion {
-  value: string;
-  viewValue: string;
-}
-
-interface UnivYear {
-  value: string;
-  viewValue: string;
-}
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
+import { Unite } from 'src/app/models/unite';
+import { EtudiantService } from 'src/app/services/etudiant.service';
+import { PromotionService } from 'src/app/services/promotion.service';
 
 @Component({
-  selector: 'app-gestion-des-ue',
-  templateUrl: './gestion-des-ue.component.html',
-  styleUrls: ['./gestion-des-ue.component.css']
+selector: 'app-gestion-des-ue',
+templateUrl: './gestion-des-ue.component.html',
+styleUrls: ['./gestion-des-ue.component.css']
 })
 export class GestionDesUEComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
-  selectedValue!: string;
-  selectedYearValue!: string;
+constructor(private ps:PromotionService, private fb:FormBuilder,private toastr:ToastrService,private es:EtudiantService) { this.initForm();}
+selectedValue!: string;
+selectedYearValue!: string;
+promotions: any[]=[];
+years: any[]=[];
+form! :FormGroup;
+selectedFile!: File;
+file!: File;
+getvalue?: any;
+searchKey!:any;
+listData! : MatTableDataSource<any>;
+displayedColumns : string[] = ['code', 'libelle','coeffecient','semestre' ];
+@ViewChild(MatSort) sort! : MatSort;
+@ViewChild (MatPaginator) paginator! : MatPaginator;
+dataSource!: MatTableDataSource<Unite>;
 
-  promotions: Promotion[] = [
-    {value: 'steak-0', viewValue: '3A INFO'},
-    {value: 'pizza-1', viewValue: '4A INFO'},
-    {value: 'tacos-2', viewValue: '5A INFO'},
-  ];
 
-  years: UnivYear[] = [
-    {value: 'year-0', viewValue: '2020-2021'},
-    {value: 'year-1', viewValue: '2021-2022'},
-    {value: 'year-2', viewValue: '2022-2023'},
-  ];
+
+
+ngAfterViewInit(): void {
+
+}
+
+ngOnInit(): void {
+this.getAnnees(); 
+this.getPromotions();
+console.log(this.f.promotion)
+}
+
+initForm(): void {
+this.form = this.fb.group({
+promotion: new FormControl('',Validators.required),
+annee: new FormControl('',Validators.required),
+});
+}
+
+applyFilter(){this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase(); }
   
-  ngAfterViewInit(): void {
-    $('#example2').DataTable();
-    console.log('ngAfterViewInit GUE');
+onSearchClear(){
+  this.searchKey="";
+  this.applyFilter();
+}
+
+get f(){return this.form.controls}
+onSubmit() {console.warn(this.form.value);}
+
+
+/**
+ * Retourner les promotions
+ */
+getPromotions(){
+  this.ps.getpromotions().subscribe(
+    data => {this.promotions=data;
+    }, err => { console.log(err); });
+}
+
+/**
+ * Retourner les années 
+ */
+getAnnees(){
+  this.ps.getannees().subscribe(
+    data => { this.years=data; } , 
+    err => { console.log(err);}
+  )
+}
+
+
+  /**
+   * 
+   * @param event 
+   */
+  onFileChanged(event: any) {
+    this.selectedFile = event.target.files[0];
+    // Récupération du fichier Excel
+    this.file = event.target.files[0];
+    const fd = new FormData();
+    fd.append('file', this.file);
+    // Envoi de la requête POST
+    this.es.importModules(fd).subscribe(data => {
+    }, err => { console.log(err); });
+    this.toastr.success('Importation avec Succées', 'La liste des modules est bien importée'); 
   }
 
-  ngOnInit(): void {
-    // $('#example2').DataTable();
-    // console.log('ngOnInit GUE');
-  }
-
- 
 }

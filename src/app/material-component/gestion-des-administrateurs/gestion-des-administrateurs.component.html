@@ -3,109 +3,45 @@
     <div fxFlex.gt-sm="100%">
         <mat-card>
             <mat-card-content>
-                <mat-card-title>LISTE</mat-card-title><br>
+                <mat-card-title>LISTE DES UTILISATEURS</mat-card-title><br>
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button color="primary">
+                <mat-icon>person_add</mat-icon>
+            </button>
+            <br>
+            <br>
+            <div class="mat-elevation-z8"> 
+                <mat-table [dataSource]='dataSource' matSort>
+                <ng-container matColumnDef="id"> 
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> <b> ID </b> </mat-header-cell>
+                    <mat-cell *matCellDef="let utilisateur" >{{utilisateur.id}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="nom" > 
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Nom </b> </mat-header-cell>
+                    <mat-cell *matCellDef="let utilisateur" >{{utilisateur.name}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="nomutilisateur"> 
+                    <mat-header-cell *matHeaderCellDef> <b> Nom d'utilisateur </b></mat-header-cell>
+                    <mat-cell *matCellDef="let utilisateur" >{{utilisateur.username}} </mat-cell>
+                </ng-container>
+         
+        
+                <mat-header-row *matHeaderRowDef= "displayedColumns" > </mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"> </mat-row>
+                </mat-table>  
+                <mat-paginator [pageSizeOptions]="[5,10,25,100]" [pageSize]="10" showFirstLastButtons> </mat-paginator> 
+                </div>
 
-                <table id="user-table-id" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Prenom</th>
-                            <th>Statut</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>MBAIWODJI</td>
-                            <td>Bienvenue</td>
-                            <td>Activé</td>
-                            <td>
-                                <button mat-icon-button color="warn">
-                                    <mat-icon aria-label="delete button icon">delete</mat-icon>
-                                </button>
-
-                                <button mat-icon-button color="primary">
-                                    <mat-icon aria-label="delete button icon">edit</mat-icon>
-                                </button>
-
-                                <button mat-icon-button color="accent">
-                                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
-                                </button>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>SMIRANI</td>
-                            <td>Ibtihel</td>
-                            <td>Activé</td>
-                            <td>
-                                <button mat-icon-button color="warn">
-                                    <mat-icon aria-label="delete button icon">delete</mat-icon>
-                                </button>
-
-                                <button mat-icon-button color="primary">
-                                    <mat-icon aria-label="delete button icon">edit</mat-icon>
-                                </button>
-
-                                <button mat-icon-button color="accent">
-                                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>KOUIDI</td>
-                            <td>Smail</td>
-                            <td>Activé</td>
-                            <td>
-                                <button mat-icon-button color="warn">
-                                    <mat-icon aria-label="delete button icon">delete</mat-icon>
-                                </button>
-
-                                <button mat-icon-button color="primary">
-                                    <mat-icon aria-label="delete button icon">edit</mat-icon>
-                                </button>
-
-                                <button mat-icon-button color="accent">
-                                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>ES-SMAHI</td>
-                            <td>Hussam</td>
-                            <td>Activé</td>
-                            <td>
-                                <button mat-icon-button color="warn">
-                                    <mat-icon aria-label="delete button icon">delete</mat-icon>
-                                </button>
-
-                                <button mat-icon-button color="primary">
-                                    <mat-icon aria-label="delete button icon">edit</mat-icon>
-                                </button>
-
-                                <button mat-icon-button color="accent">
-                                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-
-
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Numéro</th>
-                            <th>Nom</th>
-                            <th>Prénom</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
-                </table>
-
-
-                <button mat-raised-button color="primary"><mat-icon
-                        aria-label="Example icon-button with a heart icon">add</mat-icon> Noiuveau
-                </button>
-            </mat-card-content>
-        </mat-card>
-    </div>
+        </mat-card-content>
+    </mat-card>
 </div>
+</div>
+            

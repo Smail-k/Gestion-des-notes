@@ -7,7 +7,7 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
-
+import { ToastrModule } from 'ngx-toastr';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FullComponent } from './layouts/full/full.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
@@ -19,7 +19,8 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './login/login.component';
 import { IsSignedGuard } from './guards/is-signed.guard';
 import { AuthinterceptorInterceptor } from './Interceptor/authinterceptor.interceptor';
-import {DataTablesModule} from 'angular-datatables'
+import {DataTablesModule} from 'angular-datatables';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 @NgModule({
     declarations: [
@@ -46,10 +47,16 @@ import {DataTablesModule} from 'angular-datatables'
         FlexLayoutModule,
         HttpClientModule,
         FormsModule,
-        SharedModule, 
+        SharedModule,
+        ToastrModule.forRoot({
+            timeOut : 3600,
+            progressBar : true,
+            progressAnimation: 'increasing'}),
         DataTablesModule,
         DataTablesModule.forRoot(),
         RouterModule.forRoot(AppRoutes),
+        FontAwesomeModule,
+
     ]
 })
 export class AppModule {}

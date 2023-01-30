@@ -10,22 +10,12 @@ const httpOptions = {headers: new HttpHeaders( {'Content-Type': 'application/jso
 })
 export class EtudiantService {
   apiURL: string = 'http://localhost:8080/api/etudiants';
-  etudiants: Etudiant[];
   constructor(private http: HttpClient) { 
-
-    this.etudiants = [
-      { id: 1, nom: "MBAIWODJI", numero: "m21231253", prenom: "Bienvenue" },
-      { id: 2, nom: "SMIRANI", numero: "m21231215", prenom: "Ibtihel" },
-    ]
   }
 
-  listeEtudiant(): Observable<Etudiant[]>{
-    return this.http.get<Etudiant[]>(this.apiURL+'/lister');
+  listeEtudiant(promo:any,annee:any): Observable<Etudiant[]>{
+    return this.http.get<Etudiant[]>(`${this.apiURL+'/liste'}/?promo=${promo}&annee=${annee}`);
     }
-
-  addEtudiant(etudiant: Etudiant){
-    this.etudiants.push(etudiant);
-  }
 
     /**
    * 
@@ -36,6 +26,16 @@ export class EtudiantService {
     { 
       // Envoi de la requête POST
       return this.http.post( 'http://localhost:8080/api/excel/etudiant',file); }
+
+      importModules(file:FormData):Observable<any>
+    { 
+      // Envoi de la requête POST
+      return this.http.post( 'http://localhost:8080/api/excel',file); }
+
+      public DeleteEtudiant(id: number)  
+      {return this.http.delete(`${this.apiURL +'/delete' }/${id}`); }
+
+
 
 
 }

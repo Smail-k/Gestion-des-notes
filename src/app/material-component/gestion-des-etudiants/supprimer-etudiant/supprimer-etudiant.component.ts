@@ -23,26 +23,26 @@ export class SupprimerEtudiantComponent implements OnInit {
   }
  
   
-  closeDialog() {this.dialogRef.close(false);}
-  onDeleteEtudiant ()
+closeDialog() {this.dialogRef.close(false);}
+
+/**
+ * Supprimer Etudiant
+ */
+onDeleteEtudiant ()
 {
-  var existe : Boolean =false ; 
-  console.log(this.data)
-  this.ES.DeleteEtudiant(this.data.u.numero)
+  this.ES.DeleteEtudiant(this.data.etudiant.numero)
   .subscribe(data => {
     this.ListerEtudiants();
-    }, err => {
-      
-  });
+    });
   this.toastr.success('Suppression avec Succées', 'Suppression Etudiant'); 
-
-
 }
 
+/**
+ * Lister etudiants
+ */
 ListerEtudiants(){
   this.ES.listeEtudiant("Annee4","2021/2022").subscribe(data => {
-    this.etudiants = data; }, err => {
-    console.log(err);
-  });
-}
+    this.etudiants = data}); }
+  
+
 }

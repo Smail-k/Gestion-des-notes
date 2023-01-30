@@ -1,4 +1,9 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Matiere } from 'src/app/models/matiere';
+import { PromotionService } from 'src/app/services/promotion.service';
 declare const $:any;
 
 interface Promotion {
@@ -17,27 +22,56 @@ interface UnivYear {
 })
 export class GestionDesMatieresComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  constructor(private ps:PromotionService) { }
   ngAfterViewInit(): void {
     $('#dt-mat-id').DataTable();
   }
 
   selectedValue!: string;
   selectedYearValue!: string;
+  promotions: any[]=[];
+  years: any[]=[];
+  searchKey!:any;
+  listData! : MatTableDataSource<any>;
+  displayedColumns : string[] = ['code', 'libelle','coeffecient','unite' ];
+  @ViewChild(MatSort) sort! : MatSort;
+  @ViewChild (MatPaginator) paginator! : MatPaginator;
+  dataSource!: MatTableDataSource<Matiere>;
 
-  promotions: Promotion[] = [
-    {value: 'steak-0', viewValue: '3A INFO'},
-    {value: 'pizza-1', viewValue: '4A INFO'},
-    {value: 'tacos-2', viewValue: '5A INFO'},
-  ];
 
-  years: UnivYear[] = [
-    {value: 'year-0', viewValue: '2020-2021'},
-    {value: 'year-1', viewValue: '2021-2022'},
-    {value: 'year-2', viewValue: '2022-2023'},
-  ];
 
   ngOnInit(): void {
+   this.getAnnees(); 
+   this.getPromotions();
   }
+
+  
+  /**
+   * Retourner les promotions
+   */
+  getPromotions(){
+    this.ps.getpromotions().subscribe(
+      data => {this.promotions=data;
+      }, err => { console.log(err); });
+  }
+
+  /**
+   * Retourner les années 
+   */
+  getAnnees(){
+    this.ps.getannees().subscribe(
+      data => { this.years=data;
+      } , 
+      err => { console.log(err);}
+    )
+  }
+
+  applyFilter(){this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase(); }
+  
+onSearchClear(){
+  this.searchKey="";
+  this.applyFilter();
+}
+
 
 }

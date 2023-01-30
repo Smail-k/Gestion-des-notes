@@ -71,8 +71,7 @@ const MENUITEMS = [
   // },
   { state: 'gestionEtudiant', type: 'link2', name: 'Gestion des étudiants', icon: 'person', },
   { state: 'gestionUE', type: 'link2', name: 'Gestion des UE', icon: 'book', },
-  { state: 'gestionMatieres', type: 'link2', name: 'Gestion des matières', icon: 'book', },
-  { state: 'gestionDesParametres', type: 'link2', name: 'Gestion de Paramètres', icon: 'settings', },
+  { state: 'gestionMatieres', type: 'link2', name: 'Gestion des matières', icon: 'view_list', },
   { state: 'gestionDesUtilisateurs', type: 'link2', name: 'Gestion des utilisateurs', icon: 'supervised_user_circle', },
 
 ];
