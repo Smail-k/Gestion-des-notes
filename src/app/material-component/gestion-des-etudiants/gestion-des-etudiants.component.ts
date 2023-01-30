@@ -1,52 +1,37 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AfterViewInit, OnDestroy, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import DataTables from 'datatables.net';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 
 import { Etudiant } from 'src/app/models/etudiant';
+import { Promotion } from 'src/app/models/promotion';
 import { EtudiantService } from 'src/app/services/etudiant.service';
+import { PromotionService } from 'src/app/services/promotion.service';
 import { UtilisateurService } from 'src/app/services/user.service';
-
-declare const $: any;
-interface Promotion {
-  value: string;
-  viewValue: string;
-}
-interface UnivYear {
-  value: string;
-  viewValue: string;
-}
+import { SupprimerEtudiantComponent } from '../supprimer-etudiant/supprimer-etudiant.component';
 
 @Component({
   selector: 'app-gestion-des-etudiants',
   templateUrl: './gestion-des-etudiants.component.html',
   styleUrls: ['./gestion-des-etudiants.component.css']
 })
-export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
+export class GestionDesEtudiantsComponent implements OnInit {
   ExcelData: any;
   searchKey!:any;
   etudiants?: Etudiant[];
-  dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject<any>();
   selectedValue!: string;
   selectedYearValue!: string;
   selectedFile!: File;
   file!: File;
-  promotions: Promotion[] = [
-    {value: 'steak-0', viewValue: '3A INFO'},
-    {value: 'pizza-1', viewValue: '4A INFO'},
-    {value: 'tacos-2', viewValue: '5A INFO'},
-  ];
-
-  years: UnivYear[] = [
-    {value: 'year-0', viewValue: '2020-2021'},
-    {value: 'year-1', viewValue: '2021-2022'},
-    {value: 'year-2', viewValue: '2022-2023'},
-  ];
-  
+  promotions: any[]=[];
+  years: any[]=[];
+  promo?:any;
+  annee?:any;
   listData! : MatTableDataSource<any>;
   displayedColumns : string[] = ['numero' , 'nom', 'prenom','actions' ];
   dataSource!: MatTableDataSource<Etudiant>;
@@ -54,20 +39,18 @@ export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
   @ViewChild (MatPaginator) paginator! : MatPaginator;
 
 
-  constructor(private HttpClient: HttpClient, private us: UtilisateurService, private etuService: EtudiantService) { }
+  constructor(private HttpClient: HttpClient,private dialog: MatDialog,
+     private us: UtilisateurService, private etuService: EtudiantService,private promService:PromotionService, 
+     private toastr:ToastrService) { }
 
-  ngAfterViewInit(): void {
-    $('#dt-mat-id').DataTable();
-  }
 
   ngOnInit(): void {
-    this.ListerEtudiants();
+   this.getAnnees(); 
+   this.getPromotions();
+   this.ListerEtudiants("Annee4","2021/2022")
   }
 
-  
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
-  }
+ 
 
   /**
    * 
@@ -81,16 +64,20 @@ export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
     fd.append('file', this.file);
     // Envoi de la requête POST
     this.etuService.importEtudiants(fd).subscribe(data => {
-      console.log(data);
     }, err => { console.log(err); });
+    this.toastr.success('Importation avec Succées', 'La liste des Etudiant est bien importé'); 
+
   }
 
   /**
    * Lister tous les etudiants sans filtre
    */
-  ListerEtudiants():void{
-    this.etuService.listeEtudiant().subscribe(etuds => {
-      console.log(etuds);
+  ListerEtudiants(promo:any,annee:any):void{
+    if (promo=='Annee4') promo='4A';
+    if (promo=='Annee3') promo='3A';
+    if (promo=='Annee5') promo='5A';
+
+    this.etuService.listeEtudiant(promo,annee).subscribe(etuds => {
       this.etudiants = etuds;
       this.dataSource = new MatTableDataSource(this.etudiants);
       this.dataSource.sort = this.sort;
@@ -105,6 +92,45 @@ export class GestionDesEtudiantsComponent implements OnInit, AfterViewInit {
     this.searchKey="";
     this.applyFilter();
   }
+
+  /**
+   * Retourner les promotions
+   */
+  getPromotions(){
+    this.promService.getpromotions().subscribe(
+      data => {this.promotions=data;
+      }, err => { console.log(err); });
+  }
+
+  /**
+   * Retourner les années 
+   */
+  getAnnees(){
+    this.promService.getannees().subscribe(
+      data => { this.years=data;
+      } , 
+      err => { console.log(err);}
+    )
+  }
+
+  Open(u:any) 
+  {
+    console.log(u);
+  
+    const DialogConfig = new MatDialogConfig();
+      DialogConfig.autoFocus=true;
+      const dialogRef= this.dialog.open(SupprimerEtudiantComponent,
+        {
+        width:'20%',
+        height:'20%',
+        panelClass:'custom-dialog',
+        data:{u}    })
+      dialogRef.afterClosed().subscribe(res=>
+        {
+        })
+      }
+
+
 
   
 

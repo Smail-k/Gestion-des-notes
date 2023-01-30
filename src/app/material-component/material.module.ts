@@ -19,8 +19,9 @@ import { GestionDesMatieresComponent } from './gestion-des-matieres/gestion-des-
 import { GestionDesUEComponent } from './gestion-des-ue/gestion-des-ue.component';
 import { ImporterFichierExcellUEComponent } from './gestion-des-ue/importer-fichier-excell-ue/importer-fichier-excell-ue.component';
 import { GestionDesAdministrateursComponent } from './gestion-des-administrateurs/gestion-des-administrateurs.component';
-import { GestionDesParametresComponent } from './gestion-des-parametres/gestion-des-parametres.component';
 import { LoginComponent } from '../login/login.component';
+import { SupprimerEtudiantComponent } from './supprimer-etudiant/supprimer-etudiant.component';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { LoginComponent } from '../login/login.component';
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    CdkTableModule
+    CdkTableModule,
+
   ],
   providers: [],
   entryComponents: [],
@@ -43,7 +45,7 @@ import { LoginComponent } from '../login/login.component';
     GestionDesUEComponent,
     ImporterFichierExcellUEComponent,
     GestionDesAdministrateursComponent,
-    GestionDesParametresComponent,
+    SupprimerEtudiantComponent,
 
   
   ]

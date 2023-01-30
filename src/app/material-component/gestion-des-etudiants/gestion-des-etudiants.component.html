@@ -7,21 +7,16 @@
 
                 <mat-form-field appearance="fill" style="width:25%">
                     <mat-label>Année Universitaire</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="univYear">
-                        <mat-option *ngFor="let uYear of years" [value]="uYear.value">
-                            {{uYear.viewValue}}
-                        </mat-option>
-                    </mat-select>
+                    <select matNativeControl class="custom-select" >
+                      <option [ngValue]="annee"  *ngFor="let auYear of years" value="uYear.value">{{auYear}}</option>
+                    </select>
                 </mat-form-field>
                 &nbsp;&nbsp;
-                
                 <mat-form-field appearance="fill" style="width:25%">
-                    <mat-label>Promotion</mat-label>
-                    <mat-select [(ngModel)]="selectedValue" name="promotion">
-                        <mat-option *ngFor="let promotion of promotions" [value]="promotion.value">
-                            {{promotion.viewValue}}
-                        </mat-option>
-                    </mat-select>
+                    <mat-label>Promotions</mat-label>
+                    <select matNativeControl class="custom-select"  >
+                      <option [ngValue]="promo" *ngFor="let promotion of promotions" value="promotion.value">{{promotion}}</option>
+                    </select>
                 </mat-form-field>
 
                 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -40,8 +35,6 @@
                 </button>
 
 
-                
-              
     <div class="mat-elevation-z8"> 
         <mat-table [dataSource]='dataSource' matSort>
         <ng-container matColumnDef="numero"> 
@@ -62,12 +55,9 @@
             <mat-cell *matCellDef="let Utilisateur"> 
 
                 <button mat-icon-button color="warn">
-                    <mat-icon aria-label="delete button icon">delete</mat-icon>
+                    <mat-icon (click)="Open(Utilisateur)" aria-label="delete button icon">delete</mat-icon>
                 </button>
 
-                <button mat-icon-button color="accent"> 
-                    <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
-                </button>
 
                 <button mat-icon-button color="primary"> 
                     <mat-icon aria-label="delete button icon">edit</mat-icon>
