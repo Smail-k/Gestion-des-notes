@@ -14,4 +14,6 @@ public interface MatiereService {
 	Matiere findMatiereById(Long id);
 	List<Matiere> findMatiereByUnite(Unite u);
 	Matiere findMatiereByCode(String code);
+	List<Matiere> findAll();
+	
 }

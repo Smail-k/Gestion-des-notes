@@ -27,4 +27,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	
 	@Query("select distinct promotion from Etudiant")
 	List<String> findPromotions();
+	
+	@Query("select max(numero) from Etudiant")
+	String findLastNumero();
 }

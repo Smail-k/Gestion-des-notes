@@ -38,6 +38,9 @@ public class MatiereServiceDefault implements MatiereService{
 	}
 	
 	
-
+	@Override
+	public List<Matiere> findAll() {
+		return repository.findAll();
+	}
 
 }

@@ -143,4 +143,8 @@ public class EtudiantServiceDefault implements EtudiantService{
 		return repository.findAll();
 	}
 	
+	@Override
+	public String lastEtudiantNumero() {
+		return Integer.parseInt(repository.findLastNumero())+1+"";
+	}
 }

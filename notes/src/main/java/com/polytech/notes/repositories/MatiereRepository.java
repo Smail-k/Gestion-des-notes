@@ -13,4 +13,5 @@ public interface MatiereRepository extends JpaRepository<Matiere, Long>{
 	Matiere findMatiereById(Long id);
 	List<Matiere> findMatiereByUnite(Unite u);
 	Matiere findMatiereByCode(String code);
+	//Matiere findMatiereByUniteCode(String code);
 }

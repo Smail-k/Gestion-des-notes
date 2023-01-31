@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,19 +32,14 @@ public class EtudiantController {
 	private UniteService uniteService;
 	
 	
-	@DeleteMapping("/delete")
-	public String deleteEtudiant(String numero) {
+	@DeleteMapping("/delete/{numero}")
+	public String deleteEtudiant(@PathVariable String numero) {
 		etudiantService.deleteEtudiantByNumero(numero);
 		return "supprimé avec succés";
 	}
 	
 	@PostMapping("/add")
-	public String addEtudiant(String numero,String nom,String prenom,int annee) {
-		Etudiant e=new Etudiant();
-		e.setNom(nom);
-		e.setPrenom(prenom);
-		e.setNumero(numero);
-		e.setPromotion(annee == 1 ? Promotion.Annee3 : annee == 2 ? Promotion.Annee4 : Promotion.Annee5);
+	public String addEtudiant(@RequestBody Etudiant e) {
 		etudiantService.saveEtudiant(e);
 		return "ajouté avec succés";
 	}
@@ -59,6 +56,11 @@ public class EtudiantController {
 		
 		etudiantService.modifyEtudiant(e);
 		return "modifié avec succés";
+	}
+	
+	@GetMapping("/get/{numero}")
+	public Etudiant getEtudiant(@PathVariable String numero) {
+		return etudiantService.getEtudiantByNumero(numero);
 	}
 	//chercher la note d'une matiere par numero d'etudiant
 	@GetMapping("/note/matiere/numero/")
@@ -115,5 +117,11 @@ public class EtudiantController {
 	public List<Etudiant> etudiants() {
 		return etudiantService.getAll();
 	}
+	
+	@GetMapping("/lastNumero")
+	public String lastEtudiant() {
+		return etudiantService.lastEtudiantNumero();
+	}
+	
 	
 }
