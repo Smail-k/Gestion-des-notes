@@ -27,7 +27,9 @@ public class NoteServiceDefault implements NoteService{
 
 	@Override
 	public Note saveNote(Note note) {
-		Note n = getNoteEtudiantByMatiere(note.getEtudiant().getNumero(), note.getMatiere().getCode());
+		Note n=null;
+		if(note.getMatiere()!=null)
+			n = getNoteEtudiantByMatiere(note.getEtudiant().getNumero(), note.getMatiere().getCode());
 		if(n!=null) {
 			n.setNote(note.getNote());
 			return noteRepository.save(n);

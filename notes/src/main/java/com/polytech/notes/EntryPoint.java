@@ -22,12 +22,12 @@ public class EntryPoint {
 	@Bean 
 	CommandLineRunner run(UserService userService,SemestreService semestreService,UniteService uniteService) {
 		return args->{
-			userService.saveUser(new User(null,"smailox","smail","123","admin")); 
+			userService.saveUser(new User(null,"smailox","smail","123","secretaire")); 
 		};
 	}
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+		return new BCryptPasswordEncoder(); 
 	}
 }

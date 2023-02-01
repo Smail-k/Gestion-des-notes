@@ -96,6 +96,7 @@ public class ImportController {
 			String etudiantNumero= note.getEtudiant().getNumero();
 			
 			Note n = noteService.getNoteByUniteCodeAndEtudiantNumero(uniteCode, etudiantNumero);
+			
 			List<Note> list = noteService.getNoteByMatiereUnite(uniteCode, etudiantNumero);
 			double noteModule=0;
 			for (Note noteMatiere : list) {
