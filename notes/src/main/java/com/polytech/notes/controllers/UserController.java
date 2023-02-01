@@ -86,4 +86,8 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping("/user/exist")
+	public boolean userExist(String username) {
+		return userService.userExist(username);
+	}
 }

@@ -24,7 +24,7 @@ public class Unite {
 	private String code;
 	private String libelle;
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
 	private Semestre semestre;
 	private double coefficient;
 	

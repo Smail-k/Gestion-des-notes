@@ -37,6 +37,11 @@ public class UserServiceDefault implements UserService,UserDetailsService{
 		}
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("secretaire"));
+		if(user.getRole() !=null && user.getRole().equals("admin")) {
+			authorities.add(new SimpleGrantedAuthority("ADMIN"));
+			//System.out.println("-------------------");
+		}
+		
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
 	}	
 	
@@ -56,4 +61,8 @@ public class UserServiceDefault implements UserService,UserDetailsService{
 		return repository.findAll();
 	}
 
+	@Override
+	public boolean userExist(String username) {
+		return getUser(username)!=null;
+	}
 }

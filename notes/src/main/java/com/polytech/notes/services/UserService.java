@@ -11,4 +11,5 @@ public interface UserService {
 	User saveUser(User user);	
 	User getUser(String username);
 	List<User> getUsers();
+	boolean userExist(String username);
 }

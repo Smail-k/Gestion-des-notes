@@ -47,11 +47,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		
 		http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/login/**","/api/token/refresh/**","/ExcelImport.html","/ExcelImportEtudiants.html").permitAll();
 		http.authorizeRequests().antMatchers(HttpMethod.GET,"/ExcelImportNote.html").permitAll();
-
+ 
 		http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/login/**","/api/excel","/api/excel/etudiant","/api/excel/note").permitAll();
 		
-		http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/user/**").hasAuthority("ADMIN");
-		http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/user/save/**").hasAuthority("ADMIN");
+		http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/user").hasAuthority("ADMIN");
+ 		http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/users").hasAuthority("ADMIN");
+		http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/user").hasAuthority("ADMIN");
 		http.authorizeRequests().anyRequest().authenticated();
 		
 		//http.authorizeRequests().anyRequest().permitAll();

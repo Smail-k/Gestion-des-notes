@@ -19,10 +19,10 @@ public class EntryPoint {
 		SpringApplication.run(EntryPoint.class, args);
 	}
 	
-	@Bean
+	@Bean 
 	CommandLineRunner run(UserService userService,SemestreService semestreService,UniteService uniteService) {
 		return args->{
-			userService.saveUser(new User(null,"smailox","smail","123"));
+			userService.saveUser(new User(null,"smailox","smail","123","admin")); 
 		};
 	}
 	
