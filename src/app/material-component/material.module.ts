@@ -24,6 +24,8 @@ import { SupprimerEtudiantComponent } from './gestion-des-etudiants/supprimer-et
 import { ToastrModule } from 'ngx-toastr';
 import { AjouteretudiantComponent } from './gestion-des-etudiants/ajouteretudiant/ajouteretudiant.component';
 import { AjouterutilisateurComponent } from './gestion-des-administrateurs/ajouterutilisateur/ajouterutilisateur.component';
+import { NotesComponent } from './notes/notes.component';
+import { ConfigurationsComponent } from './configurations/configurations.component';
 
 
 @NgModule({
@@ -50,6 +52,8 @@ import { AjouterutilisateurComponent } from './gestion-des-administrateurs/ajout
     SupprimerEtudiantComponent,
     AjouteretudiantComponent,
     AjouterutilisateurComponent,
+    NotesComponent,
+    ConfigurationsComponent,
 
   
   ]

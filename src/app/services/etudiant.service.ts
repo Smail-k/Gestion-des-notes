@@ -30,6 +30,9 @@ export class EtudiantService {
       importModules(file:FormData):Observable<any>
     {  return this.http.post( 'http://localhost:8080/api/excel',file); }
 
+    importNotes(file:FormData):Observable<any>
+    {  return this.http.post( 'http://localhost:8080/api/excel/note',file); }
+
       public DeleteEtudiant(id: number)  
       {return this.http.delete(`${this.apiURL +'/delete' }/${id}`); }
 

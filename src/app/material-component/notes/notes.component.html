@@ -1,0 +1,68 @@
+<div fxLayout="row">
+    <div fxFlex.gt-sm="100%">
+        <mat-card>
+            <mat-card-content>
+                <mat-card-title>NOTES</mat-card-title>
+                <br>
+                <mat-form-field appearance="fill" style="width:25%">
+                    <mat-label>Année Universitaire</mat-label>
+                    <select matNativeControl class="custom-select" formControlName="annee" >
+                      <option  *ngFor="let auYear of years" value="auYear">{{auYear}}</option>
+                    </select>
+                </mat-form-field>
+
+                &nbsp;&nbsp;
+                <mat-form-field appearance="fill" style="width:25%">
+                    <mat-label>Promotions</mat-label> 
+                    <select matNativeControl class="custom-select" formControlName="promotion" >
+                      <option *ngFor="let promotion of promotions" >{{promotion}}</option>
+                    </select>
+                </mat-form-field>
+              
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <mat-form-field class="search-form-field" floatLabel="never" style="width: 20%;">
+                    <input matInput [(ngModel)]= "searchKey" placeholder="Recherche" autocomplete="off" (keyup)="applyFilter()">
+                    <button mat-button matSuffix mat-icon-button aria-label="clear" 
+                    *ngIf="searchKey" (click)= "onSearchClear()">
+                        <mat-icon> close</mat-icon>
+                    </button>
+                </mat-form-field>
+                &nbsp;&nbsp;
+                
+                &nbsp;&nbsp;
+                <button mat-raised-button color="primary" (click)="FileInput.click()">
+                    <mat-icon>cloud_upload</mat-icon>
+                    Import Excel
+                    <input #FileInput  type="file" accept=".xls,.xlsx" (change)="onFileChanged($event)"  style="display: none" >
+                </button>
+
+                <div class="mat-elevation-z8"> 
+                    <!-- <mat-table [dataSource]='dataSource' matSort>
+                    <ng-container matColumnDef="nu"> 
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Code </b> </mat-header-cell>
+                        <mat-cell ></mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="libelle" > 
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Libelle </b> </mat-header-cell>
+                        <mat-cell > </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="coeffecient"> 
+                        <mat-header-cell *matHeaderCellDef> <b> Coeffecient </b></mat-header-cell>
+                        <mat-cell> </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="unite"> 
+                        <mat-header-cell *matHeaderCellDef> <b> Semestre </b></mat-header-cell>
+                        <mat-cell > </mat-cell>
+                    </ng-container>
+            
+                    <mat-header-row *matHeaderRowDef= "displayedColumns" > </mat-header-row>
+                    <mat-row > </mat-row>
+                
+                    </mat-table>   -->
+                    <mat-paginator [pageSizeOptions]="[5,10,25,100]" [pageSize]="10" showFirstLastButtons> </mat-paginator> 
+                    </div>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

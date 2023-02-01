@@ -10,6 +10,8 @@ import { ImporterFichierExcellUEComponent } from './gestion-des-ue/importer-fich
 import { LoginComponent } from '../login/login.component';
 import { IsSignedGuard } from '../guards/is-signed.guard';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { NotesComponent } from './notes/notes.component';
+import { ConfigurationsComponent } from './configurations/configurations.component';
 
 
 export const MaterialRoutes: Routes = [
@@ -27,6 +29,15 @@ export const MaterialRoutes: Routes = [
     canActivate:[IsSignedGuard],
     path: 'gestionMatieres',
     component: GestionDesMatieresComponent
+  },{
+    canActivate:[IsSignedGuard],
+    path: 'gestionDesNotes',
+    component: NotesComponent
+  },
+  {
+    canActivate:[IsSignedGuard],
+    path: 'configurations',
+    component: ConfigurationsComponent
   },
   {
     canActivate:[IsSignedGuard],
