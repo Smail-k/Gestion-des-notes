@@ -17,6 +17,12 @@ export class UtilisateurService {
   listeUtilisateurs(): Observable<User[]>{
     return this.http.get<User[]>(`${url+'/users'}`);
     }
+  
+    public addUtilisateur(user: User): Observable<User> 
+    { return this.http.post<User>(url +'/user/save' , user); }
+
+    public userExist(username: string): Observable<boolean> 
+    { return this.http.get<boolean>(`${url +'/user/exist'}/${username}`);}
 
 
 }

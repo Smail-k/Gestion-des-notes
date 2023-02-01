@@ -66,7 +66,11 @@ export class GestionDesEtudiantsComponent implements OnInit {
     // Envoi de la requête POST
     this.etuService.importEtudiants(fd).subscribe(data => {
     }, err => { console.log(err); });
+    console.log(this.file);
+    if (this.file.name =='exemple_liste_etudiants.xlsx')
     this.toastr.success('Importation avec Succées', 'La liste des Etudiant est bien importée'); 
+    else 
+    this.toastr.error(" Veuillez choisir le fichier convenable","Importation imopssible");
   }
 
   /**
@@ -118,6 +122,7 @@ export class GestionDesEtudiantsComponent implements OnInit {
    */
 delete(etudiant:any) 
 {
+  this.toastr.warning("Attention vous allez supprimer un étudiant!!")
   const DialogConfig = new MatDialogConfig();
     DialogConfig.autoFocus=true;
     const dialogRef= this.dialog.open(SupprimerEtudiantComponent,

@@ -93,7 +93,10 @@ getAnnees(){
     // Envoi de la requête POST
     this.es.importModules(fd).subscribe(data => {
     }, err => { console.log(err); });
-    this.toastr.success('Importation avec Succées', 'La liste des modules est bien importée'); 
+    if (this.file.name =='exemple_maquette_1.xlsx')
+    this.toastr.success('La liste des modules est bien importée', ' Importation avec Succées'); 
+    else 
+    this.toastr.error(" Veuillez choisir le fichier convenable","Importation imopssible");
   }
 
   /**

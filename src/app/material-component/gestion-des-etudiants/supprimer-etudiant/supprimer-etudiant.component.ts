@@ -23,7 +23,9 @@ export class SupprimerEtudiantComponent implements OnInit {
   }
  
   
-closeDialog() {this.dialogRef.close(false);}
+closeDialog() {this.dialogRef.close(false);
+this.toastr.info("Vous avez annuler l'opération");
+}
 
 /**
  * Supprimer Etudiant
