@@ -123,5 +123,16 @@ public class EtudiantController {
 		return etudiantService.lastEtudiantNumero();
 	}
 	
+	//http://localhost:8080/api/etudiants/moyenne/?promo=4A&annee=2021/2022
+	@GetMapping("/moyenne")
+	public List<Etudiant> moyenneModuleEtudiants(String promo, String annee){
+		if(promo.equals("3A"))
+			return etudiantService.getEtudiantsMoyenneModules(Promotion.Annee3, annee);
+		if(promo.equals("4A"))
+			return etudiantService.getEtudiantsMoyenneModules(Promotion.Annee4, annee);
+		if(promo.equals("5A"))
+			return etudiantService.getEtudiantsMoyenneModules(Promotion.Annee5, annee);
+		return null;
+	}
 	
 }

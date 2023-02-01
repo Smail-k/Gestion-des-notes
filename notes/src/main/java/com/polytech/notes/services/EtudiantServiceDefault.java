@@ -147,4 +147,20 @@ public class EtudiantServiceDefault implements EtudiantService{
 	public String lastEtudiantNumero() {
 		return Integer.parseInt(repository.findLastNumero())+1+"";
 	}
+	@Override
+	public List<Etudiant> getEtudiantsMoyenneModules(Promotion p, String annee) {
+		List<Etudiant> etudiants = repository.findEtudiantsByPromotionAndAnnee(p, annee);
+		List<Note> list ;
+		for (Etudiant etudiant : etudiants) {
+			list = new Vector<Note>();
+			for (Note n : etudiant.getNotes()) {
+				if(n.getMatiere()==null) {
+					//etudiant.getNotes().remove(n);
+					list.add(n);
+				}
+			}
+			etudiant.setNotes(list);
+		}
+		return etudiants;
+	}
 }

@@ -26,5 +26,6 @@ public interface EtudiantService {
 	List<String> getPromotions();
 	List<Etudiant> getAll();
 	String lastEtudiantNumero();
+	List<Etudiant> getEtudiantsMoyenneModules(Promotion p, String annee);
 	
 }
