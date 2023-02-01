@@ -23,6 +23,7 @@ import { LoginComponent } from '../login/login.component';
 import { SupprimerEtudiantComponent } from './gestion-des-etudiants/supprimer-etudiant/supprimer-etudiant.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AjouteretudiantComponent } from './gestion-des-etudiants/ajouteretudiant/ajouteretudiant.component';
+import { AjouterutilisateurComponent } from './gestion-des-administrateurs/ajouterutilisateur/ajouterutilisateur.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { AjouteretudiantComponent } from './gestion-des-etudiants/ajouteretudian
     GestionDesAdministrateursComponent,
     SupprimerEtudiantComponent,
     AjouteretudiantComponent,
+    AjouterutilisateurComponent,
 
   
   ]

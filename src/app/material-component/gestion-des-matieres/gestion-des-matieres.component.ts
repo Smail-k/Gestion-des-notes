@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Matiere } from 'src/app/models/matiere';
 import { PromotionService } from 'src/app/services/promotion.service';
+import { UniteService } from 'src/app/services/unite.service';
 declare const $:any;
 
 interface Promotion {
@@ -22,7 +23,7 @@ interface UnivYear {
 })
 export class GestionDesMatieresComponent implements OnInit, AfterViewInit {
 
-  constructor(private ps:PromotionService) { }
+  constructor(private ps:PromotionService,private us:UniteService) { }
   ngAfterViewInit(): void {
     $('#dt-mat-id').DataTable();
   }
@@ -31,9 +32,10 @@ export class GestionDesMatieresComponent implements OnInit, AfterViewInit {
   selectedYearValue!: string;
   promotions: any[]=[];
   years: any[]=[];
+  matieres : Matiere[]=[];
   searchKey!:any;
   listData! : MatTableDataSource<any>;
-  displayedColumns : string[] = ['code', 'libelle','coeffecient','unite' ];
+  displayedColumns : string[] = ['code', 'libelle','coefficient','unite' ];
   @ViewChild(MatSort) sort! : MatSort;
   @ViewChild (MatPaginator) paginator! : MatPaginator;
   dataSource!: MatTableDataSource<Matiere>;
@@ -43,8 +45,19 @@ export class GestionDesMatieresComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
    this.getAnnees(); 
    this.getPromotions();
+   this.getMatieres(); 
   }
 
+  getMatieres():void{
+    this.us.listeMatiere().subscribe(
+      data=> {
+        this.matieres=data; 
+        this.dataSource = new MatTableDataSource(this.matieres);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      }
+    )
+  }
   
   /**
    * Retourner les promotions
@@ -61,6 +74,7 @@ export class GestionDesMatieresComponent implements OnInit, AfterViewInit {
   getAnnees(){
     this.ps.getannees().subscribe(
       data => { this.years=data;
+        
       } , 
       err => { console.log(err);}
     )

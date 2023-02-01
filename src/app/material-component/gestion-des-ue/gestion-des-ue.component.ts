@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Unite } from 'src/app/models/unite';
 import { EtudiantService } from 'src/app/services/etudiant.service';
 import { PromotionService } from 'src/app/services/promotion.service';
+import { UniteService } from 'src/app/services/unite.service';
 
 @Component({
 selector: 'app-gestion-des-ue',
@@ -15,21 +16,24 @@ styleUrls: ['./gestion-des-ue.component.css']
 })
 export class GestionDesUEComponent implements OnInit, AfterViewInit {
 
-constructor(private ps:PromotionService, private fb:FormBuilder,private toastr:ToastrService,private es:EtudiantService) { this.initForm();}
+constructor(private ps:PromotionService, private fb:FormBuilder,private toastr:ToastrService,private es:EtudiantService,private us:UniteService) { 
+
+}
 selectedValue!: string;
 selectedYearValue!: string;
 promotions: any[]=[];
 years: any[]=[];
 form! :FormGroup;
+unites:Unite[]=[];
 selectedFile!: File;
 file!: File;
 getvalue?: any;
 searchKey!:any;
 listData! : MatTableDataSource<any>;
-displayedColumns : string[] = ['code', 'libelle','coeffecient','semestre' ];
+displayedColumns : string[] = ['code', 'libelle','coefficient','semestre' ];
+dataSource!: MatTableDataSource<Unite>;
 @ViewChild(MatSort) sort! : MatSort;
 @ViewChild (MatPaginator) paginator! : MatPaginator;
-dataSource!: MatTableDataSource<Unite>;
 
 
 
@@ -41,15 +45,9 @@ ngAfterViewInit(): void {
 ngOnInit(): void {
 this.getAnnees(); 
 this.getPromotions();
-console.log(this.f.promotion)
+this.getUnites();
 }
 
-initForm(): void {
-this.form = this.fb.group({
-promotion: new FormControl('',Validators.required),
-annee: new FormControl('',Validators.required),
-});
-}
 
 applyFilter(){this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase(); }
   
@@ -98,4 +96,20 @@ getAnnees(){
     this.toastr.success('Importation avec Succées', 'La liste des modules est bien importée'); 
   }
 
+  /**
+   * Retourner toutes les unites
+   */
+  getUnites():void{
+    this.us.listeUnite().subscribe(
+      data =>{ 
+        this.unites= data;
+        console.log(this.unites[0])
+
+        this.dataSource = new MatTableDataSource(this.unites);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+       }
+    , err=> { }
+    )
+  }
 }

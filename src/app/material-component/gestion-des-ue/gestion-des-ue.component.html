@@ -4,17 +4,11 @@
             <mat-card-content>
                 <mat-card-title>LISTE DES MODULES</mat-card-title>
                 <br>
-                <mat-form-field appearance="fill" style="width:25%">
-                    <mat-label>Année Universitaire</mat-label>
-                    <select matNativeControl class="custom-select" formControlName="annee" >
-                      <option  *ngFor="let auYear of years" value="auYear">{{auYear}}</option>
-                    </select>
-                </mat-form-field>
 
                 &nbsp;&nbsp;
                 <mat-form-field appearance="fill" style="width:25%">
                     <mat-label>Promotions</mat-label> 
-                    <select matNativeControl class="custom-select" formControlName="promotion" >
+                    <select matNativeControl class="custom-select" >
                       <option *ngFor="let promotion of promotions" >{{promotion}}</option>
                     </select>
                 </mat-form-field>
@@ -37,27 +31,27 @@
                     <mat-table [dataSource]='dataSource' matSort>
                     <ng-container matColumnDef="code"> 
                         <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Code </b> </mat-header-cell>
-                        <mat-cell ></mat-cell>
+                        <mat-cell *matCellDef="let unite">{{unite.code}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="libelle" > 
                         <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Libelle </b> </mat-header-cell>
-                        <mat-cell > </mat-cell>
+                        <mat-cell *matCellDef="let unite">{{unite.libelle}} </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="coeffecient"> 
-                        <mat-header-cell *matHeaderCellDef> <b> Coeffecient </b></mat-header-cell>
-                        <mat-cell> </mat-cell>
+                    <ng-container matColumnDef="coefficient"> 
+                        <mat-header-cell *matHeaderCellDef> <b> Coefficient </b></mat-header-cell>
+                        <mat-cell *matCellDef="let unite">{{unite.coefficient}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="semestre"> 
                         <mat-header-cell *matHeaderCellDef> <b> Semestre </b></mat-header-cell>
-                        <mat-cell > </mat-cell>
+                        <mat-cell *matCellDef="let unite">{{unite.semestre.nom}} </mat-cell>
                     </ng-container>
-            
                     <mat-header-row *matHeaderRowDef= "displayedColumns" > </mat-header-row>
-                    <mat-row > </mat-row>
-                
+                    <mat-row *matRowDef="let row; columns: displayedColumns;"> </mat-row>
                     </mat-table>  
                     <mat-paginator [pageSizeOptions]="[5,10,25,100]" [pageSize]="10" showFirstLastButtons> </mat-paginator> 
                     </div>
+            
+                  
 
             </mat-card-content>
         </mat-card>

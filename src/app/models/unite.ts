@@ -5,6 +5,6 @@ export class Unite {
     code?:string;
     libelle?:string;
     coefficient?:number;
-    semestre?:Semestre;
+    semestre_id?:Semestre;
 
 }
