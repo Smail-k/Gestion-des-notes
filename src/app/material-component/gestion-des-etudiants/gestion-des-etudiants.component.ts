@@ -137,8 +137,8 @@ ajouter() {
   DialogConfig.autoFocus=true;
   // DialogConfig.width="60%";
   const dialogRef= this.dialog.open(AjouteretudiantComponent,{
-    width:'40%',
-    height:'80%',
+    width:'25%',
+    height:'70%',
     panelClass:'custom-dialog',
     data:{
       

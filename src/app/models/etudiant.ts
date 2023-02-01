@@ -3,5 +3,6 @@ export class Etudiant {
     nom?:string;
     prenom?:string;
     numero?:string;
-    private?:number; 
+    promotion?:number; 
+    annee?:string;
 }

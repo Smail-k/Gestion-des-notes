@@ -28,14 +28,14 @@ export class EtudiantService {
       return this.http.post( 'http://localhost:8080/api/excel/etudiant',file); }
 
       importModules(file:FormData):Observable<any>
-    { 
-      // Envoi de la requête POST
-      return this.http.post( 'http://localhost:8080/api/excel',file); }
+    {  return this.http.post( 'http://localhost:8080/api/excel',file); }
 
       public DeleteEtudiant(id: number)  
       {return this.http.delete(`${this.apiURL +'/delete' }/${id}`); }
 
+      public addEtudiant(etudiant: Etudiant): Observable<Etudiant> 
+      { return this.http.post<Etudiant>(this.apiURL +'/add' , etudiant); }
 
-
+      public GetEtudiantMaxNumero(): Observable <string>{return this.http.get<string>(`${this.apiURL +'/lastNumero'}`); }
 
 }

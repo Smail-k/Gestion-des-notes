@@ -1,0 +1,59 @@
+<div class="col-sm-7">
+
+    <h3 color="primary"> <mat-icon>person</mat-icon>
+        Ajouter un etudiant</h3>
+</div>
+
+<mat-card >
+    <mat-card-content >
+        <form class="form-horizontal" name="form" [formGroup]="form" (ngSubmit)="onSubmit();onAdd()">  
+
+             
+            <mat-form-field class="exemple-form"   >
+                <mat-label>Numero</mat-label>
+                <input type="text" 
+                matInput  
+                value="{{numero}}"
+                readonly
+                >
+              </mat-form-field> 
+            <br>
+            <mat-form-field class="exemple-form" >
+                <mat-label for="inputNom">Nom</mat-label>
+                <input type="text" matInput   formControlName="nom"  placeholder="Nom "   >
+                <mat-icon matSuffix> </mat-icon>
+                <mat-error *ngIf = "f.nom.errors?.required">
+                    Nom est <strong> obligatoire</strong>
+                    </mat-error>
+                    <mat-error *ngIf = "f.nom.errors?.pattern && f.nom.touched">
+                        Veuillez saisir un nom valide
+                    </mat-error> 
+                    <mat-icon (click)="f.nom.setValue('')"  matSuffix style="color: #1f3a93;">clear</mat-icon>
+               </mat-form-field> 
+               <br>
+               <mat-form-field class="exemple-form" >
+                   <mat-label for="inputPrenom">Preom</mat-label>
+                   <input type="text" matInput   formControlName="prenom"  placeholder="Prenom"   >
+                   <mat-icon matSuffix> </mat-icon>
+                   <mat-error *ngIf = "f.prenom.errors?.required">
+                       Prenom est <strong> obligatoire</strong>
+                       </mat-error>
+                       <mat-error *ngIf = "f.prenom.errors?.pattern && f.nom.touched">
+                           Veuillez saisir un nom valide
+                       </mat-error> 
+                       <mat-icon (click)="f.prenom.setValue('')"  matSuffix style="color: #1f3a93;">clear</mat-icon>
+                  </mat-form-field> 
+
+
+            
+            <br><br> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid"> Ajouter </button>
+
+
+
+
+        </form>
+
+
+    </mat-card-content>
+</mat-card>
