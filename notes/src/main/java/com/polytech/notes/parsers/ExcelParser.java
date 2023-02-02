@@ -50,7 +50,7 @@ public class ExcelParser {
 				else if((row.getCell(0)+"").equals("UE")) {
 					u=new Unite();
 					u.setCode(row.getCell(1)+"");
-					u.setLibelle((row.getCell(2)+"").trim());
+					u.setLibelle((row.getCell(2)+"").trim()+" "+(row.getCell(3)+"").trim());
 					u.setSemestre(s);
 					if(row.getCell(5)!= null &&  (row.getCell(5)+"").trim()!="")
 						u.setCoefficient(Double.parseDouble((row.getCell(5)+"").trim()));
@@ -68,7 +68,7 @@ public class ExcelParser {
 							matieres.add(m);
 						}
 					}
-				}else if((row.getCell(0)+"").equals("")){
+				}else if((row.getCell(0)+"").equals("") && (row.getCell(2)+"").equals("")){
 					Matiere m = new Matiere();
 					m.setLibelle(row.getCell(3)+"");
 					m.setCode(row.getCell(1)+"");

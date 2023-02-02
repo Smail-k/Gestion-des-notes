@@ -27,7 +27,7 @@ public class EntryPoint {
 	}
 	
 	@Bean
-	PasswordEncoder passwordEncoder() {
+	PasswordEncoder passwordEncoder() { 
 		return new BCryptPasswordEncoder(); 
 	}
 }
