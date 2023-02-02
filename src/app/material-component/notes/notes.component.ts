@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { Unite } from 'src/app/models/unite';
 import { EtudiantService } from 'src/app/services/etudiant.service';
+import { NoteService } from 'src/app/services/note.service';
 import { PromotionService } from 'src/app/services/promotion.service';
 import { UniteService } from 'src/app/services/unite.service';
 
@@ -16,7 +17,8 @@ import { UniteService } from 'src/app/services/unite.service';
 })
 export class NotesComponent implements OnInit, AfterViewInit {
 
-  constructor(private ps: PromotionService, private toastr:ToastrService,private es:EtudiantService,private us:UniteService) { }
+  
+  constructor(private ps: PromotionService, private toastr:ToastrService,private es:EtudiantService,private notesr:NoteService) { }
   ngAfterViewInit(): void {
     $('#dt-mat-id').DataTable();
   }
@@ -34,19 +36,34 @@ export class NotesComponent implements OnInit, AfterViewInit {
   file!: File;
   getvalue?: any;
 
-  displayedColumns : string[] = ['code', 'nom','prenom','codeUE','MoyenneUE'];
-  listData!: MatTableDataSource<any>;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-
-
-
+  ExcelData: any;
+  etudiantsOb?: Object[];
+  promo?:any;
+  annee?:any;
+  listData! : MatTableDataSource<any>;
+  displayedColumns : string[] = ['numero' , 'nom', 'prenom','code', 'note','actions' ];
+  dataSource!: MatTableDataSource<Object>;
+  @ViewChild(MatSort) sort! : MatSort;
+  @ViewChild (MatPaginator) paginator! : MatPaginator;
 
   ngOnInit(): void {
     this.getAnnees();
     this.getPromotions();
-    //this.getUnites();
+    this.ListerEtudiants("Annee4","2021/2022")
+  }
+
+  ListerEtudiants(promo:any,annee:any):void{
+    if (promo=='Annee4') promo='4A';
+    if (promo=='Annee3') promo='3A';
+    if (promo=='Annee5') promo='5A';
+
+    this.notesr.listeEtudiant(promo,annee).subscribe(etuds => {
+      this.etudiantsOb = etuds;
+      console.log(this.etudiantsOb);
+      this.dataSource = new MatTableDataSource(this.etudiantsOb);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
 
@@ -75,7 +92,7 @@ export class NotesComponent implements OnInit, AfterViewInit {
 
 
   applyFilter() { 
-    //this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase(); 
+    this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase(); 
   }
 
   onSearchClear() {
