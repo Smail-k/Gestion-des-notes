@@ -1,8 +1,6 @@
-<div class="col-sm-7">
 
     <h3 color="primary"> <mat-icon>person</mat-icon>
         Ajouter un etudiant</h3>
-</div>
 
 <mat-card >
     <mat-card-content >
@@ -17,7 +15,7 @@
                 readonly
                 >
               </mat-form-field> 
-            <br>
+            
             <mat-form-field class="exemple-form" >
                 <mat-label for="inputNom">Nom</mat-label>
                 <input type="text" matInput   formControlName="nom"  placeholder="Nom "   >
@@ -30,9 +28,9 @@
                     </mat-error> 
                     <mat-icon (click)="f.nom.setValue('')"  matSuffix style="color: #1f3a93;">clear</mat-icon>
                </mat-form-field> 
-               <br>
+               
                <mat-form-field class="exemple-form" >
-                   <mat-label for="inputPrenom">Preom</mat-label>
+                   <mat-label for="inputPrenom">Prenom</mat-label>
                    <input type="text" matInput   formControlName="prenom"  placeholder="Prenom"   >
                    <mat-icon matSuffix> </mat-icon>
                    <mat-error *ngIf = "f.prenom.errors?.required">
@@ -42,8 +40,40 @@
                            Veuillez saisir un nom valide
                        </mat-error> 
                        <mat-icon (click)="f.prenom.setValue('')"  matSuffix style="color: #1f3a93;">clear</mat-icon>
-                  </mat-form-field> 
+                </mat-form-field> 
 
+                <mat-form-field class="exemple-form" >
+                    <mat-label>Promotion</mat-label>
+                    <mat-select name="selectedYear" required formControlName="selectedYear">
+                      <mat-option value="3A">3A</mat-option>
+                      <mat-option value="4A">4A</mat-option>
+                      <mat-option value="5A">5A</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.selectedYear.errors?.required">
+                      Promotion est <strong>obligatoire</strong>
+                    </mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field class="exemple-form" >
+                    <mat-label>Filiere</mat-label>
+                    <mat-select name="selectedYear" required formControlName="Filiere">
+                      <mat-option value="FISA">FISA</mat-option>
+                      <mat-option value="FISE">FISE</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="f.Filiere.errors?.required">
+                      Filiere<strong>obligatoire</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  
+                  <mat-form-field class="exemple-form" >
+                    <mat-label>Annee universitaire</mat-label>
+                    <mat-select name="selectedYear" required formControlName="AU">
+                    </mat-select>
+                    <mat-error *ngIf="f.AU.errors?.required">
+                      Annee universitaire est <strong>obligatoire</strong>
+                    </mat-error>
+                  </mat-form-field>
+                
 
             
             <br><br> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;

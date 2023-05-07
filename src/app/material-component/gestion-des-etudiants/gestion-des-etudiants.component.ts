@@ -143,7 +143,7 @@ ajouter() {
   // DialogConfig.width="60%";
   const dialogRef= this.dialog.open(AjouteretudiantComponent,{
     width:'25%',
-    height:'70%',
+    height:'89%',
     panelClass:'custom-dialog',
     data:{
       

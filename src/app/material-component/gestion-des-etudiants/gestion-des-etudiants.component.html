@@ -5,17 +5,25 @@
             <mat-card-content>
                 <mat-card-title>LISTE DES ETUDIANTS</mat-card-title><br>
 
-                <mat-form-field appearance="fill" style="width:25%">
+                <mat-form-field appearance="fill" style="width:15%">
                     <mat-label>Année Universitaire</mat-label>
                     <select matNativeControl class="custom-select" >
                       <option [ngValue]="annee"  *ngFor="let auYear of years" value="uYear.value">{{auYear}}</option>
                     </select>
                 </mat-form-field>
                 &nbsp;&nbsp;
-                <mat-form-field appearance="fill" style="width:25%">
+                <mat-form-field appearance="fill" style="width:15%">
                     <mat-label>Promotions</mat-label>
                     <select matNativeControl class="custom-select"  >
                       <option [ngValue]="promo" *ngFor="let promotion of promotions" value="promotion.value">{{promotion}}</option>
+                    </select>
+                </mat-form-field>
+                &nbsp;&nbsp;
+                <mat-form-field appearance="fill" style="width:15%">
+                    <mat-label>Filiere</mat-label>
+                    <select matNativeControl class="custom-select"  >
+                      <option> FISE</option>
+                      <option> FISA</option>
                     </select>
                 </mat-form-field>
 

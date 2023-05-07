@@ -70,8 +70,7 @@ const MENUITEMS = [
   //   ]
   // },
   { state: 'gestionEtudiant', type: 'link2', name: 'Gestion des étudiants', icon: 'person', },
-  { state: 'gestionUE', type: 'link2', name: 'Gestion des UE', icon: 'book', },
-  { state: 'gestionMatieres', type: 'link2', name: 'Gestion des matières', icon: 'view_list', },
+  { state: 'gestionMatieres', type: 'link2', name: 'Gestion des UE', icon: 'book', },
   { state: 'gestionDesNotes', type: 'link2', name: 'Gestion des Notes', icon: 'view_list', },
   { state: 'configurations', type: 'link2', name: 'Configuration', icon: 'settings', },
   { state: 'gestionDesUtilisateurs', type: 'link2', name: 'Gestion des utilisateurs', icon: 'supervised_user_circle', },

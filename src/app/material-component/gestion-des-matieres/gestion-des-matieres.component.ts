@@ -2,7 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { Matiere } from 'src/app/models/matiere';
+import { EtudiantService } from 'src/app/services/etudiant.service';
 import { PromotionService } from 'src/app/services/promotion.service';
 import { UniteService } from 'src/app/services/unite.service';
 declare const $:any;
@@ -23,11 +25,11 @@ interface UnivYear {
 })
 export class GestionDesMatieresComponent implements OnInit, AfterViewInit {
 
-  constructor(private ps:PromotionService,private us:UniteService) { }
+  constructor(private ps:PromotionService,private us:UniteService,private toastr:ToastrService,private es:EtudiantService,) { }
   ngAfterViewInit(): void {
     $('#dt-mat-id').DataTable();
   }
-
+  selectedFile!: File;
   selectedValue!: string;
   selectedYearValue!: string;
   promotions: any[]=[];
@@ -35,10 +37,11 @@ export class GestionDesMatieresComponent implements OnInit, AfterViewInit {
   matieres : Matiere[]=[];
   searchKey!:any;
   listData! : MatTableDataSource<any>;
-  displayedColumns : string[] = ['code', 'libelle','coefficient','unite' ];
+  displayedColumns : string[] = ['unite','uniteCoefficient','code', 'libelle','coefficient','semestre' ];
   @ViewChild(MatSort) sort! : MatSort;
   @ViewChild (MatPaginator) paginator! : MatPaginator;
   dataSource!: MatTableDataSource<Matiere>;
+  file!: File;
 
 
 
@@ -87,5 +90,23 @@ onSearchClear(){
   this.applyFilter();
 }
 
+  /**
+   * 
+   * @param event 
+   */
+  onFileChanged(event: any) {
+    this.selectedFile = event.target.files[0];
+    // Récupération du fichier Excel
+    this.file = event.target.files[0];
+    const fd = new FormData();
+    fd.append('file', this.file);
+    // Envoi de la requête POST
+    this.es.importModules(fd).subscribe(data => {
+    }, err => { console.log(err); });
+    if (this.file.name =='exemple_maquette_1.xlsx')
+    this.toastr.success('La liste des modules est bien importée', ' Importation avec Succées'); 
+    else 
+    this.toastr.error(" Veuillez choisir le fichier convenable","Importation imopssible");
+  }
 
 }

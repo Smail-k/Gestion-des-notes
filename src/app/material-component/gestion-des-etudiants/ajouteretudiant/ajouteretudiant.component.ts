@@ -27,6 +27,11 @@ export class AjouteretudiantComponent implements OnInit {
     this.form = this.fb.group({
     nom:new FormControl('' ,[Validators.required,  Validators.pattern('^[a-zA-Z_]+'),Validators.minLength(3)]),
     prenom:new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z_]+'),Validators.minLength(3)]),
+    selectedYear: new FormControl('', Validators.required),
+    Filiere: new FormControl('', Validators.required),
+    AU: new FormControl('', Validators.required)
+
+
   })}
 
   onAdd():void{

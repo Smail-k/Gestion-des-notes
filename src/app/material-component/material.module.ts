@@ -16,8 +16,6 @@ import { MaterialRoutes } from './material.routing';
 import { ExpansionComponent } from './expansion/expansion.component';
 import { GestionDesEtudiantsComponent } from './gestion-des-etudiants/gestion-des-etudiants.component';
 import { GestionDesMatieresComponent } from './gestion-des-matieres/gestion-des-matieres.component';
-import { GestionDesUEComponent } from './gestion-des-ue/gestion-des-ue.component';
-import { ImporterFichierExcellUEComponent } from './gestion-des-ue/importer-fichier-excell-ue/importer-fichier-excell-ue.component';
 import { GestionDesAdministrateursComponent } from './gestion-des-administrateurs/gestion-des-administrateurs.component';
 import { LoginComponent } from '../login/login.component';
 import { SupprimerEtudiantComponent } from './gestion-des-etudiants/supprimer-etudiant/supprimer-etudiant.component';
@@ -46,8 +44,6 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
     ExpansionComponent,
     GestionDesEtudiantsComponent,
     GestionDesMatieresComponent,
-    GestionDesUEComponent,
-    ImporterFichierExcellUEComponent,
     GestionDesAdministrateursComponent,
     SupprimerEtudiantComponent,
     AjouteretudiantComponent,
