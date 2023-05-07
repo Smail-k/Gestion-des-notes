@@ -1,0 +1,54 @@
+<div class="col-sm-7">
+
+    <h3 color="primary">Nouvelle configuration</h3>
+</div>
+
+<mat-card >
+    <mat-card-content >
+        <form class="form-horizontal" name="form" [formGroup]="form" (ngSubmit)="onSubmit();onAdd()">  
+
+             
+            <mat-form-field class="exemple-form"   >
+                <mat-label>Seuil</mat-label>
+                <input type="number"  placeholder="Seuil "
+                matInput  
+                value="{{seuil}}"
+                >
+              </mat-form-field> 
+            <br>
+            <mat-form-field class="exemple-form" >
+                <mat-label for="inputLibelle">Nom</mat-label>
+                <input type="text" matInput   formControlName="libelle"  placeholder="Libelle "   >
+                <mat-icon matSuffix> </mat-icon>
+                <mat-error *ngIf = "f.libelle.errors?.required">
+                    Libellé est <strong> obligatoire</strong>
+                    </mat-error>
+                    <mat-error *ngIf = "f.libelle.errors?.pattern && f.libelle.touched">
+                        Veuillez saisir un libellé valide
+                    </mat-error> 
+                    <mat-icon (click)="f.nom.setValue('')"  matSuffix style="color: #1f3a93;">clear</mat-icon>
+               </mat-form-field> 
+               <br>
+               <mat-form-field class="exemple-form" >
+                   <mat-label for="inputDescription">Description</mat-label>
+                   <input type="text" matInput   formControlName="description"  placeholder="Description"   >
+                   <mat-icon matSuffix> </mat-icon>
+                   <mat-error *ngIf = "f.description.errors?.required">
+                       Prenom est <strong> obligatoire</strong>
+                       </mat-error>
+                       <mat-error *ngIf = "f.description.errors?.pattern && f.nom.touched">
+                           Veuillez saisir un nom valide
+                       </mat-error> 
+                       <mat-icon (click)="f.description.setValue('')"  matSuffix style="color: #1f3a93;">clear</mat-icon>
+                  </mat-form-field> 
+
+
+            
+            <br><br> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+            <button mat-raised-button type="submit" color="primary" [disabled]="!form.valid"> Ajouter </button>
+
+        </form>
+
+
+    </mat-card-content>
+</mat-card>

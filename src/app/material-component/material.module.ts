@@ -50,6 +50,7 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
     AjouterutilisateurComponent,
     NotesComponent,
     ConfigurationsComponent,
+    AjouterconfigurationComponent,
 
   
   ]
