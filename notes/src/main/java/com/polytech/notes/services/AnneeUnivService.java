@@ -7,4 +7,5 @@ import com.polytech.notes.models.AnneeUniversitaire;
 @Service
 public interface AnneeUnivService {
   AnneeUniversitaire add(AnneeUniversitaire a);
+  AnneeUniversitaire getAnneeUniversitaire(String annee);
 }

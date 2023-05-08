@@ -74,9 +74,15 @@ public class ImportController {
 	@PostMapping("/excel/etudiant")
 	public String importEtudiants(@RequestParam("file") MultipartFile excel,@RequestParam("promo") String promo,@RequestParam("annee") String annee) {
 		
-		AnneeUniversitaire a = new AnneeUniversitaire(annee);
-		AnneeUniversitaire anneeUn= anneeService.add(a);
-		Promotion p=promoService.addPromotion(new Promotion(promo, anneeUn));
+		AnneeUniversitaire a =anneeService.getAnneeUniversitaire(annee);
+		Promotion p=null;
+		if(a==null) {
+			AnneeUniversitaire anneeUn= anneeService.add(new AnneeUniversitaire(annee));
+			p=promoService.addPromotion(new Promotion(promo, anneeUn));
+		}
+		else 
+			p=promoService.addPromotion(new Promotion(promo, a));
+
 		
 		ExcelParser parser = new ExcelParser();
 		String result = parser.importEtudiants(excel,p);

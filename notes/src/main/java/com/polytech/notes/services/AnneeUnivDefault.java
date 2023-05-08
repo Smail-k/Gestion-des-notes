@@ -18,4 +18,9 @@ public class AnneeUnivDefault implements AnneeUnivService {
 	public AnneeUniversitaire add(AnneeUniversitaire a) {
 		return repo.save(a);
 	}
+
+	@Override
+	public AnneeUniversitaire getAnneeUniversitaire(String annee) {
+		return repo.findByAnnee(annee);
+	}
 }
