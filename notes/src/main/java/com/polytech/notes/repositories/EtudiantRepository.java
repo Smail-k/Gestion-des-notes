@@ -20,7 +20,8 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	Etudiant findEtudiantByNumeroAndNotesAnnee(String numero,String annee);
 	Etudiant findEtudiantByNomAndNotesAnnee(String nom,String annee);
 	Etudiant getEtudiantByNomAndPrenom(String nom,String prenom);
-	List<Etudiant> findEtudiantsByPromotionPromoAndAnnee(String p,String annee);
+	@Query("select e from Etudiant e where e.promotion.promo=:p AND e.promotion.annee.annee=:annee")
+	List<Etudiant> getEtudiantsByPromotion(String p,String annee);
 	//List<Etudiant> findEtudiantsByPromotionAndAnnee(Promotion p,String annee);
 	List<Etudiant> findEtudiantByPromotionPromoAndNotesAnneeAndNotesSituation(String promo,String annee,boolean situation);
 	

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.polytech.notes.models.Etudiant;
 import com.polytech.notes.models.Note;
 import com.polytech.notes.models.Promotion;
-import com.polytech.notes.models.PromotionType;
 import com.polytech.notes.repositories.EtudiantRepository;
 
 @Service
@@ -129,25 +128,25 @@ public class EtudiantServiceDefault implements EtudiantService{
 		List<Etudiant> etudiants; 
 		if(p.toLowerCase().equals("3a"))
 		{
-			etudiants=repository.findEtudiantsByPromotionPromoAndAnnee("3afise", annee);
-			etudiants.addAll(repository.findEtudiantsByPromotionPromoAndAnnee("3afisa", annee));
+			etudiants=repository.getEtudiantsByPromotion("3afise", annee);
+			etudiants.addAll(repository.getEtudiantsByPromotion("3afisa", annee));
 			return etudiants;
 		}
 		else if(p.toLowerCase().equals("4a"))
 		{
-			etudiants=repository.findEtudiantsByPromotionPromoAndAnnee("4afise", annee);
-			etudiants.addAll(repository.findEtudiantsByPromotionPromoAndAnnee("4afisa", annee));
+			etudiants=repository.getEtudiantsByPromotion("4afise", annee);
+			etudiants.addAll(repository.getEtudiantsByPromotion("4afisa", annee));
 			return etudiants;
 		}
 		else if(p.toLowerCase().equals("5a"))
 		{
-			etudiants=repository.findEtudiantsByPromotionPromoAndAnnee("5afise", annee);
-			etudiants.addAll(repository.findEtudiantsByPromotionPromoAndAnnee("5afisa", annee));
+			etudiants=repository.getEtudiantsByPromotion("5afise", annee);
+			etudiants.addAll(repository.getEtudiantsByPromotion("5afisa", annee));
 			return etudiants;
 		}
 		
 		
-		return repository.findEtudiantsByPromotionPromoAndAnnee(p, annee);
+		return repository.getEtudiantsByPromotion(p, annee);
 	}
 	
 	@Override
@@ -171,7 +170,7 @@ public class EtudiantServiceDefault implements EtudiantService{
 	}
 	@Override
 	public List<Etudiant> getEtudiantsMoyenneModules(String p, String annee) {
-		List<Etudiant> etudiants = repository.findEtudiantsByPromotionPromoAndAnnee(p, annee);
+		List<Etudiant> etudiants = repository.getEtudiantsByPromotion(p, annee);
 		List<Note> list ;
 		for (Etudiant etudiant : etudiants) {
 			list = new Vector<Note>();
