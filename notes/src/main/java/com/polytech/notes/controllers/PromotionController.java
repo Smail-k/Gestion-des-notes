@@ -26,7 +26,13 @@ public class PromotionController {
 	}
 	
 	@GetMapping("/promotions")
-	public List<Promotion> getPromotions(){
-		return rep.findAll();
+	public List<String> getPromotions(){
+		return rep.allPromotions();
 	}
+	
+	@GetMapping("/anneeUniv/promotions")
+	public List<String> getPromotions(String annee){
+		return rep.getPromotionsByAnnee(annee);
+	}
+	
 }
