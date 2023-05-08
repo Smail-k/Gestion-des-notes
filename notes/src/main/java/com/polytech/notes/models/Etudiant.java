@@ -28,7 +28,7 @@ public class Etudiant {
 	@JoinColumn(name="etudiant_id",referencedColumnName = "id")
 	private List<Note> notes;
 	@ManyToOne
-	private Promotion promotion;
+	private Promotion promotion; 
 	private String annee;
 
 	public Etudiant() {

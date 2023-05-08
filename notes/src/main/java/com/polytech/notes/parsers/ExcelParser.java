@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.polytech.notes.models.AnneeUniversitaire;
 import com.polytech.notes.models.Etudiant;
 import com.polytech.notes.models.Matiere;
 import com.polytech.notes.models.Note;
@@ -100,8 +101,7 @@ public class ExcelParser {
 		return "success";
 	}
 	
-	public String importEtudiants(MultipartFile excel,String promo,String annee) {
-		System.out.println(promo+"-----");
+	public String importEtudiants(MultipartFile excel,Promotion p) {
 		try {
 			XSSFWorkbook workbook = new XSSFWorkbook(excel.getInputStream());
 			XSSFSheet sheet = workbook.getSheetAt(0);
@@ -109,31 +109,18 @@ public class ExcelParser {
 			
 			
 			
-			PromotionType p=null;
-			if(promo.toLowerCase().equals("3AFISE"))
-				p = PromotionType.Annee3FISE;
-			else if(promo.toLowerCase().equals("3AFISA"))
-				p = PromotionType.Annee3FISA;
-			else if(promo.toLowerCase().equals("4AFISE"))
-				p = PromotionType.Annee4FISE;
-			else if(promo.toLowerCase().equals("4AFISA"))
-				p = PromotionType.Annee4FISA;
-			else if(promo.toLowerCase().equals("5AFISE"))
-				p = PromotionType.Annee5FISE;
-			else if(promo.toLowerCase().equals("5AFISA"))
-				p = PromotionType.Annee5FISA;
 			
-			Promotion promotion = new Promotion(promo.toLowerCase());
 			
+			//Promotion promotion = new Promotion(promo.toLowerCase(),annee);
+			System.out.println(sheet.getPhysicalNumberOfRows()+"--");
 			for(int i=3; i<=sheet.getPhysicalNumberOfRows();i++) {
 				row = sheet.getRow(i);
 				Etudiant e = new Etudiant();
 				e.setNumero((row.getCell(0)+"").trim().substring(0, (row.getCell(0)+"").trim().length()-2));
 				e.setNom((row.getCell(1)+"").trim());
 				e.setPrenom((row.getCell(2)+"").trim());
-				e.setPromotion(promotion);
-				e.setAnnee(annee);
-				
+				e.setAnnee(p.getAnnee().getAnnee());
+				e.setPromotion(p);
 				etudiants.add(e);
 			}
 			workbook.close();

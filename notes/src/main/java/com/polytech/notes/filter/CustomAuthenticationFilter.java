@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 
 	private AuthenticationManager authenticationManager;
@@ -40,7 +39,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 			throws AuthenticationException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		
+		System.out.println("-------------------");
+
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
 		return authenticationManager.authenticate(authenticationToken);
 	}
@@ -62,7 +62,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 				.withExpiresAt(new Date(System.currentTimeMillis()+60*60*1000))
 				.withIssuer(request.getRequestURL().toString())
 				.sign(algorithm);
-		
 		response.setHeader("access_token", accessToken);
 		response.setHeader("refresh_token", refreshToken);
 		Map<String, String> tokens = new HashMap<String, String>();

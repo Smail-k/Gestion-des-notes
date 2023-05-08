@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.polytech.notes.models.Etudiant;
 import com.polytech.notes.models.Promotion;
-import com.polytech.notes.models.PromotionType;
 
 public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 
@@ -34,7 +33,9 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	@Query("select max(numero) from Etudiant")
 	String findLastNumero();
 	
-	@Query("SELECT e.numero,e.nom,e.prenom FROM Etudiant e JOIN e.notes n WHERE n.situation=0 AND n.annee = :annee AND e.promotion=:promo AND n.session='normale' GROUP BY e")
+	@Query("SELECT e.numero,e.nom,e.prenom FROM Etudiant e JOIN e.notes n WHERE n.situation=0 AND n.annee = :annee AND e.promotion.promo=:promo AND n.session='normale' GROUP BY e")
 	List<Object[]> etudiantsRattrapages(Promotion promo,String annee);
 
+	@Query("SELECT e.nom, e.prenom FROM Note n JOIN n.etudiant e WHERE n.unite IS NOT NULL AND n.situation = 0 AND n.session = 'rattrapage' AND n.annee = :annee AND e.promotion.promo=:promo")
+	List<Object[]> etudiantsRedoublants(Promotion promo,String annee);
 }

@@ -13,8 +13,8 @@ public class PromotionServiceDefault implements PromotionService{
 	private PromotionRepository rep;
 	
 	@Override
-	public void addPromotion(Promotion p) {
-		rep.save(p);
+	public Promotion addPromotion(Promotion p) {
+		return rep.save(p);
 	}
 	
 }

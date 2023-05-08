@@ -6,6 +6,6 @@ import com.polytech.notes.models.Promotion;
 
 public interface PromotionService {
 
-	public void addPromotion(Promotion p);
+	public Promotion addPromotion(Promotion p);
 	
 }
