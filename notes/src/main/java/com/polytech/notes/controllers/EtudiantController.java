@@ -156,8 +156,9 @@ public class EtudiantController {
 		return ratts;
 	}
 	 
-	@GetMapping("/matiereRattrapages") 
-	public List<Object[]> listeRattrapagesEtudiant(String annee,String numeroEtudiant){
-		return uniteService.getEtudiantUniteNonValidee(numeroEtudiant, annee);
+	//http://localhost:8080/api/etudiants/listeRedoublant/?annee=2023&promo=4afise
+	@GetMapping("/listeRedoublant") 
+	public List<Object[]> listeRattrapagesEtudiant(String promo, String annee){
+		return etudiantService.getRedoublantsByPromotion(promo, annee);
 	}
 }

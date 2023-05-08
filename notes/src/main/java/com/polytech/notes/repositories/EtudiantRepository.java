@@ -37,6 +37,6 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	@Query("SELECT e.numero,e.nom,e.prenom FROM Etudiant e JOIN e.notes n WHERE n.situation=0 AND e.promotion.annee.annee = :annee AND e.promotion.promo=:promo AND n.session='normale' GROUP BY e")
 	List<Object[]> etudiantsRattrapages(String promo,String annee);
 
-	@Query("SELECT e.nom, e.prenom FROM Note n JOIN n.etudiant e WHERE n.unite IS NOT NULL AND n.situation = 0 AND n.session = 'rattrapage' AND e.promotion.annee.annee = :annee AND e.promotion.promo=:promo")
-	List<Object[]> etudiantsRedoublants(Promotion promo,String annee);
+	@Query("SELECT e.numero,e.nom, e.prenom FROM Note n JOIN n.etudiant e WHERE n.unite IS NOT NULL AND n.situation = 0 AND n.session = 'rattrapage' AND e.promotion.annee.annee = :annee AND e.promotion.promo=:promo")
+	List<Object[]> etudiantsRedoublants(String promo,String annee);
 }

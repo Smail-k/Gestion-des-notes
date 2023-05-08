@@ -28,4 +28,5 @@ public interface EtudiantService {
 	String lastEtudiantNumero();
 	List<Etudiant> getEtudiantsMoyenneModules(String p, String annee);
 	List<Object[]> getEtudiantRattrapage(String promo,String annee);
+	List<Object[]> getRedoublantsByPromotion(String promo,String annee);
 }
