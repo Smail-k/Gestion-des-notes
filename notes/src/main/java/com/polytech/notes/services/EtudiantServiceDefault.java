@@ -187,7 +187,6 @@ public class EtudiantServiceDefault implements EtudiantService{
 
 	@Override
 	public List<Object[]> getEtudiantRattrapage(String promo,String annee) {
-		Promotion p = new Promotion(promo);
-		return repository.etudiantsRattrapages(p, annee);
+		return repository.etudiantsRattrapages(promo, annee);
 	}
 }
