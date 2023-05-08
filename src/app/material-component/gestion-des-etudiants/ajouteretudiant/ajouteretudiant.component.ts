@@ -30,9 +30,9 @@ export class AjouteretudiantComponent implements OnInit {
     selectedYear: new FormControl('', Validators.required),
     Filiere: new FormControl('', Validators.required),
     AU: new FormControl('', Validators.required)
-
-
   })}
+
+  get f (){ return this.form.controls }
 
   onAdd():void{
    // this.es.addEtudiant().subscribe
@@ -40,7 +40,7 @@ export class AjouteretudiantComponent implements OnInit {
    etudiant.numero = this.numero; 
    etudiant.nom = this.f.nom.value;
    etudiant.prenom = this.f.prenom.value;
-   etudiant.promotion =1; 
+   //etudiant.promotion_id.id =1; 
    etudiant.annee="2021/2022"
    this.es.addEtudiant(etudiant).subscribe(
     data=> {
@@ -62,7 +62,6 @@ export class AjouteretudiantComponent implements OnInit {
 
   
 
-get f (){ return this.form.controls }
 onSubmit() {console.warn(this.form.value);}
 }
 

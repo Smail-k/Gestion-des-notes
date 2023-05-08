@@ -24,6 +24,7 @@ import { AjouteretudiantComponent } from './gestion-des-etudiants/ajouteretudian
 import { AjouterutilisateurComponent } from './gestion-des-administrateurs/ajouterutilisateur/ajouterutilisateur.component';
 import { NotesComponent } from './notes/notes.component';
 import { ConfigurationsComponent } from './configurations/configurations.component';
+import { AjouterconfigurationComponent } from './configurations/ajouterconfiguration/ajouterconfiguration.component';
 
 
 @NgModule({
@@ -50,8 +51,8 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
     AjouterutilisateurComponent,
     NotesComponent,
     ConfigurationsComponent,
-    AjouterconfigurationComponent,
-
+    AjouterconfigurationComponent
+   
   
   ]
 })

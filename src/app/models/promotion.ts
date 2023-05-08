@@ -1,3 +1,6 @@
 export class Promotion{
-    libelle?:string;
+    id?:number;
+    promo?:string;
+    annee_id?:number;
+
 }

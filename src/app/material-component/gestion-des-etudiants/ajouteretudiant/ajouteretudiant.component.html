@@ -55,17 +55,6 @@
                   </mat-form-field>
 
                   <mat-form-field class="exemple-form" >
-                    <mat-label>Filiere</mat-label>
-                    <mat-select name="selectedYear" required formControlName="Filiere">
-                      <mat-option value="FISA">FISA</mat-option>
-                      <mat-option value="FISE">FISE</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="f.Filiere.errors?.required">
-                      Filiere<strong>obligatoire</strong>
-                    </mat-error>
-                  </mat-form-field>
-                  
-                  <mat-form-field class="exemple-form" >
                     <mat-label>Annee universitaire</mat-label>
                     <mat-select name="selectedYear" required formControlName="AU">
                     </mat-select>

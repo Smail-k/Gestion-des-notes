@@ -15,6 +15,7 @@ import { PromotionService } from 'src/app/services/promotion.service';
 import { UtilisateurService } from 'src/app/services/user.service';
 import { AjouteretudiantComponent } from './ajouteretudiant/ajouteretudiant.component';
 import { SupprimerEtudiantComponent } from './supprimer-etudiant/supprimer-etudiant.component';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-gestion-des-etudiants',
@@ -32,26 +33,47 @@ export class GestionDesEtudiantsComponent implements OnInit {
   promotions: any[]=[];
   years: any[]=[];
   promo?:any;
+  champs:boolean=true;
   annee?:any;
   listData! : MatTableDataSource<any>;
   displayedColumns : string[] = ['numero' , 'nom', 'prenom','actions' ];
   dataSource!: MatTableDataSource<Etudiant>;
   @ViewChild(MatSort) sort! : MatSort;
   @ViewChild (MatPaginator) paginator! : MatPaginator;
-
-
+  anneeU:any;
+  selectedPromotion: string = 'Selectionner'; 
+  form!:FormGroup;
   constructor(private HttpClient: HttpClient,private dialog: MatDialog,
      private us: UtilisateurService, private etuService: EtudiantService,private promService:PromotionService, 
-     private toastr:ToastrService) { }
+     private toastr:ToastrService,
+    private fb:FormBuilder) { }
 
+
+     initForm(): void {
+      this.form = this.fb.group({
+      selectedPromotion:new FormControl('' ,[Validators.required]),
+      anneeU:new FormControl('', [Validators.required,Validators.pattern('^[0-9]{4}\/[0-9]{4}')]),
+      
+    })}
+  
+    get f (){ return this.form.controls }
 
   ngOnInit(): void {
    this.getAnnees(); 
    this.getPromotions();
    this.ListerEtudiants("Annee4","2021/2022")
+   this.initForm();
   }
 
- 
+ onFileClicked( event:any){
+    if(this.selectedPromotion=="Selectionner")
+      this.toastr.error("Veuillez choisir une promotion");
+    else
+      this.toastr.info("ok");
+    
+    
+    
+ }
 
   /**
    * 
@@ -155,6 +177,7 @@ ajouter() {
 }
   
 
+onSubmit() {console.warn(this.form.value);}
 
   
 
