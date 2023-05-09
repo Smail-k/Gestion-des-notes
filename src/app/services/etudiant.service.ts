@@ -14,8 +14,10 @@ export class EtudiantService {
   }
 
   listeEtudiant(promo:any,annee:any): Observable<Etudiant[]>{
-    return this.http.get<Etudiant[]>(`${this.apiURL+'/liste'}/?promo=${promo}&annee=${annee}`);
-    }
+    return this.http.get<Etudiant[]>(`${this.apiURL+'/liste/'}?promo=${promo}&annee=${annee}`); }
+    
+    Alletudiant(): Observable<Etudiant[]>{
+      return this.http.get<Etudiant[]>(`${this.apiURL+'/all'}`); }
 
     /**
    * 
@@ -30,8 +32,8 @@ export class EtudiantService {
       importModules(file:FormData):Observable<any>
     {  return this.http.post( 'http://localhost:8080/api/excel',file); }
 
-    importNotes(file:FormData):Observable<any>
-    {  return this.http.post( 'http://localhost:8080/api/excel/note',file); }
+      importNotes(file:FormData):Observable<any>
+      {  return this.http.post( 'http://localhost:8080/api/excel/note',file); }
 
       public DeleteEtudiant(id: number)  
       {return this.http.delete(`${this.apiURL +'/delete' }/${id}`); }

@@ -7,27 +7,29 @@
 
 
                 &nbsp;&nbsp;
-                <mat-form-field appearance="fill" style="width:15%">
+                <mat-form-field  style="width:15%">
                     <mat-label>Promotions</mat-label> 
                     <select matNativeControl class="custom-select" formControlName="promotion" >
                       <option *ngFor="let promotion of promotions" >{{promotion}}</option>
                     </select>
                 </mat-form-field>
+             
                 &nbsp;&nbsp;
-                <mat-form-field appearance="fill" style="width:15%">
-                    <mat-label>Filiere</mat-label>
-                    <select matNativeControl class="custom-select"  >
-                      <option> FISE</option>
-                      <option> FISA</option>
-                    </select>
-                </mat-form-field>
-                &nbsp;&nbsp;
-                <mat-form-field appearance="fill" style="width:15%">
+                <mat-form-field style="width:15%">
                     <mat-label>Année Universitaire</mat-label>
                     <select matNativeControl class="custom-select" >
                       <option [ngValue]="annee"  *ngFor="let auYear of years" value="uYear.value">{{auYear}}</option>
                     </select>
                 </mat-form-field>
+
+                &nbsp;&nbsp;
+                <mat-form-field style="width:15%">
+                    <mat-label>Semestre</mat-label>
+                    <select matNativeControl class="custom-select" >
+                      <option [ngValue]="semestre"  *ngFor="let auYear of years" value="uYear.value">{{auYear}}</option>
+                    </select>
+                </mat-form-field>
+                
                 &nbsp;&nbsp;
                 <mat-form-field class="search-form-field" floatLabel="never" style="width: 20%;">
                     <input matInput [(ngModel)]= "searchKey" placeholder="Recherche" autocomplete="off" (keyup)="applyFilter()">
@@ -37,6 +39,7 @@
                     </button>
                 </mat-form-field>
                 &nbsp;&nbsp;
+
                 <button mat-raised-button color="primary" (click)="FileInput.click()">
                     <mat-icon>cloud_upload</mat-icon>
                     Import Excel

@@ -16,9 +16,16 @@ export class PromotionService {
    */
   getpromotions():Observable<any[]>{ return this.httpClient.get<any[]>(url+'promotions');}
 
+    /**
+   * 
+   * @returns une liste de promotions en lui donnat l'annee
+   */
+    getpromotionsByAnnee(annee:any):Observable<any[]>{ return this.httpClient.get<any[]>(`${url+'anneeUniv/promotions/'}?annee=${annee}`); }
+
+
   /**
    * 
    * @returns une liste des années 
    */
-  getannees():Observable<any[]>  { return this.httpClient.get<any[]>(url+'annees');}
+  getannees():Observable<any[]>  { return this.httpClient.get<any[]>(url+'anneesAll');}
 }
