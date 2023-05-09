@@ -79,15 +79,31 @@ public class EtudiantController {
 	}
 	
 	//http://localhost:8080/api/etudiants/note/niveau/?nom=MQJQZ&prenom=EHC&niveau=4A
-	@GetMapping("/note/niveau")
-	public List<Note> getNoteByNiveau(String nom,String prenom,String niveau) {
-		return etudiantService.getNoteAnnee(nom, prenom, niveau);
-	}
+//	@GetMapping("/note/niveau")
+//	public List<Note> getNoteByNiveau(String nom,String prenom,String niveau) {
+//		return etudiantService.getNoteAnnee(nom, prenom, niveau);
+//	}
 	
 	//http://localhost:8080/api/etudiants/note/semestre/?nom=MQJQZ&prenom=EHC&sem=SEM 7
 	@GetMapping("/note/semestre")
-	public List<Note> getNoteBySemestre(String nom,String prenom,String sem) {
-		return etudiantService.getNoteSemestre(nom, prenom, sem);
+	public List<Object[]> getNoteBySemestre(String promo,String anneeUniv) {
+		if(promo.toLowerCase().startsWith("3a")) {
+			List<Object[]> list= etudiantService.getNoteSemestre("SEM 5", promo, anneeUniv);
+			list.addAll(etudiantService.getNoteSemestre("SEM 6", promo, anneeUniv));
+			return list;
+		}else if(promo.toLowerCase().startsWith("4a"))
+		{
+			List<Object[]> list= etudiantService.getNoteSemestre("SEM 7", promo, anneeUniv);
+			list.addAll(etudiantService.getNoteSemestre("SEM 8", promo, anneeUniv));
+			return list;
+		}
+		else if(promo.toLowerCase().startsWith("5a"))
+		{
+			List<Object[]> list= etudiantService.getNoteSemestre("SEM 9", promo, anneeUniv);
+			list.addAll(etudiantService.getNoteSemestre("SEM 10", promo, anneeUniv));
+			return list;
+		}
+		return null;
 	}
 	//http://localhost:8080/api/etudiants/note/unite/?nom=MQJQZ&prenom=EHC&codeUnite=JIN7U1B
 	@GetMapping("/note/unite")
@@ -124,19 +140,19 @@ public class EtudiantController {
 	
 	//http://localhost:8080/api/etudiants/moyenne/?promo=4AFISA&annee=2021/2022
 	@GetMapping("/moyenne")
-	public List<Etudiant> moyenneModulesEtudiantsByPromo(String promo, String annee){
+	public List<Object[]> moyenneModulesEtudiantsByPromo(String promo, String annee){
 		if(promo.equals("3A")) {
-			List<Etudiant> etudiants = etudiantService.getEtudiantsMoyenneModules("3afise", annee);
+			List<Object[]> etudiants = etudiantService.getEtudiantsMoyenneModules("3afise", annee);
 			etudiants.addAll(etudiantService.getEtudiantsMoyenneModules("3afisa", annee));
 			return etudiants;
 		}
 		if(promo.equals("4A")) {
-			List<Etudiant> etudiants = etudiantService.getEtudiantsMoyenneModules("4afise", annee);
+			List<Object[]> etudiants = etudiantService.getEtudiantsMoyenneModules("4afise", annee);
 			etudiants.addAll(etudiantService.getEtudiantsMoyenneModules("4afisa", annee));
 			return etudiants;
 		}
 		if(promo.equals("5A")) {
-			List<Etudiant> etudiants = etudiantService.getEtudiantsMoyenneModules("5afise", annee);
+			List<Object[]> etudiants = etudiantService.getEtudiantsMoyenneModules("5afise", annee);
 			etudiants.addAll(etudiantService.getEtudiantsMoyenneModules("5afisa", annee));
 			return etudiants;
 		}
@@ -160,5 +176,10 @@ public class EtudiantController {
 	@GetMapping("/listeRedoublant") 
 	public List<Object[]> listeRattrapagesEtudiant(String promo, String annee){
 		return etudiantService.getRedoublantsByPromotion(promo, annee);
+	}
+	
+	@GetMapping("/notes/unite/etudiant") 
+	public List<Note> notesUniteByEtudiant(String code, String numero){
+		return noteService.getNoteByMatiereUnite(code, numero);
 	}
 }

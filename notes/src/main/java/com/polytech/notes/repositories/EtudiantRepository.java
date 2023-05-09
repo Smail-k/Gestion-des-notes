@@ -20,10 +20,17 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	Etudiant findEtudiantByNumeroAndNotesAnnee(String numero,String annee);
 	Etudiant findEtudiantByNomAndNotesAnnee(String nom,String annee);
 	Etudiant getEtudiantByNomAndPrenom(String nom,String prenom);
+	@Query("select e from Etudiant e where e.nom=:nom and e.prenom=:prenom and e.promotion.annee.annee=:annee")
+	Etudiant getEtudiantByPromotionAndAnneeUniv(String nom,String prenom,String annee);
+	 
 	@Query("select e from Etudiant e where e.promotion.promo=:p AND e.promotion.annee.annee=:annee")
 	List<Etudiant> getEtudiantsByPromotion(String p,String annee);
 	//List<Etudiant> findEtudiantsByPromotionAndAnnee(Promotion p,String annee);
 	List<Etudiant> findEtudiantByPromotionPromoAndNotesAnneeAndNotesSituation(String promo,String annee,boolean situation);
+	
+	@Query("select e.nom,e.prenom,e.numero,n.note,u.code from Etudiant e join e.notes n join n.unite u where n.matiere is NULL AND"
+			+ " e.promotion.promo=:promo AND e.promotion.annee.annee=:annee")// AND n.annee=:annee
+	List<Object[]> getListeEtudiantsMoyennesModules(String promo,String annee);
 	
 	@Query("select distinct annee from Etudiant")
 	List<String> findAnneeUniversitaires();
@@ -39,4 +46,5 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 
 	@Query("SELECT e.numero,e.nom, e.prenom FROM Note n JOIN n.etudiant e WHERE n.unite IS NOT NULL AND n.situation = 0 AND n.session = 'rattrapage' AND e.promotion.annee.annee = :annee AND e.promotion.promo=:promo")
 	List<Object[]> etudiantsRedoublants(String promo,String annee);
+	
 }

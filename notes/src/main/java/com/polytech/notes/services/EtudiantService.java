@@ -18,15 +18,15 @@ public interface EtudiantService {
 	Etudiant getEtudiantByNumero(String numero); 
 	Etudiant getNoteEtudiantByNumero(String numero,String annee);
 	Etudiant getNoteEtudiantByNom(String nom,String annee);
-	List<Note> getNoteSemestre(String nom,String prenom,String sem);
-	List<Note> getNoteAnnee(String nom,String prenom,String niveau);
+	List<Object[]> getNoteSemestre(String nom,String prenom,String sem);
+	//List<Note> getNoteAnnee(String nom,String prenom,String niveau);
 	
 	List<Etudiant> getEtudiants(String p,String annee);
 	List<String> getAnneeUniversitaires();
 	List<String> getPromotions();
 	List<Etudiant> getAll();
 	String lastEtudiantNumero();
-	List<Etudiant> getEtudiantsMoyenneModules(String p, String annee);
+	List<Object[]> getEtudiantsMoyenneModules(String p, String annee);
 	List<Object[]> getEtudiantRattrapage(String promo,String annee);
 	List<Object[]> getRedoublantsByPromotion(String promo,String annee);
 }

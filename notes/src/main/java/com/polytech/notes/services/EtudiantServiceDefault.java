@@ -62,65 +62,64 @@ public class EtudiantServiceDefault implements EtudiantService{
 		return repository.findEtudiantByNomAndNotesAnnee(nom, annee);
 	}
 	
-	public List<Note> getNoteAnnee(String nom,String prenom,String niveau) { //niveau : 3A,4A,5A
-		List<Note> notes;
-		Note n;
-		switch (niveau) {
-		case "3A":
-			notes= getNoteSemestre(nom,prenom,"SEM 5");
-			n = notes.get(notes.size()-1);
-			notes.remove(notes.size()-1);
-			notes.addAll(getNoteSemestre(nom,prenom,"SEM 6"));
-			notes.add(notes.size()-1, n);
-			break;
-		case "4A":
-			notes= getNoteSemestre(nom,prenom,"SEM 7");
-			n = notes.get(notes.size()-1);
-			notes.remove(notes.size()-1);
-			notes.addAll(getNoteSemestre(nom,prenom,"SEM 8"));
-			notes.add(notes.size()-1, n);
-			break;
-		case "5A":
-			notes= getNoteSemestre(nom,prenom,"SEM 9");
-			n = notes.get(notes.size()-1);
-			notes.remove(notes.size()-1);
-			notes.addAll(getNoteSemestre(nom,prenom,"SEM 10"));
-			notes.add(notes.size()-1, n);
-			break;
-		default:
-			return null;
-		}
-		Note finale = new Note();
-		finale.setNote((notes.get(notes.size()-2).getNote()+notes.get(notes.size()-1).getNote())/2);
-		notes.add(finale);
-		return notes;
-	}
+//	public List<Note> getNoteAnnee(String nom,String prenom,String niveau) { //niveau : 3A,4A,5A
+//		List<Note> notes;
+//		Note n;
+//		switch (niveau) {
+//		case "3A":
+//			notes= getNoteSemestre(nom,prenom,"SEM 5");
+//			n = notes.get(notes.size()-1);
+//			notes.remove(notes.size()-1);
+//			notes.addAll(getNoteSemestre(nom,prenom,"SEM 6"));
+//			notes.add(notes.size()-1, n);
+//			break;
+//		case "4A":
+//			notes= getNoteSemestre(nom,prenom,"SEM 7");
+//			n = notes.get(notes.size()-1);
+//			notes.remove(notes.size()-1);
+//			notes.addAll(getNoteSemestre(nom,prenom,"SEM 8"));
+//			notes.add(notes.size()-1, n);
+//			break;
+//		case "5A":
+//			notes= getNoteSemestre(nom,prenom,"SEM 9");
+//			n = notes.get(notes.size()-1);
+//			notes.remove(notes.size()-1);
+//			notes.addAll(getNoteSemestre(nom,prenom,"SEM 10"));
+//			notes.add(notes.size()-1, n);
+//			break;
+//		default:
+//			return null;
+//		}
+//		Note finale = new Note();
+//		finale.setNote((notes.get(notes.size()-2).getNote()+notes.get(notes.size()-1).getNote())/2);
+//		notes.add(finale);
+//		return notes;
+//	}
 	
-	public List<Note> getNoteSemestre(String nom,String prenom,String sem) {
-		Double noteFinale=0.0;
-		Double totalCoefficient=1.0;
-		Etudiant e= repository.getEtudiantByNomAndPrenom(nom, prenom);
-		List<Note> notes = e.getNotes();
-		if(notes.size()==0)
-			return null;
-		List<Note> notesSemestre = new Vector<Note>();
-		for (Note note : notes) {
-			if(note.getUnite()!=null && note.getUnite().getSemestre().getNom().equals(sem)) {
-				noteFinale+= note.getNote()*note.getUnite().getCoefficient();
-				notesSemestre.add(note);
-				if(totalCoefficient==1.0)
-					totalCoefficient=note.getUnite().getSemestre().getSemestreCoefficient();
-			}else if(note.getUnite()==null && note.getMatiere().getUnite().getSemestre().getNom().equals(sem)) {
-				notesSemestre.add(note);
-				
+	public List<Object[]> getNoteSemestre(String sem,String promo,String anneeUniv) {
+		List<Etudiant> list= repository.getEtudiantsByPromotion(promo, anneeUniv);
+		List<Object[]> resultats = new Vector<Object[]>();
+		for (Etudiant etudiant : list) {
+			Double noteFinale=0.0;
+			Double totalCoefficient=1.0;
+			Etudiant e= repository.getEtudiantByPromotionAndAnneeUniv(etudiant.getNom(), etudiant.getPrenom(),anneeUniv);
+			List<Note> notes = e.getNotes();
+			if(notes.size()==0)
+				return null;
+			for (Note note : notes) {
+				if(note.getUnite()!=null && note.getUnite().getSemestre().getNom().equals(sem)) {
+					noteFinale+= note.getNote()*note.getUnite().getCoefficient();
+					if(totalCoefficient==1.0)
+						totalCoefficient=note.getUnite().getSemestre().getSemestreCoefficient();
+				}
 			}
+			if(totalCoefficient!=1.0) {
+				Object [] resEtudiant = new Object[] {etudiant.getNom(),etudiant.getPrenom(),etudiant.getNumero(),noteFinale/totalCoefficient,sem};
+				resultats.add(resEtudiant);
+			}
+			
 		}
-		
-		Note n = new Note(); 
-		n.setNote(noteFinale/totalCoefficient);
-		//System.out.println(totalCoefficient);
-		notesSemestre.add(n);
-		return notesSemestre;
+		return resultats;
 	}
 
 	@Override
@@ -169,20 +168,23 @@ public class EtudiantServiceDefault implements EtudiantService{
 		return Integer.parseInt(repository.findLastNumero())+1+"";
 	}
 	@Override
-	public List<Etudiant> getEtudiantsMoyenneModules(String p, String annee) {
-		List<Etudiant> etudiants = repository.getEtudiantsByPromotion(p, annee);
-		List<Note> list ;
-		for (Etudiant etudiant : etudiants) {
-			list = new Vector<Note>();
-			for (Note n : etudiant.getNotes()) {
-				if(n.getMatiere()==null) {
-					//etudiant.getNotes().remove(n);
-					list.add(n);
-				}
-			}
-			etudiant.setNotes(list);
-		}
-		return etudiants;
+	public List<Object[]> getEtudiantsMoyenneModules(String p, String annee) {
+//		List<Etudiant> etudiants = repository.getEtudiantsByPromotion(p, annee);
+//		List<Note> list ;
+//		for (Etudiant etudiant : etudiants) {
+//			list = new Vector<Note>();
+//			for (Note n : etudiant.getNotes()) {
+//				System.out.println(n.getMatiere()+"---");
+//				if(n.getMatiere()==null) {
+//					System.out.println("///////////////");
+//					//etudiant.getNotes().remove(n);
+//					list.add(n);
+//				}
+//			}
+//			etudiant.setNotes(list);
+//		}
+//		return etudiants;
+		return repository.getListeEtudiantsMoyennesModules(p,annee);
 	}
 
 	@Override

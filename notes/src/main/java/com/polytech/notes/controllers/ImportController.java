@@ -134,7 +134,7 @@ public class ImportController {
 				n=new Note();
 				n.setNote(noteModule);
 				n.setEtudiant(note.getEtudiant());
-				n.setAnnee(note.getAnnee());
+				n.setAnnee(note.getEtudiant().getPromotion().getPromo());
 				n.setUnite(note.getMatiere().getUnite());
 				n.setSituation(noteModule>=10 ? true : false);
 				if(noteModule>=10) //meme si >=10 on verifie la note eliminatoire
@@ -147,6 +147,7 @@ public class ImportController {
 				n.setNote(noteModule);
 				noteService.saveNote(n);
 			}
+			
 		}
 		
 		return test==null ? "erreur d'ajout de certaines notes !" : "notes bien ajoutées";
