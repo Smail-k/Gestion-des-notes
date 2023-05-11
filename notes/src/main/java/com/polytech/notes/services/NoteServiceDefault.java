@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.polytech.notes.models.Matiere;
 import com.polytech.notes.models.Note;
+import com.polytech.notes.models.Session;
 import com.polytech.notes.models.Unite;
 import com.polytech.notes.repositories.NoteRepository;
 
@@ -27,13 +28,6 @@ public class NoteServiceDefault implements NoteService{
 
 	@Override
 	public Note saveNote(Note note) {
-		Note n=null;
-		if(note.getMatiere()!=null)
-			n = getNoteEtudiantByMatiere(note.getEtudiant().getNumero(), note.getMatiere().getCode());
-		if(n!=null) {
-			n.setNote(note.getNote());
-			return noteRepository.save(n);
-		}
 		return noteRepository.save(note);
 	}
 
@@ -54,5 +48,10 @@ public class NoteServiceDefault implements NoteService{
 	@Override
 	public Note getTotalNoteUnite(String unite,String nom,String prenom) {
 		return noteRepository.findNoteByUniteCodeAndEtudiantNomAndEtudiantPrenom(unite,nom, prenom);
+	}
+
+	@Override
+	public Note getNoteEtudiantBySession(String code, Session session, String numero) {
+		return noteRepository.getNoteEtudiantBySession(code, session, numero);
 	}
 }

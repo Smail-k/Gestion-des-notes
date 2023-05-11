@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.polytech.notes.models.AnneeUniversitaire;
 import com.polytech.notes.models.Promotion;
+import com.polytech.notes.repositories.AnneeUniversitaireRepository;
 import com.polytech.notes.repositories.PromotionRepository;
 import com.polytech.notes.services.EtudiantService;
 
@@ -20,9 +22,12 @@ public class PromotionController {
 	@Autowired
 	private PromotionRepository rep;
 	
-	@GetMapping("/annees")
-	public List<String> getAnneeUniversitaires(){
-		return service.getAnneeUniversitaires();
+	@Autowired
+	private AnneeUniversitaireRepository repAnneeUniv;
+	
+	@GetMapping("/anneesAll")
+	public List<AnneeUniversitaire> getAnneeUniversitaires(){
+		return repAnneeUniv.findAll();
 	}
 	
 	@GetMapping("/promotions")

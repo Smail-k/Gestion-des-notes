@@ -104,17 +104,23 @@ public class ImportController {
 	@PostMapping("excel/note")
 	public String importNotes(@RequestParam("file") MultipartFile excel,@RequestParam("session") String session) {
 		ExcelParser parser = new ExcelParser();
-		parser.importNotes(excel);
+		parser.importNotes(excel,session);
 		List<Note> notes = parser.getNotes();
 		Note test=null;
 		for (Note note : notes) {
-			note.setEtudiant(etudiantService.getEtudiantByNumero(note.getEtudiant().getNumero()));
+			Etudiant e = etudiantService.getEtudiantByNumero(note.getEtudiant().getNumero());
+			note.setEtudiant(e);
 			note.setMatiere(matiereService.findMatiereByCode(note.getMatiere().getCode()));
 			//note.setUnite(note.getMatiere().getUnite());
+			note.setAnnee(e.getPromotion().getAnnee().getAnnee());
 			note.setSituation(note.getNote()<6 ? false : true);
 			note.setSession(session.equals("normale") ? Session.normale : Session.rattrapage);
 			test = noteService.saveNote(note);
+			if(session.equals("rattrapage"))
+				System.out.println(test.getId()+"--/////////-"+test.getSession());
 		}
+		if(session.equals("rattrapage"))
+			System.out.println(notes.size()+"****");
 		for (Note note : notes) {
 			String uniteCode= note.getMatiere().getUnite().getCode();
 			String etudiantNumero= note.getEtudiant().getNumero();
@@ -125,16 +131,28 @@ public class ImportController {
 			double noteModule=0;
 			boolean noNoteEliminatoire=true;
 			for (Note noteMatiere : list) {
-				noteModule+=noteMatiere.getNote()*noteMatiere.getMatiere().getCoefficient();
-				if(noteMatiere.getNote()<6)
-					noNoteEliminatoire=false; //il ya une note eliminatoire dans cette ue
+				
+				if(noteMatiere.getNote()<10 && noteMatiere.getSession()==Session.normale) {
+					
+					Note noteRatt= noteService.getNoteEtudiantBySession(noteMatiere.getMatiere().getCode(),Session.rattrapage,noteMatiere.getEtudiant().getNumero());
+					if(noteRatt==null) {
+						noteModule+=noteMatiere.getNote()*noteMatiere.getMatiere().getCoefficient();
+						if(noteMatiere.getNote()<6)
+							noNoteEliminatoire=false;
+					}
+				}else {
+					noteModule+=noteMatiere.getNote()*noteMatiere.getMatiere().getCoefficient();
+					if(noteMatiere.getNote()<6)
+						noNoteEliminatoire=false; //il ya une note eliminatoire dans cette ue
+				}
 			}
 			noteModule/=note.getMatiere().getUnite().getCoefficient();
 			if(n==null) {
+				
 				n=new Note();
 				n.setNote(noteModule);
 				n.setEtudiant(note.getEtudiant());
-				n.setAnnee(note.getEtudiant().getPromotion().getPromo());
+				n.setAnnee(note.getEtudiant().getPromotion().getAnnee().getAnnee());
 				n.setUnite(note.getMatiere().getUnite());
 				n.setSituation(noteModule>=10 ? true : false);
 				if(noteModule>=10) //meme si >=10 on verifie la note eliminatoire
@@ -145,6 +163,10 @@ public class ImportController {
 			}
 			else {
 				n.setNote(noteModule);
+				n.setSituation(noteModule>=10 ? true : false);
+				if(noteModule>=10) //meme si >=10 on verifie la note eliminatoire
+					n.setSituation(noNoteEliminatoire); // s'il ya note eliminatoire alors pas validée
+				n.setSession(session.equals("normale") ? Session.normale : Session.rattrapage);
 				noteService.saveNote(n);
 			}
 			

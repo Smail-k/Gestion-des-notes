@@ -84,7 +84,6 @@ public class EtudiantController {
 //		return etudiantService.getNoteAnnee(nom, prenom, niveau);
 //	}
 	
-	//http://localhost:8080/api/etudiants/note/semestre/?nom=MQJQZ&prenom=EHC&sem=SEM 7
 	@GetMapping("/note/semestre")
 	public List<Object[]> getNoteBySemestre(String promo,String anneeUniv) {
 		if(promo.toLowerCase().startsWith("3a")) {

@@ -98,4 +98,10 @@ public class Note {
 	public void setSession(Session session) {
 		this.session = session;
 	}
+
+	@Override
+	public String toString() {
+		return "Note [id=" + id + ", note=" + note + "]";
+	}
+	
 }

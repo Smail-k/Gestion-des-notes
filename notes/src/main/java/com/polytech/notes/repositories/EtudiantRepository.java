@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.polytech.notes.models.Etudiant;
+import com.polytech.notes.models.Note;
 import com.polytech.notes.models.Promotion;
 
 public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
@@ -20,8 +21,8 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	Etudiant findEtudiantByNumeroAndNotesAnnee(String numero,String annee);
 	Etudiant findEtudiantByNomAndNotesAnnee(String nom,String annee);
 	Etudiant getEtudiantByNomAndPrenom(String nom,String prenom);
-	@Query("select e from Etudiant e where e.nom=:nom and e.prenom=:prenom and e.promotion.annee.annee=:annee")
-	Etudiant getEtudiantByPromotionAndAnneeUniv(String nom,String prenom,String annee);
+	@Query("select e.notes from Etudiant e where e.nom=:nom and e.prenom=:prenom and e.promotion.annee.annee=:annee")
+	List<Note> getEtudiantByPromotionAndAnneeUniv(String nom,String prenom,String annee);
 	 
 	@Query("select e from Etudiant e where e.promotion.promo=:p AND e.promotion.annee.annee=:annee")
 	List<Etudiant> getEtudiantsByPromotion(String p,String annee);
@@ -32,7 +33,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 			+ " e.promotion.promo=:promo AND e.promotion.annee.annee=:annee")// AND n.annee=:annee
 	List<Object[]> getListeEtudiantsMoyennesModules(String promo,String annee);
 	
-	@Query("select distinct annee from Etudiant")
+	@Query("select distinct e.annee.annee from Etudiant e")
 	List<String> findAnneeUniversitaires();
 	
 	@Query("select distinct promotion from Etudiant")

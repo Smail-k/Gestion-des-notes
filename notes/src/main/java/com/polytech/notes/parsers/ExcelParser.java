@@ -131,7 +131,7 @@ public class ExcelParser {
 		}
 	}
 	
-	public String importNotes(MultipartFile excel) {
+	public String importNotes(MultipartFile excel,String session) {
 		XSSFWorkbook workbook;
 		try {
 			workbook = new XSSFWorkbook(excel.getInputStream());
@@ -174,10 +174,11 @@ public class ExcelParser {
 					} catch (Exception e) {
 						noteValue=0.0;
 					}
+					if(noteValue==0.0 && session.equals("rattrapage"))
+						continue;
 					note.setNote(noteValue);
 					note.setMatiere(m);
 					note.setSituation(note.getNote()>=6.0 ? true : false);
-					note.setAnnee(Year.now().getValue()+"");
 					Etudiant e = new Etudiant();
 					e.setNumero((row.getCell(0)+"").trim());
 					e.setNom((row.getCell(1)+"").trim());

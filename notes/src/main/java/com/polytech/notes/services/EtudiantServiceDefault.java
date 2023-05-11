@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.polytech.notes.models.Etudiant;
 import com.polytech.notes.models.Note;
 import com.polytech.notes.models.Promotion;
+import com.polytech.notes.models.Session;
 import com.polytech.notes.repositories.EtudiantRepository;
 
 @Service
@@ -99,15 +100,19 @@ public class EtudiantServiceDefault implements EtudiantService{
 	public List<Object[]> getNoteSemestre(String sem,String promo,String anneeUniv) {
 		List<Etudiant> list= repository.getEtudiantsByPromotion(promo, anneeUniv);
 		List<Object[]> resultats = new Vector<Object[]>();
+		System.out.println(list.size()+"***");
 		for (Etudiant etudiant : list) {
 			Double noteFinale=0.0;
 			Double totalCoefficient=1.0;
-			Etudiant e= repository.getEtudiantByPromotionAndAnneeUniv(etudiant.getNom(), etudiant.getPrenom(),anneeUniv);
-			List<Note> notes = e.getNotes();
+			List<Note> notes= repository.getEtudiantByPromotionAndAnneeUniv(etudiant.getNom(), etudiant.getPrenom(),anneeUniv);
 			if(notes.size()==0)
 				return null;
 			for (Note note : notes) {
-				if(note.getUnite()!=null && note.getUnite().getSemestre().getNom().equals(sem)) {
+				if(note.getUnite()!=null && note.getUnite().getSemestre().getNom().equals(sem) && note.isSituation() && note.getSession()==Session.normale) {//isSituation = validé
+					noteFinale+= note.getNote()*note.getUnite().getCoefficient();
+					if(totalCoefficient==1.0)
+						totalCoefficient=note.getUnite().getSemestre().getSemestreCoefficient();
+				}else if(note.getUnite()!=null && note.getUnite().getSemestre().getNom().equals(sem) && note.getSession()==Session.rattrapage) {
 					noteFinale+= note.getNote()*note.getUnite().getCoefficient();
 					if(totalCoefficient==1.0)
 						totalCoefficient=note.getUnite().getSemestre().getSemestreCoefficient();
