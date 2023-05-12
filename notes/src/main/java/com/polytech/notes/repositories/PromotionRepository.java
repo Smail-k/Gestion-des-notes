@@ -16,4 +16,7 @@ public interface PromotionRepository extends JpaRepository<Promotion, String>{
 	
 	@Query("select promo from Promotion p where p.annee.annee=:annee")
 	List<String> getPromotionsByAnnee(String annee);
+	
+	@Query("select p from Promotion p where p.promo=:promo and p.annee.annee=:annee")
+	Promotion getPromotionByPromoAndAnnee(String promo,String annee);
 }

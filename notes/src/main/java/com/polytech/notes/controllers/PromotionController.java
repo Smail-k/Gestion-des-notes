@@ -40,4 +40,9 @@ public class PromotionController {
 		return rep.getPromotionsByAnnee(annee);
 	}
 	
+	@GetMapping("/promoAnnee")
+	public Promotion getPromotion(String promo,String annee){
+		return rep.getPromotionByPromoAndAnnee(promo,annee);
+	}
+	
 }
