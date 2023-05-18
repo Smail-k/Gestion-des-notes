@@ -17,7 +17,13 @@ public interface NoteRepository extends JpaRepository<Note, Long>{
 	Note findNoteByEtudiantNumeroAndMatiereCode(String numero,String code); 
 	Note findByEtudiantNomAndEtudiantPrenomAndMatiereCode(String nom,String prenom,String code); 
 	Note findNoteByUniteCodeAndEtudiantNumero(String code,String numero);
-	List<Note> findNoteByMatiereUniteCodeAndEtudiantNumero(String code,String numero);
+	@Query("select n.etudiant.nom,n.etudiant.prenom,n.matiere.libelle,n.note from Note n where "
+			+ "n.matiere.unite.code=:code and n.etudiant.numero=:numero and n.annee=:annee")
+	List<Object[]> getNoteMatieresOfUnite(String code,String numero,String annee);
+	@Query("select n from Note n where "
+			+ "n.matiere.unite.code=:code and n.etudiant.numero=:numero and n.annee=:annee")
+	List<Note> getListNoteMatieresOfUnite(String code,String numero,String annee);
+	
 	List<Note> findNoteByMatiereUniteCodeAndEtudiantNomAndEtudiantPrenom(String u,String nom,String prenom);
 	Note findNoteByUniteCodeAndEtudiantNomAndEtudiantPrenom(String code,String nom,String prenom);
 	//List<Note> findNoteByUnite

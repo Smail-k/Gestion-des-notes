@@ -48,4 +48,15 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	@Query("SELECT e.numero,e.nom, e.prenom FROM Note n JOIN n.etudiant e WHERE n.unite IS NOT NULL AND n.situation = 0 AND n.session = 'rattrapage' AND e.promotion.annee.annee = :annee AND e.promotion.promo=:promo")
 	List<Object[]> etudiantsRedoublants(String promo,String annee);
 	
+	@Query("select n.unite.code from Note n where n.etudiant.promotion.annee.annee=:annee and n.etudiant.numero=:numero and n.situation=0 and n.session='normale'")
+	List<String> unitesARattrapper(String annee,String numero);
+	
+	@Query("select n.matiere.libelle from Note n where n.etudiant.promotion.annee.annee=:annee and n.note<10 and n.etudiant.numero=:numero and n.session='normale' and n.matiere.unite.code=:codeUnite and n.unite is null")
+	List<String> matieresRatt(String annee,String numero,String codeUnite);
+	
+	@Query("select e.nom,e.prenom,e.numero from Note n join n.etudiant e where e.numero not in (select e2.numero from Note n2 join n2.etudiant e2 where n2.situation=0 and n2.session='rattrapage' and n2.unite is not null)"
+			+ " and n.etudiant.promotion.annee.annee=:annee and n.etudiant.promotion.promo=:promo group by e")
+	List<Object[]> listeAdmis(String annee,String promo);
+	
+	
 }

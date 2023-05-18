@@ -105,14 +105,17 @@ public class EtudiantServiceDefault implements EtudiantService{
 			Double noteFinale=0.0;
 			Double totalCoefficient=1.0;
 			List<Note> notes= repository.getEtudiantByPromotionAndAnneeUniv(etudiant.getNom(), etudiant.getPrenom(),anneeUniv);
+			System.out.println(notes.size()+" : size");
 			if(notes.size()==0)
 				return null;
 			for (Note note : notes) {
+				System.out.println((note.getUnite()!=null && note.getUnite().getSemestre().getNom().equals(sem))+"----");
 				if(note.getUnite()!=null && note.getUnite().getSemestre().getNom().equals(sem) && note.isSituation() && note.getSession()==Session.normale) {//isSituation = validé
 					noteFinale+= note.getNote()*note.getUnite().getCoefficient();
 					if(totalCoefficient==1.0)
 						totalCoefficient=note.getUnite().getSemestre().getSemestreCoefficient();
 				}else if(note.getUnite()!=null && note.getUnite().getSemestre().getNom().equals(sem) && note.getSession()==Session.rattrapage) {
+					System.out.println("..---....");
 					noteFinale+= note.getNote()*note.getUnite().getCoefficient();
 					if(totalCoefficient==1.0)
 						totalCoefficient=note.getUnite().getSemestre().getSemestreCoefficient();
@@ -200,5 +203,19 @@ public class EtudiantServiceDefault implements EtudiantService{
 	@Override
 	public List<Object[]> getRedoublantsByPromotion(String promo,String annee) {
 		return repository.etudiantsRedoublants(promo, annee);
+	}
+
+	@Override
+	public List<String> listeRattrapagesEtudiant(String annee, String numero) {
+		List<String> list=new Vector<String>();
+		for (String unite : repository.unitesARattrapper(annee, numero)) {
+			list.addAll(repository.matieresRatt(annee, numero, unite));
+		} 
+		return list;
+	}
+
+	@Override
+	public List<Object[]> listeDesAdmis(String annee, String promo) {
+		return repository.listeAdmis(annee, promo);
 	}
 }

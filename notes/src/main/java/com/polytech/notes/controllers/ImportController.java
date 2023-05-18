@@ -127,7 +127,7 @@ public class ImportController {
 			
 			Note n = noteService.getNoteByUniteCodeAndEtudiantNumero(uniteCode, etudiantNumero);
 			
-			List<Note> list = noteService.getNoteByMatiereUnite(uniteCode, etudiantNumero);
+			List<Note> list = noteService.getListNoteByMatiereUnite(uniteCode, etudiantNumero,note.getEtudiant().getPromotion().getAnnee().getAnnee());
 			double noteModule=0;
 			boolean noNoteEliminatoire=true;
 			for (Note noteMatiere : list) {

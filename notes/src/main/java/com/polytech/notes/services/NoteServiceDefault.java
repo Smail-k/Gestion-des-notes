@@ -37,8 +37,8 @@ public class NoteServiceDefault implements NoteService{
 	}
 	
 	@Override
-	public List<Note> getNoteByMatiereUnite(String code,String numero) {
-		return noteRepository.findNoteByMatiereUniteCodeAndEtudiantNumero(code,numero);
+	public List<Object[]> getNoteByMatiereUnite(String code,String numero,String annee) {
+		return noteRepository.getNoteMatieresOfUnite(code,numero,annee);
 	}
 	
 	@Override
@@ -53,5 +53,10 @@ public class NoteServiceDefault implements NoteService{
 	@Override
 	public Note getNoteEtudiantBySession(String code, Session session, String numero) {
 		return noteRepository.getNoteEtudiantBySession(code, session, numero);
+	}
+
+	@Override
+	public List<Note> getListNoteByMatiereUnite(String code, String numero, String annee) {
+		return noteRepository.getListNoteMatieresOfUnite(code, numero, annee);
 	}
 }

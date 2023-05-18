@@ -159,13 +159,13 @@ public class EtudiantController {
 	}
 	
 	//http://localhost:8080/api/etudiants/rattrapages/?annee=2023&promo=4afise
-	@GetMapping("/rattrapages") //etidiants qui vont passer le ratt
+	@GetMapping("/rattrapages") //etudiants qui vont passer le ratt
 	public List<RattrapageResponse> listeRattrapages(String promo, String annee){
 		List<Object[]> etudiants= etudiantService.getEtudiantRattrapage(promo,annee);
 		List<RattrapageResponse> ratts=new Vector<RattrapageResponse>();
 		for (Object[] etu : etudiants) {
 			RattrapageResponse res = new RattrapageResponse(etu[0]+"", etu[1]+"", etu[2]+"",
-					listeRattrapagesEtudiant(annee,etu[0]+""));
+					etudiantService.listeRattrapagesEtudiant(annee,etu[0]+""));
 			ratts.add(res);
 		}
 		return ratts;
@@ -173,12 +173,18 @@ public class EtudiantController {
 	 
 	//http://localhost:8080/api/etudiants/listeRedoublant/?annee=2023&promo=4afise
 	@GetMapping("/listeRedoublant") 
-	public List<Object[]> listeRattrapagesEtudiant(String promo, String annee){
+	public List<Object[]> listeRedoublant(String promo, String annee){
 		return etudiantService.getRedoublantsByPromotion(promo, annee);
 	}
 	
 	@GetMapping("/notes/unite/etudiant") 
-	public List<Note> notesUniteByEtudiant(String code, String numero){
-		return noteService.getNoteByMatiereUnite(code, numero);
+	public List<Object[]> notesUniteByEtudiant(String code, String numero,String annee){
+		return noteService.getNoteByMatiereUnite(code, numero,annee);
+	}
+	
+	//http://localhost:8080/api/etudiants/listeAdmis/?annee=2022/2023&promo=4afise
+	@GetMapping("/listeAdmis") 
+	public List<Object[]> listeDesAdmis(String promo, String annee){
+		return etudiantService.listeDesAdmis(annee, promo);
 	}
 }

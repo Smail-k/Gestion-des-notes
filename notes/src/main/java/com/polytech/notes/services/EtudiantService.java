@@ -29,4 +29,6 @@ public interface EtudiantService {
 	List<Object[]> getEtudiantsMoyenneModules(String p, String annee);
 	List<Object[]> getEtudiantRattrapage(String promo,String annee);
 	List<Object[]> getRedoublantsByPromotion(String promo,String annee);
+	List<String> listeRattrapagesEtudiant(String annee, String numero);
+	List<Object[]> listeDesAdmis(String annee,String promo);
 }

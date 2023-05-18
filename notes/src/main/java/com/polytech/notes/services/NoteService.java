@@ -16,7 +16,8 @@ public interface NoteService {
 	Note getNoteEtudiantByNomAndMatiere(String nom,String prenom,String code);
 	Note saveNote(Note note);
 	Note getNoteByUniteCodeAndEtudiantNumero(String code,String numero);
-	List<Note> getNoteByMatiereUnite(String code, String numero);
+	List<Object[]> getNoteByMatiereUnite(String code, String numero,String annee);
+	List<Note> getListNoteByMatiereUnite(String code, String numero,String annee);
 	List<Note> getNoteByUnite(String u, String nom, String prenom);
 	Note getTotalNoteUnite(String unite, String nom, String prenom);
 	Note getNoteEtudiantBySession(String code, Session s, String numero);

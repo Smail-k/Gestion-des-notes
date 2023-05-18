@@ -7,9 +7,9 @@ public class RattrapageResponse {
 	private String numeroEtudiant;
 	private String nom;
 	private String prenom;
-	private List<Object[]> matiereRatts;
+	private List<String> matiereRatts;
 	
-	public RattrapageResponse(String numeroEtudiant, String nom, String prenom, List<Object[]> matiereRatts) {
+	public RattrapageResponse(String numeroEtudiant, String nom, String prenom, List<String> matiereRatts) {
 		super();
 		this.numeroEtudiant = numeroEtudiant;
 		this.nom = nom;
@@ -35,10 +35,10 @@ public class RattrapageResponse {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	public List<Object[]> getMatiereRatts() {
+	public List<String> getMatiereRatts() {
 		return matiereRatts;
 	}
-	public void setMatiereRatts(List<Object[]> matiereRatts) {
+	public void setMatiereRatts(List<String> matiereRatts) {
 		this.matiereRatts = matiereRatts;
 	}
 	
