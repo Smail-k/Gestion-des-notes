@@ -104,6 +104,11 @@ public class EtudiantController {
 		}
 		return null;
 	}
+	//http://localhost:8080/api/etudiants/note/semestre/etudiant?promo=3afise&anneeUniv=2022/2023&sem=sem 5&numero=551176
+	@GetMapping("/note/semestre/etudiant")
+	public List<Object[]> getNoteBySemestre(String promo,String anneeUniv,String sem,String numero) {
+		return etudiantService.moyennesUniteBySem(promo, anneeUniv, sem, numero);
+	}
 	//http://localhost:8080/api/etudiants/note/unite/?nom=MQJQZ&prenom=EHC&codeUnite=JIN7U1B
 	@GetMapping("/note/unite")
 	public List<Note> getNoteOfModule(String nom,String prenom,String codeUnite) {
@@ -185,6 +190,13 @@ public class EtudiantController {
 	//http://localhost:8080/api/etudiants/listeAdmis/?annee=2022/2023&promo=4afise
 	@GetMapping("/listeAdmis") 
 	public List<Object[]> listeDesAdmis(String promo, String annee){
-		return etudiantService.listeDesAdmis(annee, promo);
+		return etudiantService.listeDesAdmisPrin(annee, promo);
 	}
+	
+	//http://localhost:8080/api/etudiants/listeAdmisRatt/?annee=2022/2023&promo=4afise
+	@GetMapping("/listeAdmisRatt") 
+	public List<Object[]> listeDesAdmisRatt(String promo, String annee){
+		return etudiantService.listeDesAdmisRatt(annee, promo);
+	}
+		
 }

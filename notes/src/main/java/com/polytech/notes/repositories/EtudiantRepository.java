@@ -26,12 +26,20 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	 
 	@Query("select e from Etudiant e where e.promotion.promo=:p AND e.promotion.annee.annee=:annee")
 	List<Etudiant> getEtudiantsByPromotion(String p,String annee);
+	
+	@Query("select e from Etudiant e where e.promotion.promo=:p AND e.promotion.annee.annee=:annee and e.numero=:numero")
+	Etudiant getEtudiantByPromotion(String p,String annee,String numero);
 	//List<Etudiant> findEtudiantsByPromotionAndAnnee(Promotion p,String annee);
 	List<Etudiant> findEtudiantByPromotionPromoAndNotesAnneeAndNotesSituation(String promo,String annee,boolean situation);
 	
 	@Query("select e.nom,e.prenom,e.numero,n.note,u.code from Etudiant e join e.notes n join n.unite u where n.matiere is NULL AND"
 			+ " e.promotion.promo=:promo AND e.promotion.annee.annee=:annee")// AND n.annee=:annee
 	List<Object[]> getListeEtudiantsMoyennesModules(String promo,String annee);
+	
+	@Query("select e.nom,e.prenom,e.numero,n.note,u.code from Etudiant e join e.notes n join n.unite u where n.matiere is NULL AND"
+			+ " u.semestre.nom=:sem AND e.numero=:numero AND "
+			+ "e.promotion.promo=:promo AND e.promotion.annee.annee=:annee")// AND n.annee=:annee
+	List<Object[]> getEtudiantMoyennesModulesBySem(String promo,String annee,String sem,String numero);
 	
 	@Query("select distinct e.annee.annee from Etudiant e")
 	List<String> findAnneeUniversitaires();
@@ -55,8 +63,12 @@ public interface EtudiantRepository extends JpaRepository<Etudiant, Long>{
 	List<String> matieresRatt(String annee,String numero,String codeUnite);
 	
 	@Query("select e.nom,e.prenom,e.numero from Note n join n.etudiant e where e.numero not in (select e2.numero from Note n2 join n2.etudiant e2 where n2.situation=0 and n2.session='rattrapage' and n2.unite is not null)"
+			+ " and e.numero in (select e4.numero from Note n4 join n4.etudiant e4 where n4.session='rattrapage')"
 			+ " and n.etudiant.promotion.annee.annee=:annee and n.etudiant.promotion.promo=:promo group by e")
-	List<Object[]> listeAdmis(String annee,String promo);
+	List<Object[]> listeAdmisApresRatt(String annee,String promo);
 	
-	
+	@Query("select e.nom,e.prenom,e.numero from Note n join n.etudiant e where e.numero not in (select e2.numero from Note n2 join n2.etudiant e2 where n2.situation=0 and n2.unite is not null)"
+			+ " and e.numero not in (select e4.numero from Note n4 join n4.etudiant e4 where n4.session='rattrapage')"
+			+ " and n.etudiant.promotion.annee.annee=:annee and n.etudiant.promotion.promo=:promo group by e")
+	List<Object[]> listeAdmisEnPrincipale(String annee,String promo);
 }

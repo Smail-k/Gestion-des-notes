@@ -130,6 +130,8 @@ public class EtudiantServiceDefault implements EtudiantService{
 		return resultats;
 	}
 
+	
+	
 	@Override
 	public List<Etudiant> getEtudiants(String p, String annee) {
 		List<Etudiant> etudiants; 
@@ -215,7 +217,18 @@ public class EtudiantServiceDefault implements EtudiantService{
 	}
 
 	@Override
-	public List<Object[]> listeDesAdmis(String annee, String promo) {
-		return repository.listeAdmis(annee, promo);
+	public List<Object[]> listeDesAdmisRatt(String annee, String promo) {
+		return repository.listeAdmisApresRatt(annee, promo);
 	}
+
+	@Override
+	public List<Object[]> listeDesAdmisPrin(String annee, String promo) {
+		return repository.listeAdmisEnPrincipale(annee, promo);
+	}
+	
+	public List<Object[]> moyennesUniteBySem(String promo,String annee,String sem,String numero) {
+		return repository.getEtudiantMoyennesModulesBySem(promo,annee,sem,numero);
+	}
+	
+	
 }

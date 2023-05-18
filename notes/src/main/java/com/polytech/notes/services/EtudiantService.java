@@ -20,8 +20,8 @@ public interface EtudiantService {
 	Etudiant getNoteEtudiantByNom(String nom,String annee);
 	List<Object[]> getNoteSemestre(String nom,String prenom,String sem);
 	//List<Note> getNoteAnnee(String nom,String prenom,String niveau);
-	
 	List<Etudiant> getEtudiants(String p,String annee);
+	List<Object[]> moyennesUniteBySem(String promo,String annee,String sem,String numero);
 	List<String> getAnneeUniversitaires();
 	List<String> getPromotions();
 	List<Etudiant> getAll();
@@ -30,5 +30,7 @@ public interface EtudiantService {
 	List<Object[]> getEtudiantRattrapage(String promo,String annee);
 	List<Object[]> getRedoublantsByPromotion(String promo,String annee);
 	List<String> listeRattrapagesEtudiant(String annee, String numero);
-	List<Object[]> listeDesAdmis(String annee,String promo);
+	List<Object[]> listeDesAdmisRatt(String annee,String promo);
+	List<Object[]> listeDesAdmisPrin(String annee,String promo);
+	
 }
