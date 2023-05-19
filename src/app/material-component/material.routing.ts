@@ -10,6 +10,7 @@ import { IsSignedGuard } from '../guards/is-signed.guard';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { NotesComponent } from './notes/notes.component';
 import { ConfigurationsComponent } from './configurations/configurations.component';
+import { RattrapageComponent } from './rattrapage/rattrapage.component';
 
 
 export const MaterialRoutes: Routes = [
@@ -42,6 +43,11 @@ export const MaterialRoutes: Routes = [
     canActivate:[IsSignedGuard],
     path: 'gestionDesUtilisateurs',
     component: GestionDesAdministrateursComponent
+  },
+  {
+    canActivate:[IsSignedGuard],
+    path: 'gestionDesRattrapages',
+    component: RattrapageComponent
   },
 
  

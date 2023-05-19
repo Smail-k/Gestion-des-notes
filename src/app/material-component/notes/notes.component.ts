@@ -10,6 +10,14 @@ import { NoteService } from 'src/app/services/note.service';
 import { PromotionService } from 'src/app/services/promotion.service';
 import { UniteService } from 'src/app/services/unite.service';
 
+export interface NoteSemestreElement {
+  nom: string;
+  prenom: string;
+  numero:number;
+  moyenne:number;
+  semestreLabel:string;
+}
+
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
@@ -23,6 +31,10 @@ export class NotesComponent implements OnInit, AfterViewInit {
     $('#dt-mat-id').DataTable();
   }
 
+
+  selectedYear:any;
+  selectedPromotion: any;
+  selectedSession: any;
 
   selectedValue!: string;
   selectedYearValue!: string;
@@ -48,22 +60,47 @@ export class NotesComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getAnnees();
-    this.getPromotions();
-    this.ListerEtudiants("Annee4","2021/2022")
+    //this.getPromotions();
   }
 
   ListerEtudiants(promo:any,annee:any):void{
-    if (promo=='Annee4') promo='4A';
-    if (promo=='Annee3') promo='3A';
-    if (promo=='Annee5') promo='5A';
-
-    this.notesr.listeEtudiant(promo,annee).subscribe(etuds => {
+    
+    this.notesr.listeNotesSemestre(promo,annee).subscribe(etuds => {
       this.etudiantsOb = etuds;
-      console.log(this.etudiantsOb);
+      console.log(etuds);
+
+      this.etudiantsOb = etuds.map(([nom, prenom, numero, moyenne, semestreLabel]): NoteSemestreElement => ({
+        nom,
+        prenom,
+        numero,
+        moyenne,
+        semestreLabel
+      }) );
+
+      
+      
       this.dataSource = new MatTableDataSource(this.etudiantsOb);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+ddlChange(ob: any): void {
+    const filterValue = ob.value;
+    this.selectedYear = filterValue;
+    this.getPromotions();
+    this.ListerEtudiants(this.selectedPromotion, this.selectedYear)
+  }
+
+  ddlPromoChange(ob: any): void {
+    const filterValue = ob.value;
+    this.selectedPromotion = filterValue;
+    this.ListerEtudiants(this.selectedPromotion, this.selectedYear)
+  }
+
+  ddlSessionChange(ob: any): void {
+    const filterValue = ob.value;
+    this.selectedSession = filterValue;
   }
 
 
@@ -74,6 +111,8 @@ export class NotesComponent implements OnInit, AfterViewInit {
     this.ps.getpromotions().subscribe(
       data => {
         this.promotions = data;
+        this.selectedPromotion = this.promotions[0];
+        this.ListerEtudiants(this.selectedPromotion, this.selectedYear)
       }, err => { console.log(err); });
   }
 
@@ -84,6 +123,9 @@ export class NotesComponent implements OnInit, AfterViewInit {
     this.ps.getannees().subscribe(
       data => {
         this.years = data;
+        this.selectedYear = this.years[0].annee;
+        this.selectedSession='principale';
+        this.getPromotions();
       },
       err => { console.log(err); }
     )
@@ -105,7 +147,11 @@ export class NotesComponent implements OnInit, AfterViewInit {
    * @param event 
    */
   onFileChanged(event: any) {
-    this.selectedFile = event.target.files[0];
+    console.log(this.selectedYear);
+    console.log(this.selectedPromotion);
+    console.log(this.selectedSession);
+    
+    /*this.selectedFile = event.target.files[0];
     // Récupération du fichier Excel
     this.file = event.target.files[0];
     const fd = new FormData();
@@ -113,7 +159,7 @@ export class NotesComponent implements OnInit, AfterViewInit {
     // Envoi de la requête POST
     this.es.importNotes(fd).subscribe(data => {
     }, err => { console.log(err); });
-    this.toastr.success('Importation avec Succées', 'La liste des notes est bien importée'); 
+    this.toastr.success('Importation avec Succées', 'La liste des notes est bien importée'); */
   }
 
   /**

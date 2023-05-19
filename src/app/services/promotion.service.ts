@@ -20,5 +20,5 @@ export class PromotionService {
    * 
    * @returns une liste des années 
    */
-  getannees():Observable<any[]>  { return this.httpClient.get<any[]>(url+'annees');}
+  getannees():Observable<any[]>  { return this.httpClient.get<any[]>(url+'anneesAll');}
 }

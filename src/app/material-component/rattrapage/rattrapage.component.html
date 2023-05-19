@@ -3,7 +3,7 @@
         <mat-card>
             <mat-card-content>
                 <div class="d-flex no-block align-items-center b-b m-b-30 p-b-15">
-                    <h4 class="font-medium m-b-0 m-t-0">Moyennes par semestres</h4>
+                    <h4 class="font-medium m-b-0 m-t-0">Etudiants éligibles au rattrapage</h4>
                 </div>
 
                 <!-- <mat-card-title>NOTES</mat-card-title> -->
@@ -41,19 +41,13 @@
                     </button>
                 </mat-form-field>
                 &nbsp;&nbsp;
-                
-                &nbsp;&nbsp;
-                <button mat-raised-button color="primary" (click)="FileInput.click()">
-                    <mat-icon>cloud_upload</mat-icon>
-                    Import Excel
-                    <input #FileInput  type="file" accept=".xls,.xlsx" (change)="onFileChanged($event)"  style="display: none" >
-                </button>
+            
 
                 <div class="mat-elevation-z8"> 
                     <mat-table [dataSource]='dataSource' matSort>
                     <ng-container matColumnDef="numero"> 
                         <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Numero </b> </mat-header-cell>
-                        <mat-cell *matCellDef="let etudiant">{{etudiant.numero}} </mat-cell>
+                        <mat-cell *matCellDef="let etudiant">{{etudiant.numeroEtudiant}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="nom" > 
                         <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Nom </b> </mat-header-cell>
@@ -63,22 +57,13 @@
                         <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Prenom </b></mat-header-cell>
                         <mat-cell *matCellDef="let etudiant">{{etudiant.prenom }} </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="code"> 
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Code </b></mat-header-cell>
-                        <mat-cell *matCellDef="let etudiant">{{ etudiant.semestreLabel }} </mat-cell>
-                    </ng-container>
-            
-                    <ng-container matColumnDef="note"> 
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Moyenne(UE) </b></mat-header-cell>
-                        <mat-cell *matCellDef="let etudiant">{{ etudiant.moyenne | number: '1.2-2' }} </mat-cell>
-                    </ng-container>
 
                     <ng-container matColumnDef="actions"> 
                         <mat-header-cell *matHeaderCellDef> <b> Actions </b></mat-header-cell>
                         <mat-cell *matCellDef="let etudiant"> 
             
-                            <button mat-icon-button color="primary">
-                                <mat-icon (click)="delete(etudiant)" aria-label="delete button icon">remove_red_eye</mat-icon>
+                            <button mat-icon-button color="primary" (click)="openDialog('Add', etudiant)">
+                                <mat-icon aria-label="delete button icon">remove_red_eye</mat-icon>
                             </button>
                         </mat-cell>
                     </ng-container>

@@ -18,9 +18,10 @@ import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import { LoginComponent } from './login/login.component';
 import { IsSignedGuard } from './guards/is-signed.guard';
+import { RattrapageDialogContentComponent } from './material-component/rattrapage/rattrapage.component';
 import { AuthinterceptorInterceptor } from './Interceptor/authinterceptor.interceptor';
 import {DataTablesModule} from 'angular-datatables';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
         FullComponent,
         SpinnerComponent,
         AppSidebarComponent,
-        LoginComponent
+        RattrapageDialogContentComponent,
+        LoginComponent,
     ],
     providers: [
         IsSignedGuard,
