@@ -3,19 +3,22 @@
     <div fxFlex.gt-sm="100%">
         <mat-card>
             <mat-card-content>
-                <form class="form-horizontal" name="form" [formGroup]="form" (ngSubmit)="onSubmit();">  
                 <mat-card-title>LISTE DES ETUDIANTS</mat-card-title><br>
+<form class="form-horizontal" name="form" [formGroup]="form" (ngSubmit)="onSubmit();">  
 
                 <mat-form-field  style="width:15%">
                     <mat-label>Promotions</mat-label>
-                    <select matNativeControl class="custom-select" [(ngModel)]="selectedPromotion" >
-                      <option >3AFISE</option>
-                      <option >3AFISA</option>
-                      <option >4AFISE</option>
-                      <option >4AFISA</option>
-                      <option >5AFISE</option>
-                      <option >5AFISA</option>
+                    <select matNativeControl class="custom-select" formControlName="selectedPromotion" >
+                      <option >3afise</option>
+                      <option >3afisa</option>
+                      <option >4afise</option>
+                      <option >4afisa</option>
+                      <option >5afise</option>
+                      <option >5afisa</option>
                     </select>
+                    <mat-error *ngIf="f.selectedPromotion.errors?.required">
+                        Promotion est <strong>obligatoire</strong>
+                      </mat-error>
                      
                 </mat-form-field>
                 &nbsp;&nbsp;
@@ -35,39 +38,41 @@
                 <button mat-raised-button color="primary" (click)="FileInput.click()">
                     <mat-icon>cloud_upload</mat-icon>
                     Import Excel
-                    <input #FileInput  type="file" accept=".xls,.xlsx" (mousedown)="onFileClicked($event)" [disabled]="f.anneeU.errors?.required || (f.anneeU.errors?.pattern && f.anneeU.touched)" (change)="onFileChanged($event)"  style="display: none" >
+                    <input #FileInput  type="file" accept=".xls,.xlsx"[disabled]="f.anneeU.errors?.required || (f.anneeU.errors?.pattern && f.anneeU.touched)" (change)="onFileChanged($event)"  style="display: none" >
                 </button>
                 
                 <br>
-
+                &nbsp;
                 <mat-form-field  style="width:15%">
                     <mat-label>Année Universitaire</mat-label>
-                    <select matNativeControl class="custom-select" >
-                      <option [ngValue]="annee"  *ngFor="let auYear of years" value="uYear.value">{{auYear}}</option>
+                    <select matNativeControl class="custom-select" formControlName="anneeSel" (change)="ChargerPromotions()" >
+                      <option  selected aria-readonly="true"> Selectionner</option>
+                      <option *ngFor="let anneeU of annees">{{anneeU.annee}}</option>
                     </select>
                 </mat-form-field>
+
                 &nbsp;&nbsp;
                 <mat-form-field style="width:15%">
                     <mat-label>Promotions</mat-label>
-                    <select matNativeControl class="custom-select"  >
-                      <option [ngValue]="promo" *ngFor="let promotion of promotions" value="promotion.value">{{promotion}}</option>
+                    <select matNativeControl class="custom-select" formControlName="promoSel" (change)="ListerEtudiantFiltrer()" >
+                        <option  selected aria-readonly="true"> Selectionner</option>
+                      <option  *ngFor="let promotion of promotions_Annee" >{{promotion}}</option>
                     </select>
                 </mat-form-field>
-            
-
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                    <mat-form-field class="search-form-field" floatLabel="never" style="width: 20%;">
-                        <input matInput [(ngModel)]= "searchKey" placeholder="Recherche" autocomplete="off" (keyup)="applyFilter()">
-                        <button mat-button matSuffix mat-icon-button aria-label="clear" 
-                        *ngIf="searchKey" (click)= "onSearchClear()">
-                            <mat-icon> close</mat-icon>
-                        </button>
-                    </mat-form-field>
-                    &nbsp;&nbsp;
+                <mat-form-field class="search-form-field" floatLabel="never" style="width: 20%;">
+                    <input matInput formControlName= "searchKey" placeholder="Recherche" autocomplete="off" (keyup)="applyFilter()">
+                 
+                </mat-form-field>
+                &nbsp;&nbsp;
                 <button mat-raised-button color="primary" (click)="ajouter()">
                     <mat-icon>person_add</mat-icon>
                 </button>
                 &nbsp;
+            
+</form>
+               
+              
              
 
 
@@ -94,19 +99,19 @@
                 <button mat-icon-button color="warn">
                     <mat-icon (click)="delete(Utilisateur)" aria-label="delete button icon">delete</mat-icon>
                 </button>
-
-
-
-        </mat-cell>
+            </mat-cell>
+        
+ 
+        
         </ng-container>
 
+    
         <mat-header-row *matHeaderRowDef= "displayedColumns" > </mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"> </mat-row>
         </mat-table>  
         <mat-paginator [pageSizeOptions]="[5,10,25,100]" [pageSize]="10" showFirstLastButtons> </mat-paginator> 
         </div>
     
-        </form>
             </mat-card-content>
             
         </mat-card>

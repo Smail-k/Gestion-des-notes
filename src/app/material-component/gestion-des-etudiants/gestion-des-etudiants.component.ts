@@ -16,6 +16,7 @@ import { UtilisateurService } from 'src/app/services/user.service';
 import { AjouteretudiantComponent } from './ajouteretudiant/ajouteretudiant.component';
 import { SupprimerEtudiantComponent } from './supprimer-etudiant/supprimer-etudiant.component';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { annee_universitaire } from 'src/app/models/annee_universitaire';
 
 @Component({
   selector: 'app-gestion-des-etudiants',
@@ -24,7 +25,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 })
 export class GestionDesEtudiantsComponent implements OnInit {
   ExcelData: any;
-  searchKey!:any;
   etudiants?: Etudiant[];
   selectedValue!: string;
   selectedYearValue!: string;
@@ -32,6 +32,7 @@ export class GestionDesEtudiantsComponent implements OnInit {
   file!: File;
   promotions: any[]=[];
   years: any[]=[];
+  annees:annee_universitaire[]=[];
   promo?:any;
   champs:boolean=true;
   annee?:any;
@@ -40,9 +41,8 @@ export class GestionDesEtudiantsComponent implements OnInit {
   dataSource!: MatTableDataSource<Etudiant>;
   @ViewChild(MatSort) sort! : MatSort;
   @ViewChild (MatPaginator) paginator! : MatPaginator;
-  anneeU:any;
-  selectedPromotion: string = 'Selectionner'; 
   form!:FormGroup;
+  promotions_Annee : Promotion[]=[];
   constructor(private HttpClient: HttpClient,private dialog: MatDialog,
      private us: UtilisateurService, private etuService: EtudiantService,private promService:PromotionService, 
      private toastr:ToastrService,
@@ -53,28 +53,34 @@ export class GestionDesEtudiantsComponent implements OnInit {
       this.form = this.fb.group({
       selectedPromotion:new FormControl('' ,[Validators.required]),
       anneeU:new FormControl('', [Validators.required,Validators.pattern('^[0-9]{4}\/[0-9]{4}')]),
+      promoSel:new FormControl('' ,[]),
+      anneeSel:new FormControl('' ,[]),
+      searchKey:new FormControl('' ,[]),
+
+
       
     })}
   
     get f (){ return this.form.controls }
 
   ngOnInit(): void {
-   this.getAnnees(); 
    this.getPromotions();
-   this.ListerEtudiants("Annee4","2021/2022")
+   this.ListerEtudiants()
    this.initForm();
+   this.getAnnees();
   }
 
- onFileClicked( event:any){
-    if(this.selectedPromotion=="Selectionner")
-      this.toastr.error("Veuillez choisir une promotion");
-    else
-      this.toastr.info("ok");
-    
-    
-    
- }
 
+  getAnnees(){
+    this.promService.getannees().subscribe(
+      data=>{
+        this.annees=data;
+        
+      }
+    , err => { console.log(err); });
+  }
+
+  
   /**
    * 
    * @param event 
@@ -86,57 +92,69 @@ export class GestionDesEtudiantsComponent implements OnInit {
     const fd = new FormData();
     fd.append('file', this.file);
     // Envoi de la requête POST
+    fd.append('promo',this.f.selectedPromotion.value);
+    fd.append('annee',this.f.anneeU.value);
+
     this.etuService.importEtudiants(fd).subscribe(data => {
-    }, err => { console.log(err); });
-    console.log(this.file);
-    if (this.file.name =='exemple_liste_etudiants.xlsx')
     this.toastr.success('Importation avec Succées', 'La liste des Etudiant est bien importée'); 
-    else 
-    this.toastr.error(" Veuillez choisir le fichier convenable","Importation imopssible");
+    }, err => {     this.toastr.error("Une erreur s'est produite","Importation imopssible");
+    console.log(err); });
+    
   }
 
   /**
    * Lister tous les etudiants sans filtre
    */
-  ListerEtudiants(promo:any,annee:any):void{
-    if (promo=='Annee4') promo='4A';
-    if (promo=='Annee3') promo='3A';
-    if (promo=='Annee5') promo='5A';
-
-    this.etuService.listeEtudiant(promo,annee).subscribe(etuds => {
+  ListerEtudiants():void{
+    this.etuService.Alletudiant().subscribe(etuds => {
       this.etudiants = etuds;
       this.dataSource = new MatTableDataSource(this.etudiants);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
+    
   }
 
-  applyFilter(){this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase(); }
+  applyFilter(){this.dataSource.filter = this.f.searchKey.value.trim().toLocaleLowerCase(); }
   
-  onSearchClear(){
-    this.searchKey="";
-    this.applyFilter();
+  
+  ChargerPromotions(){
+    this.promService.getpromotionsByAnnee(this.f.anneeSel.value).subscribe(
+      data=>{
+        this.promotions_Annee=data;
+      });
+      
   }
+  
 
   /**
    * Retourner les promotions
    */
   getPromotions(){
+    
     this.promService.getpromotions().subscribe(
       data => {this.promotions=data;
       }, err => { console.log(err); });
   }
 
-  /**
-   * Retourner les années 
-   */
-  getAnnees(){
-    this.promService.getannees().subscribe(
-      data => { this.years=data;
-      } , 
-      err => { console.log(err);}
-    )
+
+  ListerEtudiantFiltrer(){
+
+  console.log("promo est"+this.f.promoSel.value)
+  console.log("Anne est "+this.f.anneeSel.value)
+  
+      this.etuService.listeEtudiant(this.f.promoSel.value,this.f.anneeSel.value).subscribe(etuds => {
+        console.log(etuds);
+        this.etudiants = etuds;
+        this.dataSource = new MatTableDataSource(this.etudiants);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
+    
+    
   }
+
+
 
   /**
    * 
@@ -154,7 +172,8 @@ delete(etudiant:any)
       panelClass:'custom-dialog',
       data:{etudiant}    })
     dialogRef.afterClosed().subscribe(res=>
-      {      this.ListerEtudiants("Annee4","2021/2022") })
+      {      //this.ListerEtudiants("Annee4","2021/2022") 
+      })
 }
 
  
@@ -172,7 +191,7 @@ ajouter() {
     }
   })
   dialogRef.afterClosed().subscribe(res=>{
-    this.ListerEtudiants("Annee4","2021/2022")
+   // this.ListerEtudiants("Annee4","2021/2022")
   })
 }
   

@@ -83,7 +83,7 @@ export class GestionDesMatieresComponent implements OnInit, AfterViewInit {
     )
   }
 
-  applyFilter(){this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase(); }
+applyFilter(){this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase(); }
   
 onSearchClear(){
   this.searchKey="";
