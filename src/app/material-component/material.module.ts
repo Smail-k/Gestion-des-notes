@@ -25,6 +25,10 @@ import { AjouterutilisateurComponent } from './gestion-des-administrateurs/ajout
 import { NotesComponent } from './notes/notes.component';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { AjouterconfigurationComponent } from './configurations/ajouterconfiguration/ajouterconfiguration.component';
+import { NoteuniteComponent } from './notes/noteunite/noteunite.component';
+import { NotematiereComponent } from './notes/notematiere/notematiere.component';
+import { RattrapageComponent } from './rattrapage/rattrapage.component';
+import { AdmissionComponent } from './admission/admission.component';
 
 
 @NgModule({
@@ -51,7 +55,11 @@ import { AjouterconfigurationComponent } from './configurations/ajouterconfigura
     AjouterutilisateurComponent,
     NotesComponent,
     ConfigurationsComponent,
-    AjouterconfigurationComponent
+    AjouterconfigurationComponent,
+    NoteuniteComponent,
+    NotematiereComponent,
+    RattrapageComponent,
+    AdmissionComponent
    
   
   ]
