@@ -124,7 +124,7 @@ ddlChange(ob: any): void {
       data => {
         this.years = data;
         this.selectedYear = this.years[0].annee;
-        this.selectedSession='principale';
+        this.selectedSession='normale';
         this.getPromotions();
       },
       err => { console.log(err); }
@@ -147,19 +147,27 @@ ddlChange(ob: any): void {
    * @param event 
    */
   onFileChanged(event: any) {
-    console.log(this.selectedYear);
-    console.log(this.selectedPromotion);
-    console.log(this.selectedSession);
+   
     
-    /*this.selectedFile = event.target.files[0];
+    this.selectedFile = event.target.files[0];
     // Récupération du fichier Excel
     this.file = event.target.files[0];
     const fd = new FormData();
     fd.append('file', this.file);
+    fd.append('session',this.selectedSession);
     // Envoi de la requête POST
-    this.es.importNotes(fd).subscribe(data => {
-    }, err => { console.log(err); });
-    this.toastr.success('Importation avec Succées', 'La liste des notes est bien importée'); */
+    const res = this.es.importNotes(fd).subscribe(data => {
+      
+    }, err => { 
+      if(err.status==200){
+        this.ngOnInit();
+        this.toastr.success('Importation avec Succées', 'La liste des notes est bien importée'); 
+      }
+      console.log(err); 
+    });
+
+    //console.log(res);
+    
   }
 
   /**

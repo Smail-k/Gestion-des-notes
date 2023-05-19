@@ -7,21 +7,18 @@ import { EtudiantService } from 'src/app/services/etudiant.service';
 import { NoteService } from 'src/app/services/note.service';
 import { PromotionService } from 'src/app/services/promotion.service';
 
-export interface NoteUniteElement {
+export interface StudentElement {
   nom: string;
   prenom: string;
   numero:number;
-  moyenne:number;
-  uniteLabel:string;
 }
 
 @Component({
-  selector: 'app-noteunite',
-  templateUrl: './noteunite.component.html',
-  styleUrls: ['./noteunite.component.css']
+  selector: 'app-admission',
+  templateUrl: './admission.component.html',
+  styleUrls: ['./admission.component.css']
 })
-export class NoteuniteComponent implements OnInit {
-
+export class AdmissionComponent implements OnInit {
   selectedYear:any;
   selectedPromotion: any;
   selectedSession: any;
@@ -34,7 +31,7 @@ export class NoteuniteComponent implements OnInit {
   promo?:any;
   annee?:any;
   listData! : MatTableDataSource<any>;
-  displayedColumns : string[] = ['numero' , 'nom', 'prenom','code', 'note','actions' ];
+  displayedColumns : string[] = ['numero' , 'nom', 'prenom','actions' ];
   dataSource!: MatTableDataSource<Object>;
   @ViewChild(MatSort) sort! : MatSort;
   @ViewChild (MatPaginator) paginator! : MatPaginator;
@@ -49,22 +46,19 @@ export class NoteuniteComponent implements OnInit {
     const filterValue = ob.value;
     this.selectedYear = filterValue;
     this.getPromotions();
-    const sem = this.route.snapshot.paramMap.get('sem');
-    const numero = this.route.snapshot.paramMap.get('code');
-    this.ListerEtudiants(this.selectedPromotion, this.selectedYear, sem, numero)
+    this.ListerEtudiants(this.selectedPromotion, this.selectedYear, this.selectedSession)
   }
 
   ddlPromoChange(ob: any): void {
     const filterValue = ob.value;
     this.selectedPromotion = filterValue;
-    const sem = this.route.snapshot.paramMap.get('sem');
-    const numero = this.route.snapshot.paramMap.get('code');
-    this.ListerEtudiants(this.selectedPromotion, this.selectedYear, sem, numero)
+    this.ListerEtudiants(this.selectedPromotion, this.selectedYear, this.selectedSession)
   }
 
   ddlSessionChange(ob: any): void {
     const filterValue = ob.value;
     this.selectedSession = filterValue;
+    this.ListerEtudiants(this.selectedPromotion, this.selectedYear, this.selectedSession)
   }
 
 
@@ -87,23 +81,21 @@ export class NoteuniteComponent implements OnInit {
         this.selectedPromotion = this.promotions[0];
         const sem = this.route.snapshot.paramMap.get('sem');
         const numero = this.route.snapshot.paramMap.get('code');
-        this.ListerEtudiants(this.selectedPromotion, this.selectedYear, sem, numero)
+        this.ListerEtudiants(this.selectedPromotion, this.selectedYear, this.selectedSession)
 
       }, err => { console.log(err); });
   }
 
-  ListerEtudiants(promo:any,annee:any, sem:any, numero:any):void{
+  ListerEtudiants(promo:any,annee:any, session:string):void{
     
-    this.notesr.listeNotesUnite(promo,annee, sem, numero).subscribe(etuds => {
+    this.notesr.listeAdmission(promo,annee, session).subscribe(etuds => {
       this.etudiantsOb = etuds;
       console.log(etuds);
 
-      this.etudiantsOb = etuds.map(([nom, prenom, numero, moyenne, uniteLabel]): NoteUniteElement => ({
+      this.etudiantsOb = etuds.map(([nom, prenom, numero]): StudentElement => ({
         nom,
         prenom,
-        numero,
-        moyenne,
-        uniteLabel
+        numero
       }) );
 
       this.dataSource = new MatTableDataSource(this.etudiantsOb);
@@ -121,6 +113,5 @@ export class NoteuniteComponent implements OnInit {
     this.searchKey = "";
     this.applyFilter();
   }
-
 
 }

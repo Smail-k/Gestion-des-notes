@@ -3,7 +3,7 @@
         <mat-card>
             <mat-card-content>
                 <div class="d-flex no-block align-items-center b-b m-b-30 p-b-15">
-                    <h4 class="font-medium m-b-0 m-t-0">Moyennes par unités </h4>
+                    <h4 class="font-medium m-b-0 m-t-0">Liste des étudiants admis</h4>
                 </div>
 
                 <!-- <mat-card-title>NOTES</mat-card-title> -->
@@ -56,15 +56,6 @@
                     <ng-container matColumnDef="prenom"> 
                         <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Prenom </b></mat-header-cell>
                         <mat-cell *matCellDef="let etudiant">{{etudiant.prenom }} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="code"> 
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Code </b></mat-header-cell>
-                        <mat-cell *matCellDef="let etudiant">{{ etudiant.uniteLabel }} </mat-cell>
-                    </ng-container>
-            
-                    <ng-container matColumnDef="note"> 
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Moyenne(UE) </b></mat-header-cell>
-                        <mat-cell *matCellDef="let etudiant">{{ etudiant.moyenne | number: '1.2-2' }} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="actions"> 

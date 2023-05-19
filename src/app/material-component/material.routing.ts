@@ -11,6 +11,8 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { NotesComponent } from './notes/notes.component';
 import { ConfigurationsComponent } from './configurations/configurations.component';
 import { RattrapageComponent } from './rattrapage/rattrapage.component';
+import { NoteuniteComponent } from './notes/noteunite/noteunite.component';
+import { AdmissionComponent } from './admission/admission.component';
 
 
 export const MaterialRoutes: Routes = [
@@ -49,7 +51,17 @@ export const MaterialRoutes: Routes = [
     path: 'gestionDesRattrapages',
     component: RattrapageComponent
   },
-
+  {
+    canActivate:[IsSignedGuard],
+    path: 'admission',
+    component: AdmissionComponent
+  },
+  {
+    canActivate:[IsSignedGuard],
+    path: 'note/note-unite/:sem/:code',
+    component: NoteuniteComponent
+  },
+//topics/:id
  
 
 ];

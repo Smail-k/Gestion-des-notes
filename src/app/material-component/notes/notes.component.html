@@ -69,17 +69,19 @@
                     </ng-container>
             
                     <ng-container matColumnDef="note"> 
-                        <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Moyenne(UE) </b></mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header> <b> Moyenne(SEM) </b></mat-header-cell>
                         <mat-cell *matCellDef="let etudiant">{{ etudiant.moyenne | number: '1.2-2' }} </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="actions"> 
                         <mat-header-cell *matHeaderCellDef> <b> Actions </b></mat-header-cell>
                         <mat-cell *matCellDef="let etudiant"> 
-            
-                            <button mat-icon-button color="primary">
-                                <mat-icon (click)="delete(etudiant)" aria-label="delete button icon">remove_red_eye</mat-icon>
-                            </button>
+                            
+                            <!-- [routerLink]="['/topics/', element.id_cours]" -->
+                            <a mat-icon-button [routerLink]="['/note/note-unite/', etudiant.semestreLabel, etudiant.numero]">
+                                <mat-icon class="text-info">remove_red_eye</mat-icon>
+                            </a> 
+
                         </mat-cell>
                     </ng-container>
 

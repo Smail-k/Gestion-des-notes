@@ -23,6 +23,20 @@ export class NoteService {
       return this.http.get<any>(`${this.apiURL+'/note/semestre'}?promo=${promo}&anneeUniv=${annee}`);
     }
 
+    listeAdmission(promo:any,annee:any, session:string): Observable<any[]>{
+      if(session=='normale'){
+        return this.http.get<any>(`${this.apiURL+'/listeAdmis'}?annee=${annee}&promo=${promo}`);
+      }else{
+        return this.http.get<any>(`${this.apiURL+'/listeAdmisRatt'}?annee=${annee}&promo=${promo}`);
+      }
+      
+    }
+
+    listeNotesUnite(promo:any,annee:any, sem:any, numero:any): Observable<any[]>{
+      return this.http.get<any>(`${this.apiURL+'/note/semestre/etudiant'}?promo=${promo}&anneeUniv=${annee}&sem=${sem}&numero=${numero}`);
+    }
+
+
     listeEtudiantRattrapagee(annee:any,promo:any): Observable<EtudiantRattrapage[]>{
    
       return this.http.get<any>(`${this.apiURL+'/rattrapages'}?annee=${annee}&promo=${promo}`);

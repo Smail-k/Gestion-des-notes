@@ -28,6 +28,7 @@ import { AjouterconfigurationComponent } from './configurations/ajouterconfigura
 import { NoteuniteComponent } from './notes/noteunite/noteunite.component';
 import { NotematiereComponent } from './notes/notematiere/notematiere.component';
 import { RattrapageComponent } from './rattrapage/rattrapage.component';
+import { AdmissionComponent } from './admission/admission.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { RattrapageComponent } from './rattrapage/rattrapage.component';
     AjouterconfigurationComponent,
     NoteuniteComponent,
     NotematiereComponent,
-    RattrapageComponent
+    RattrapageComponent,
+    AdmissionComponent
    
   
   ]
