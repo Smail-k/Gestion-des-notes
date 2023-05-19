@@ -6,27 +6,13 @@
                 <br>
 
 
-                &nbsp;&nbsp;
-                <mat-form-field  style="width:15%">
-                    <mat-label>Promotions</mat-label> 
-                    <select matNativeControl class="custom-select" formControlName="promotion" >
-                      <option *ngFor="let promotion of promotions" >{{promotion}}</option>
-                    </select>
-                </mat-form-field>
-             
-                &nbsp;&nbsp;
-                <mat-form-field style="width:15%">
-                    <mat-label>Année Universitaire</mat-label>
-                    <select matNativeControl class="custom-select" >
-                      <option [ngValue]="annee"  *ngFor="let auYear of years" value="uYear.value">{{auYear}}</option>
-                    </select>
-                </mat-form-field>
 
                 &nbsp;&nbsp;
                 <mat-form-field style="width:15%">
                     <mat-label>Semestre</mat-label>
                     <select matNativeControl class="custom-select" >
-                      <option [ngValue]="semestre"  *ngFor="let auYear of years" value="uYear.value">{{auYear}}</option>
+
+                        
                     </select>
                 </mat-form-field>
                 

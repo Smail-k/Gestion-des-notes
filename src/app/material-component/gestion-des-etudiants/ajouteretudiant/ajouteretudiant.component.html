@@ -31,6 +31,20 @@
                
                
                <mat-form-field class="exemple-form" >
+                <mat-label for="inputPrenom">Prenom</mat-label>
+                <input type="text" matInput   formControlName="prenom"  placeholder="Prenom"   >
+                <mat-icon matSuffix> </mat-icon>
+                <mat-error *ngIf = "f.prenom.errors?.required">
+                    Prenom est <strong> obligatoire</strong>
+                    </mat-error>
+                    <mat-error *ngIf = "f.prenom.errors?.pattern && f.nom.touched">
+                        Veuillez saisir un nom valide
+                    </mat-error> 
+                    <mat-icon (click)="f.prenom.setValue('')"  matSuffix style="color: #1f3a93;">clear</mat-icon>
+             </mat-form-field> 
+
+               
+               <mat-form-field class="exemple-form" >
                 <mat-label for="inputAE">Annee d'entrée</mat-label>
                 <input type="text" matInput   formControlName="AE"  placeholder="AE "   >
                 <mat-icon matSuffix> </mat-icon>
@@ -43,32 +57,20 @@
                     <mat-icon (click)="f.AE.setValue('')"  matSuffix style="color: #1f3a93;">clear</mat-icon>
                </mat-form-field>
 
-               <mat-form-field class="exemple-form" >
-                   <mat-label for="inputPrenom">Prenom</mat-label>
-                   <input type="text" matInput   formControlName="prenom"  placeholder="Prenom"   >
-                   <mat-icon matSuffix> </mat-icon>
-                   <mat-error *ngIf = "f.prenom.errors?.required">
-                       Prenom est <strong> obligatoire</strong>
-                       </mat-error>
-                       <mat-error *ngIf = "f.prenom.errors?.pattern && f.nom.touched">
-                           Veuillez saisir un nom valide
-                       </mat-error> 
-                       <mat-icon (click)="f.prenom.setValue('')"  matSuffix style="color: #1f3a93;">clear</mat-icon>
-                </mat-form-field> 
 
-
-                  <mat-form-field class="exemple-form">
+                <mat-form-field >
                     <mat-label>Année Universitaire</mat-label>
-                    <select matNativeControl class="custom-select" formControlName="AU"  >
-                      <option *ngFor="let promotion of promotions">{{promotion.annee.annee}}</option>
+                    <select matNativeControl class="custom-select" formControlName="AU" (change)="ChargerPromotions()" >
+                      <option  selected aria-readonly="true"> Selectionner</option>
+                      <option *ngFor="let anneeU of annees">{{anneeU.annee}}</option>
                     </select>
                 </mat-form-field>
 
-             
                 <mat-form-field >
                     <mat-label>Promotions</mat-label>
-                    <select matNativeControl class="custom-select" formControlName="selectedYear" >
-                      <option  *ngFor="let promotion of promotions" >{{promotion.promo}}</option>
+                    <select matNativeControl class="custom-select" formControlName="Promo" >
+                        <option  selected aria-readonly="true"> Selectionner</option>
+                      <option  *ngFor="let promotion of promotions_Annee" >{{promotion}}</option>
                     </select>
                 </mat-form-field>
                 

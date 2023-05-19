@@ -22,6 +22,11 @@ export class PromotionService {
    */
     getpromotionsByAnnee(annee:any):Observable<any[]>{ return this.httpClient.get<any[]>(`${url+'anneeUniv/promotions/'}?annee=${annee}`); }
 
+    /**
+   * 
+   * @returns Promotion par Id
+   */
+    getPromotionsById(id:any):Observable<any[]>{ return this.httpClient.get<any[]>(`${url+'promotionsById'}?id=${id}`); }
 
   /**
    * 

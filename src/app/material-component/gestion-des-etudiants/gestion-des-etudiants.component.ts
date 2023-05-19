@@ -74,9 +74,7 @@ export class GestionDesEtudiantsComponent implements OnInit {
   getAnnees(){
     this.promService.getannees().subscribe(
       data=>{
-        this.annees=data;
-        
-      }
+        this.annees=data;      }
     , err => { console.log(err); });
   }
 
@@ -122,8 +120,7 @@ export class GestionDesEtudiantsComponent implements OnInit {
     this.promService.getpromotionsByAnnee(this.f.anneeSel.value).subscribe(
       data=>{
         this.promotions_Annee=data;
-      });
-      
+      }); 
   }
   
 

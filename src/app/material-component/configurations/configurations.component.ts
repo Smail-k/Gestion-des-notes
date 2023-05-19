@@ -38,7 +38,7 @@ export class ConfigurationsComponent implements OnInit {
   promo?:any;
   annee?:any;
   listData! : MatTableDataSource<any>;
-  displayedColumns : string[] = ['id' , 'libelle', 'seuil','description','actions' ];
+  displayedColumns : string[] = ['id' , 'libelle', 'seuil','description'];
   dataSource!: MatTableDataSource<Configuration>;
   @ViewChild(MatSort) sort! : MatSort;
   @ViewChild (MatPaginator) paginator! : MatPaginator;

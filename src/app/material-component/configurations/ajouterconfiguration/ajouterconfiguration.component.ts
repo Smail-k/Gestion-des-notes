@@ -24,24 +24,28 @@ export class AjouterconfigurationComponent implements OnInit {
 
   initForm(): void {
     this.form = this.fb.group({
-    nom:new FormControl('' ,[Validators.required,  Validators.pattern('^[a-zA-Z_]+'),Validators.minLength(3)]),
-    prenom:new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z_]+'),Validators.minLength(3)]),
+    libelle:new FormControl('' ,[Validators.required,  Validators.pattern('^[a-zA-Z_]+'),Validators.minLength(3)]),
+    seuil:new FormControl('', [Validators.required, Validators.pattern('^[0-9]+\.[0-9]+') ]),
+    description:new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z_ ]+'),Validators.minLength(10),Validators.maxLength(100)]),
+
   })}
 
   onAdd():void{
     // this.es.addEtudiant().subscribe
     let configure:Configuration={};
-    configure.seuil = this.seuil; 
-    configure.libelle = this.f.li.value;
+    configure.id =1;
+    configure.seuil = this.f.seuil.value; 
+    configure.libelle = this.f.libelle.value;
     configure.description = this.f.description.value;
    
     this.es.addConfiguration(configure).subscribe(
      data=> {
+      this.toastr.success('Nouvelle configuration ',"L'ajout à été effectuée avec succés"); 
      } , err => { console.log(err);
+      this.toastr.error("Une erreur s'est produite", "Impossible d'inserer")
      }
     )
 
-    this.toastr.success('Nouvelle configuration ',"L'ajout à été effectuée avec succés"); 
 
   }
 
