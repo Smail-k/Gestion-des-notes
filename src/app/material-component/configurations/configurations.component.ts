@@ -16,6 +16,7 @@ import { EtudiantService } from 'src/app/services/etudiant.service';
 import { PromotionService } from 'src/app/services/promotion.service';
 import { UtilisateurService } from 'src/app/services/user.service';
 import { AjouterconfigurationComponent } from './ajouterconfiguration/ajouterconfiguration.component';
+import { DeleteConfigurationComponent } from './delete-configuration/delete-configuration.component';
 
 // import { AjouteretudiantComponent } from './ajouteretudiant/ajouteretudiant.component';
 // import { SupprimerEtudiantComponent } from './supprimer-etudiant/supprimer-etudiant.component';
@@ -38,7 +39,7 @@ export class ConfigurationsComponent implements OnInit {
   promo?:any;
   annee?:any;
   listData! : MatTableDataSource<any>;
-  displayedColumns : string[] = ['id' , 'libelle', 'seuil','description'];
+  displayedColumns : string[] = ['id' , 'libelle', 'seuil','description','actions'];
   dataSource!: MatTableDataSource<Configuration>;
   @ViewChild(MatSort) sort! : MatSort;
   @ViewChild (MatPaginator) paginator! : MatPaginator;
@@ -77,25 +78,6 @@ export class ConfigurationsComponent implements OnInit {
     this.applyFilter();
   }
 
-  /**
-   * 
-   * @param etudiant : represente l'etudiant quand va supprimer
-   */
-delete(configuration:any) 
-{
-  this.toastr.warning("Attention vous allez supprimer cette configuration!!")
-  const DialogConfig = new MatDialogConfig();
-    // DialogConfig.autoFocus=true;
-    // const dialogRef= this.dialog.open(SupprimerEtudiantComponent,
-    //   {
-    //   width:'20%',
-    //   height:'20%',
-    //   panelClass:'custom-dialog',
-    //   data:{configuration}    })
-    // dialogRef.afterClosed().subscribe(res=>
-    //   {      this.ListerConfigurations() })
-
-}
 
  
 ajouter() {
@@ -116,6 +98,21 @@ ajouter() {
   })
 }
   
+delete(configuration:any) 
+{
+  this.toastr.warning("Attention vous allez supprimer une configuration !!")
+  const DialogConfig = new MatDialogConfig();
+    DialogConfig.autoFocus=true;
+    const dialogRef= this.dialog.open(DeleteConfigurationComponent,
+      {
+      width:'20%',
+      height:'20%',
+      panelClass:'custom-dialog',
+      data:{configuration}    })
+    dialogRef.afterClosed().subscribe(res=>
+      {      
+      })
+}
 
 
   
