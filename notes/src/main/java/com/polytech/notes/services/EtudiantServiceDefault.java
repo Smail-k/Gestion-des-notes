@@ -7,16 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.polytech.notes.models.Etudiant;
+import com.polytech.notes.models.Mobilite;
 import com.polytech.notes.models.Note;
 import com.polytech.notes.models.Promotion;
 import com.polytech.notes.models.Session;
 import com.polytech.notes.repositories.EtudiantRepository;
+import com.polytech.notes.repositories.MobiliteRepository;
 
 @Service
 public class EtudiantServiceDefault implements EtudiantService{
 
 	@Autowired
 	private EtudiantRepository repository;
+	@Autowired
+	private MobiliteRepository mobiliteRepo;
+	
 	
 	@Override
 	public Etudiant saveEtudiant(Etudiant e) {
@@ -228,6 +233,14 @@ public class EtudiantServiceDefault implements EtudiantService{
 	
 	public List<Object[]> moyennesUniteBySem(String promo,String annee,String sem,String numero) {
 		return repository.getEtudiantMoyennesModulesBySem(promo,annee,sem,numero);
+	}
+
+	@Override
+	public void setMobilite(String numero, Mobilite mobilite) {
+		Mobilite m =mobiliteRepo.save(mobilite);
+		Etudiant e= repository.getEtudiantByNumero(numero);
+		e.setMobilite(m);
+		repository.save(e);
 	}
 	
 	

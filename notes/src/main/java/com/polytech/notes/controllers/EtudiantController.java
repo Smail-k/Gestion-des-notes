@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.polytech.notes.models.Etudiant;
+import com.polytech.notes.models.Mobilite;
 import com.polytech.notes.models.Note;
 import com.polytech.notes.models.RattrapageResponse;
 import com.polytech.notes.models.Unite;
@@ -199,4 +200,10 @@ public class EtudiantController {
 		return etudiantService.listeDesAdmisRatt(annee, promo);
 	}
 		
+	//http://localhost:8080/api/etudiants/addMobilite/?numero=551176
+	@PostMapping("/addMobilite")
+	public void mobilite(String numero,@RequestBody Mobilite mobilite){
+		etudiantService.setMobilite(numero,mobilite);
+	}
+	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.polytech.notes.models.Etudiant;
+import com.polytech.notes.models.Mobilite;
 import com.polytech.notes.models.Note;
 import com.polytech.notes.models.PromotionType;
 
@@ -32,5 +33,6 @@ public interface EtudiantService {
 	List<String> listeRattrapagesEtudiant(String annee, String numero);
 	List<Object[]> listeDesAdmisRatt(String annee,String promo);
 	List<Object[]> listeDesAdmisPrin(String annee,String promo);
+	void setMobilite(String numero, Mobilite mobilite);
 	
 }
